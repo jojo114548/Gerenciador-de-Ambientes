@@ -1,0 +1,212 @@
+/* ======================================================
+   MODAL NOTIFICAÇÕES - SISTEMA DE OVERLAY
+====================================================== */
+
+/* Overlay */
+.modal-notificacao {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  
+  display: none;
+  justify-content: right;
+  align-items: flex-start;
+  
+  padding-top: 90px;
+  
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.modal-notificacao.active {
+  display: flex;
+}
+
+/* ======================================================
+   CARD PRINCIPAL
+====================================================== */
+.modal-notificacao-card {
+  width: 100%;
+  max-width: 420px;
+  
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  
+  overflow: hidden;
+  animation: slideDown 0.25s ease;
+}
+
+/* ======================================================
+   HEADER
+====================================================== */
+.modal-notificacao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  padding: 1rem 1.25rem;
+  
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-notificacao-header h3 {
+  margin: 0;
+  
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.modal-notificacao-header button {
+  background: transparent;
+  border: none;
+  
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #6b7280;
+  
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal-notificacao-header button:hover {
+  color: #111827;
+}
+
+/* ======================================================
+   BODY - LISTA DE NOTIFICAÇÕES
+====================================================== */
+.modal-notificacao-body {
+  max-height: 420px;
+  padding: 0.75rem 0;
+  
+  overflow-y: auto;
+  
+  /* Scrollbar customizada */
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.modal-notificacao-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-notificacao-body::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 8px;
+}
+
+.modal-notificacao-body::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ======================================================
+   ITEM DE NOTIFICAÇÃO
+====================================================== */
+.notificacao-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  
+  padding: 0.75rem 1.25rem;
+  
+  border-bottom: 1px solid #e5e7eb;
+  
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.notificacao-item:hover {
+  background: #f3f4f6;
+}
+
+.notificacao-item:last-child {
+  border-bottom: none;
+}
+
+/* Estado: Não Lida */
+.notificacao-item.nao-lida {
+  background: #eef2ff;
+}
+
+.notificacao-item.nao-lida:hover {
+  background: #e0e7ff;
+}
+
+/* ======================================================
+   CONTEÚDO DA NOTIFICAÇÃO
+====================================================== */
+.notificacao-titulo {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.notificacao-mensagem {
+  font-size: 0.85rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.notificacao-data {
+  align-self: flex-end;
+  margin-top: 0.25rem;
+  
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+/* ======================================================
+   TIPOS DE NOTIFICAÇÃO
+====================================================== */
+.notificacao-item.sucesso .notificacao-titulo {
+  color: #065f46;
+}
+
+.notificacao-item.alerta .notificacao-titulo {
+  color: #92400e;
+}
+
+.notificacao-item.erro .notificacao-titulo {
+  color: #991b1b;
+}
+
+/* ======================================================
+   ESTADO VAZIO
+====================================================== */
+.notificacao-vazia {
+  padding: 2rem 1rem;
+  
+  font-size: 0.9rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* ======================================================
+   ANIMAÇÕES
+====================================================== */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+@media (max-width: 480px) {
+  .modal-notificacao {
+    padding-top: 60px;
+  }
+  
+  .modal-notificacao-card {
+    max-width: 95%;
+    margin: 0 auto;
+  }
+}

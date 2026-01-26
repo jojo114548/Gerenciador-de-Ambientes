@@ -1,0 +1,170 @@
+/* ======================================================
+   OVERLAY
+====================================================== */
+#modaldetalhes.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1500;
+}
+
+#modaldetalhes.modal.active {
+  display: flex;
+}
+
+/* ======================================================
+   MODAL CONTENT
+====================================================== */
+#modaldetalhes .modal-content {
+  background: #ffffff;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalFadeIn 0.25s ease;
+}
+
+/* ======================================================
+   IMAGEM DO EVENTO
+====================================================== */
+#modaldetalhes .modal-imagem {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* ======================================================
+   HEADER
+====================================================== */
+#modaldetalhes .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#modaldetalhes .modal-header h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+#modaldetalhes .modal-header .tag {
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+/* ======================================================
+   INFORMAÇÕES DO EVENTO
+====================================================== */
+#modaldetalhes .modal-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  font-size: 0.875rem;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+#modaldetalhes .modal-info div {
+  flex: 1 1 45%;
+}
+
+/* ======================================================
+   SEÇÕES DE DESCRIÇÃO
+====================================================== */
+#modaldetalhes h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  color: #111827;
+}
+
+#modaldetalhes p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* ======================================================
+   INFORMAÇÕES ADICIONAIS
+====================================================== */
+#modaldetalhes .extra-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+#modaldetalhes .extra-info span {
+  flex: 1 1 45%;
+}
+
+/* ======================================================
+   BOTÃO FECHAR
+====================================================== */
+#modaldetalhes .btn-cancelar {
+  display: inline-block;
+  background: #e5e7eb;
+  color: #374151;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+#modaldetalhes .btn-cancelar:hover {
+  background: #d1d5db;
+}
+
+/* ======================================================
+   ANIMAÇÃO
+====================================================== */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+@media (max-width: 600px) {
+  #modaldetalhes .modal-content {
+    padding: 1.5rem;
+  }
+
+  #modaldetalhes .modal-imagem {
+    height: 160px;
+  }
+
+  #modaldetalhes .modal-info div,
+  #modaldetalhes .extra-info span {
+    flex: 1 1 100%;
+  }
+}

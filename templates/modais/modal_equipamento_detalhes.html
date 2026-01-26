@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="/static/Css/modal_equipamento_detalhes.css">
+
+<div id="modal-detalhes-equipamento" class="modal">
+  <div class="modal-content">
+
+    <span class="close" onclick="fecharModalDetalhesEquipamento()">×</span>
+
+    <img id="md-equip-imagem" class="modal-imagem">
+
+    <h2 id="md-equip-nome"></h2>
+
+    <div class="modal-info">
+      <p><strong>Categoria:</strong> <span id="md-equip-categoria"></span></p>
+      <p><strong>Status:</strong> <span id="md-equip-status"></span></p>
+      <p><strong>Marca:</strong> <span id="md-equip-marca"></span></p>
+      <p><strong>Modelo:</strong> <span id="md-equip-modelo"></span></p>
+      <p><strong>Condição:</strong> <span id="md-equip-condicao"></span></p>
+
+      <!-- NOVO -->
+      <p>
+        <strong>Quantidade disponível:</strong>
+        <span id="md-equip-quantidade"></span>
+      </p>
+    </div>
+
+    <div class="modal-descricao">
+      <h4>Descrição</h4>
+      <p id="md-equip-descricao"></p>
+    </div>
+
+    <div class="modal-recursos">
+      <h4>Especificações</h4>
+      <ul id="md-equip-recursos"></ul>
+    </div>
+
+  </div>
+</div>
+
+<script src="/static/Javascript/detalhes_equipamentos.js"></script>

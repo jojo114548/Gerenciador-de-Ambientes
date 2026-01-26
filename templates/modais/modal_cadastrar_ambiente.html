@@ -1,0 +1,140 @@
+    <link rel="stylesheet" href="/static/Css/modal_cadastrar_ambiente.css">
+    <div id="add-ambiente-modal" class="modalAdicionar" >
+
+    <div class="modal-content modal-booking" >
+       <button class="close" onclick="fecharModalAmbiente()">
+           x
+        </button>
+
+        <div class="booking-header">
+            <h2>Adicionar Novo Ambiente</h2>
+            <p>Preencha as informações do ambiente</p>
+        </div>
+
+        <form
+            id="add-ambiente-form"
+            class="booking-form"
+            action="/novo-ambiente"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+            <!-- Imagem -->
+            <div class="form-group">
+                <label for="ambiente-image">Imagem do Ambiente</label>
+                <input type="file" id="ambiente-image" name="image" accept="image/*">
+            </div>
+
+            <!-- Nome -->
+            <div class="form-group">
+                <label for="ambiente-name">Nome do Ambiente</label>
+                <input
+                    type="text"
+                    id="ambiente-name"
+                    name="name"
+                    placeholder="Ex: Sala de Reuniões A"
+                    required
+                >
+            </div>
+
+            <!-- Tipo / Status -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ambiente-type">Tipo</label>
+                    <select id="ambiente-type" name="type" required>
+                        <option value="">Selecione...</option>
+                        <option value="sala">Sala</option>
+                        <option value="laboratorio">Laboratório</option>
+                        <option value="auditorio">Auditório</option>
+                        <option value="estudio">Estúdio</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ambiente-status">Status</label>
+                    <select id="ambiente-status" name="status" required>
+                        <option value="Disponivel">Disponível</option>
+                        <option value="ocupado">Ocupado</option>
+                        <option value="manutencao">Manutenção</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Capacidade / Área -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ambiente-capacidade">Capacidade</label>
+                    <input
+                        type="number"
+                        id="ambiente-capacidade"
+                        name="capacidade"
+                        placeholder="Ex: 20"
+                        min="1"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="ambiente-area">Área</label>
+                    <input
+                        type="text"
+                        id="ambiente-area"
+                        name="area"
+                        placeholder="Ex: 35m²"
+                    >
+                </div>
+            </div>
+
+            <!-- Localização -->
+            <div class="form-group">
+                <label for="ambiente-localizacao">Localização</label>
+                <input
+                    type="text"
+                    id="ambiente-localizacao"
+                    name="localizacao"
+                    placeholder="Ex: 2º andar"
+                >
+            </div>
+
+            <div class="form-group">
+    <label>Recursos do Ambiente</label>
+
+    <!-- Recursos padrão -->
+       <div id="especificacoes-container">
+        <input type="text" name="recursos[]" placeholder="Ex: Projetor">
+      </div>
+         
+      <button type="button" onclick="addrecursos()">+ Adicionar especificação</button>
+
+      <br><br>
+</div>
+
+            <!-- Descrição -->
+            <div class="form-group">
+                <label for="ambiente-descricao">Descrição</label>
+                <textarea
+                    id="ambiente-descricao"
+                    name="descricao"
+                    rows="4"
+                    placeholder="Descrição do ambiente"
+                ></textarea>
+            </div>
+
+            <!-- Ações -->
+            <div class="form-actions">
+                <button
+                    type="button"
+                    class="btn-secondary"
+                     onclick="fecharModalAmbiente()"
+                >
+                    Cancelar
+                </button>
+                <button type="submit" class="btn-primary">
+                    Adicionar Ambiente
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="/static/Javascript/cadastrar_ambiente.js"></script>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Agendamentos</title>
+      <link rel="stylesheet" href="/static/Css/geral.css">
+    <link rel="stylesheet" href="/static/Css/base.css">
+     <link rel="stylesheet" href="../static/css/modal_notificacao.css">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="dashboard" class="dashboard">
+
+    <!-- Sidebar -->
+    {% include 'base.html' %}
+
+    <!-- Notificações -->
+    {% include 'notificacao.html' %}
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <div class="topbar">
+           
+            <div class="topbar-search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" placeholder="Buscar ambientes, equipamentos ou eventos...">
+            </div>
+
+            <div class="topbar-actions">
+                  <button class="icon-button" onclick="modalConfig(event)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+
+                </button>
+                <button class="icon-button" onclick="modal_notificacao()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span id="badge-notificacao" class="badge-notificacao"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="content-main">
+           
+
+
+<section class="section">
+  <div class="section-header">
+    <h2>Equipamentos Disponíveis</h2>
+  </div>
+
+  <div class="cards-grid">
+    {% for equipamento in equipamentos %}
+    <div class="card">
+
+      <img src="{{ equipamento.image }}" class="equipamentos-imagem" alt="Imagem do equipamento">
+
+      <div class="card-body">
+
+        <h3 class="equipamento-nome">{{ equipamento.name }}</h3>
+
+        <p class="equipamento-descricao">
+          {{ equipamento.descricao or "Sem descrição disponível" }}
+        </p>
+
+        <div class="info">
+          <span class="equipamento-categoria">{{ equipamento.categoria }}</span>
+          <span class="equipamento-modelo">{{ equipamento.modelo }}</span>
+
+          <span class="equipamento-quantidade">
+            Quantidade disponível:
+            <strong>{{ equipamento.quantidade_disponivel }}</strong>
+          </span>
+
+          <span class="equipamento-status" style="display:none">
+            {{ equipamento.status }}
+          </span>
+
+          <span class="equipamento-condicao" style="display:none">
+            {{ equipamento.condicao }}
+          </span>
+        </div>
+
+        <div class="actions">
+          <button class="btn-details"
+                  onclick="abrirModalDetalhesEquipamento(this)">
+            Ver Detalhes
+          </button>
+
+          {% if equipamento.quantidade_disponivel > 0 %}
+          <button class="btn-reserve"
+                  onclick="abrirModalAgendamentoEquipamento(
+                    '{{ equipamento.id }}',
+                    '{{ equipamento.name }}'
+                  )">
+            Reservar
+          </button>
+          {% else %}
+          <button class="btn-reserve disabled" disabled>
+            Indisponível
+          </button>
+          {% endif %}
+        </div>
+
+        <!-- Recursos -->
+        <div class="recursos-equip" style="display:none;">
+          <h4>Recursos:</h4>
+          <ul>
+            {% for recurso in equipamento.specifications %}
+              <li>{{ recurso }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+                      </div>
+                    </div>
+                    </main>
+                    </div>
+
+
+
+
+  {% include 'modais/modal_equipamento_detalhes.html' %}     
+  {% include 'modais/modal_equipamento_agendamento.html' %}  
+  {% include 'modais/modal_editar_equipamento.html' %}    
+  {% include 'modais/modal_cadastrar_equipamento.html' %}
+  
+
+<script src="/static/Javascript/equipamentos.js"></script>
+</body>
+</html>

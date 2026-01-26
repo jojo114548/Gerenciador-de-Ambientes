@@ -1,0 +1,181 @@
+/* ======================================================
+   MODAL - OVERLAY
+====================================================== */
+.modal-agendamento {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1400;
+}
+
+.modal-agendamento.active {
+  display: flex;
+}
+
+/* ======================================================
+   BOX DO MODAL
+====================================================== */
+.modal-agendamento .modal-box {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0,0,0,.25);
+  animation: modalFade .25s ease;
+}
+
+/* ======================================================
+   BOTÃO FECHAR
+====================================================== */
+.modal-agendamento .close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.modal-agendamento .close:hover {
+  color: #111827;
+}
+
+/* ======================================================
+   TÍTULO
+====================================================== */
+.modal-agendamento h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.25rem;
+}
+
+/* ======================================================
+   FORMULÁRIO
+====================================================== */
+#form-agendamento {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+#form-agendamento label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+#form-agendamento input,
+#form-agendamento textarea {
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+#form-agendamento textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+#form-agendamento input:focus,
+#form-agendamento textarea:focus {
+  outline: none;
+  border-color: #324f8a;
+  box-shadow: 0 0 0 3px rgba(50,79,138,.15);
+}
+
+/* ======================================================
+   HORÁRIOS
+====================================================== */
+.horarios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ======================================================
+   AÇÕES
+====================================================== */
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1rem;
+}
+
+.btn-cancelar {
+  background: #f3f4f6;
+  color: #374151;
+  border: none;
+  padding: 0.55rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover {
+  background: #e5e7eb;
+}
+
+.btn-confirmar {
+  background: #324f8a;
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-confirmar:hover {
+  background: #243b6b;
+}
+
+/* ======================================================
+   ANIMAÇÃO
+====================================================== */
+@keyframes modalFade {
+  from {
+    opacity: 0;
+    transform: scale(.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+@media (max-width: 480px) {
+  .modal-agendamento .modal-box {
+    padding: 1.5rem;
+  }
+
+  .horarios {
+    grid-template-columns: 1fr;
+  }
+
+  .acoes {
+    flex-direction: column;
+  }
+
+  .acoes button {
+    width: 100%;
+  }
+}

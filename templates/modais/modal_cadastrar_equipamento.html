@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="/static/Css/modal_cadastrar_equipamento.css">
+
+<div id="modalEquipamento" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="fecharModalEquipamento()">&times;</span>
+
+    <h2>Cadastrar Equipamento</h2>
+
+    <form
+      action="/novo-equipamento"
+      method="POST"
+      enctype="multipart/form-data"
+      id="form-cadastro-equipamento"
+    >
+
+      <label>Nome</label>
+      <input type="text" name="name" required>
+
+      <label>Categoria</label>
+      <input type="text" name="categoria" required>
+
+      <!-- 🔢 NOVO CAMPO OBRIGATÓRIO -->
+      <label>Quantidade disponível</label>
+      <input
+        type="int"
+        name="quantidade_disponivel"
+        id="quantidade_disponivel"
+        required
+      >
+
+      <label>Status</label>
+      <select name="status">
+        <option value="Disponivel">Disponível</option>
+        <option value="ocupado">Indisponível</option>
+      </select>
+
+      <label>Descrição</label>
+      <textarea name="descricao"></textarea>
+
+      <label>Marca</label>
+      <input type="text" name="marca">
+
+      <label>Modelo</label>
+      <input type="text" name="modelo">
+
+      <label>Condição</label>
+      <select name="condicao">
+        <option value="Novo">Novo</option>
+        <option value="Usado">Usado</option>
+        <option value="Seminovo">Seminovo</option>
+      </select>
+
+      <label>Imagem</label>
+      <input type="file" name="image" accept="image/*">
+
+      <hr>
+
+      <label>Especificações</label>
+      <div id="especificacoes-container">
+        <input type="text" name="especificacoes[]" placeholder="Ex: HDMI">
+      </div>
+
+      <button type="button" onclick="addEspecificacao()">
+        + Adicionar especificação
+      </button>
+
+      <br><br>
+
+      <button type="submit">Salvar Equipamento</button>
+
+    </form>
+  </div>
+</div>
+
+<script src="/static/Javascript/cadastrar_equipamentos.js"></script>
