@@ -12,8 +12,15 @@ notificacao_bp = Blueprint("notificacao", __name__)
 @notificacao_bp.route("/notificacoes/<usuario_id>", methods=["GET"])
 @jwt_required()
 def listar_notificacoes(usuario_id):
-    notificacoes = NotificacaoService.listar_nao_lidas(usuario_id)
-    return jsonify(notificacoes)
+    try:
+        notificacoes = NotificacaoService.listar_nao_lidas(usuario_id)
+        return jsonify(notificacoes)
+    
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    
 
 @notificacao_bp.route("/notificacoes", methods=["POST"])
 @jwt_required()
@@ -29,16 +36,28 @@ def criar_notificacao():
         )
         return jsonify({"mensagem": "Notificação criada"}), 201
 
-    except Exception as e:
+
+    except ValueError as e:
         return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    
 
 @notificacao_bp.route("/notificacoes/<id>/lida", methods=["PUT"])
 @jwt_required()
 def marcar_lida(id):
-    sucesso = NotificacaoService.marcar_lida(id)
+    
+    try:
+        sucesso = NotificacaoService.marcar_lida(id)
 
-    if not sucesso:
-        return jsonify({"erro": "Notificação não encontrada"}), 404
+        if not sucesso:
+            return jsonify({"erro": "Notificação não encontrada"}), 404
 
-    return jsonify({"mensagem": "Notificação marcada como lida"})
+        return jsonify({"mensagem": "Notificação marcada como lida"})
+    
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    
 

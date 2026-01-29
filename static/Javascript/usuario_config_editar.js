@@ -42,7 +42,7 @@ function abrirEditarUsuario(
   document.getElementById("edit-user-role").value = role ;
   document.getElementById("edit-user-status").value = status ;
 
-    document.getElementById("edit-image-atual").value = image || "";
+   
 
   const preview = document.getElementById("preview-imagem");
   if (preview && image) preview.src = image;
@@ -71,9 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
     formData.append("funcao", document.getElementById("edit-user-funcao").value);
     formData.append("role", document.getElementById("edit-user-role").value);
     formData.append("status", document.getElementById("edit-user-status").value);
-    formData.append("image_atual", document.getElementById("edit-image-atual").value);
+    
+    
 
-    const imagemInput = document.getElementById("edit-imagem");
+    const imagemInput = document.getElementById("edit-image-atual");
     if (imagemInput && imagemInput.files.length > 0) {
       formData.append("image", imagemInput.files[0]);
     }

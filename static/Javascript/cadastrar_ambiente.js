@@ -32,22 +32,19 @@ document.getElementById('form-editar-ambiente').addEventListener('submit', funct
         method: 'POST',
         body: formData
     })
-   .then(response => {
-    return response.json().then(data => {
-        if (!response.ok) {
-            throw new Error(data.erro || data.mensagem || "Erro desconhecido");
-        }
-        return data;
-    });
-})
-    .then(() => {
-        alert("Ambiente atualizado com sucesso!");
+   .then(res => {
+        if (!res.ok) throw new Error('Erro na requisição');
+        return res.json();
+      })
+      .then(data => {
+        alert(data.mensagem);
+        fecharModalAmbiente();
         location.reload();
-    })
-    .catch(error => {
-        console.error(error);
-        alert(error.message);
-    });
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Erro ao Cadastrar ambiente');
+      });
 });
 
 

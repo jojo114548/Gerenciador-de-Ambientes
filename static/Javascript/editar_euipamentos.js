@@ -15,7 +15,7 @@ function abrirModalEditarEquipamento(button) {
   document.getElementById('edit_modelo').value = equipamento.modelo || '';
   document.getElementById('edit_condicao').value = equipamento.condicao || '';
   document.getElementById('edit_descricao').value = equipamento.descricao || '';
-  document.getElementById('edit_quantidade_disponivel').value = equipamento.quantidade_disponivel  || '';
+  document.getElementById('edit_quantidade_disponivel').value = equipamento.quantidade_disponivel ?? 0;
 
   // Preview da imagem
   const preview = document.getElementById('edit-preview-imagem');
@@ -52,7 +52,13 @@ function abrirModalEditarEquipamento(button) {
 function fecharModalEditarEquipamento() {
   document.getElementById('modalEditarEquipamento').style.display = 'none';
   
+  // Limpar preview
+  const preview = document.getElementById('edit-preview-imagem');
+  preview.style.display = 'none';
+  preview.src = '';
 
+  // Limpar input de arquivo
+  document.getElementById('edit_imagem').value = '';
 }
 
 // ===============================

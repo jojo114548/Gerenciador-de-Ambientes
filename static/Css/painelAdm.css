@@ -1,154 +1,85 @@
-/* ============================================
-   PAINEL ADMINISTRATIVO - SISTEMA DE ABAS
-   ============================================ */
+/* ======================================================
+   PAINEL ADMINISTRATIVO - FINGOALS STYLE
+   Paleta: #6C5CE7 (Roxo Principal)
+====================================================== */
 
+/* ======================================================
+   LAYOUT PRINCIPAL
+====================================================== */
 .adm-panel {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: #f9fafb;
+    background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
     overflow-y: auto;
-     scrollbar-width: none;
-    min-width: 80vw;
 }
 
-.adm-panel::-webkit-scrollbar {
-  display: none;
-}
-/* ============================================
+/* ======================================================
    TOPBAR COM NAVEGAÇÃO
-   ============================================ */
-
+====================================================== */
 .topbar {
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border-bottom: 1px solid #e5e7eb;
+    background: #FFFFFF;
+    border-bottom: 2px solid #F3F4F6;
     padding: 0;
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    align-items: center;
+   
+        
+       
 }
 
 .topbar-main {
     display: flex;
     align-items: center;
-    justify-content:center;
-    padding: 16px 32px;
-    border-bottom: 1px solid #f3f4f6;
-}
-
-
-/* ============================================
-   SISTEMA DE ABAS (TABS)
-   ============================================ */
-
-.tabs-navigation {
-    display: flex;
-    gap: 32px;
-    padding: 0 32px;
-}
-
-.tab-item {
-    padding: 14px 0;
-    font-size: 14px;
-    font-weight: 500;
-    color: #6b7280;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-}
-
-.tab-item:hover {
-    color: #374151;
-}
-
-.tab-item.active {
-    color: #3b82f6;
-    border-bottom-color: #3b82f6;
-}
-
-/* Badge de contador nas abas */
-.tab-item .tab-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 6px;
-    margin-left: 8px;
-    background: #e5e7eb;
-    color: #6b7280;
-    font-size: 11px;
-    font-weight: 600;
-    border-radius: 10px;
-}
-
-.tab-item.active .tab-badge {
-    background: #dbeafe;
-    color: #3b82f6;
-}
-
-/* ============================================
-   CONTEÚDO DAS ABAS
-   ============================================ */
-
-.content-wrapper {
-    padding: 1rem 1.5rem 2rem;
-}
-
-.content-main {/* ============================================
-   PAINEL ADMINISTRATIVO - SISTEMA DE ABAS
-   ============================================ */
-
-.adm-panel {
-    flex: 1;
-    display: flex;
     flex-direction: column;
-    background: #f9fafb;
-}
-
-/* ============================================
-   TOPBAR COM NAVEGAÇÃO
-   ============================================ */
-
-.topbar {
-    background: #fff;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.topbar-main {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 32px;
-    border-bottom: 1px solid #f3f4f6;
+    padding: 24px 32px;
+    border-bottom: 1px solid #F3F4F6;
+  
+    
 }
 
 .topbar-main h2 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #111827;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1F1F1F;
     margin: 0;
 }
 
-/* ============================================
+.topbar-main a {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #6C5CE7, #5B4CD8);
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.topbar-main a:hover {
+    background: linear-gradient(135deg, #5B4CD8, #4A3DC7);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+}
+
+/* ======================================================
    SISTEMA DE ABAS (TABS)
-   ============================================ */
+====================================================== */
+
 
 .tabs-navigation {
     display: flex;
-    gap: 32px;
+    gap: 8px;
     padding: 0 32px;
     overflow-x: auto;
     scrollbar-width: none;
+
 }
 
 .tabs-navigation::-webkit-scrollbar {
@@ -156,96 +87,133 @@
 }
 
 .tab-item {
-    padding: 14px 0;
+    padding: 14px 20px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     color: #6b7280;
-    background: none;
+    background: transparent;
     border: none;
-    border-bottom: 2px solid transparent;
+    border-bottom: 3px solid transparent;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     white-space: nowrap;
+    position: relative;
 }
 
 .tab-item:hover {
-    color: #374151;
+    color: #6C5CE7;
+    background: rgba(108, 92, 231, 0.05);
 }
 
 .tab-item.active {
-    color: #3b82f6;
-    border-bottom-color: #3b82f6;
+    color: #6C5CE7;
+    border-bottom-color: #6C5CE7;
+    background: linear-gradient(180deg, rgba(108, 92, 231, 0.05) 0%, transparent 100%);
 }
 
-.tab-item .tab-badge {
+.tab-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 6px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 8px;
     margin-left: 8px;
-    background: #e5e7eb;
+    background: #E5E7EB;
     color: #6b7280;
     font-size: 11px;
-    font-weight: 600;
-    border-radius: 10px;
+    font-weight: 700;
+    border-radius: 11px;
+    transition: all 0.3s;
 }
 
 .tab-item.active .tab-badge {
-    background: #dbeafe;
-    color: #3b82f6;
+    background: linear-gradient(135deg, #6C5CE7, #5B4CD8);
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.3);
 }
 
-/* ============================================
+/* ======================================================
    CONTEÚDO DAS ABAS
-   ============================================ */
-
+====================================================== */
 .content-wrapper {
     flex: 1;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #6C5CE7 #F8F9FA;
+}
+
+.content-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.content-wrapper::-webkit-scrollbar-thumb {
+    background: #6C5CE7;
+    border-radius: 10px;
 }
 
 .content-main {
-    padding: 24px 32px;
+    padding: 32px;
+    max-width: 1800px;
+    margin: 0 auto;
 }
 
 .tab-content {
     display: none;
+    animation: fadeIn 0.4s ease;
 }
 
 .tab-content.active {
     display: block;
 }
 
-/* ============================================
-   SEÇÕES GERAIS
-   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+/* ======================================================
+   SEÇÕES
+====================================================== */
 .section,
 .section-usuario,
 .section-pendentes {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     overflow: hidden;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
 }
+
+
 
 .section-header,
 .section-header-historico {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px 28px;
-    border-bottom: 1px solid #e5e7eb;
+    padding: 28px 32px;
+    border-bottom: 2px solid #F3F4F6;
+    background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
 }
 
 .section-header h2,
 .section-header-historico h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1F1F1F;
     margin: 0;
 }
 
@@ -253,688 +221,30 @@
     font-size: 14px;
     color: #6b7280;
     font-weight: 400;
-}
-
-.btn-adicionar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: #3b82f6;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-adicionar:hover {
-    background: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-/* ============================================
-   TABELAS GERAIS
-   ============================================ */
-
-.table-historico,
-.table-ambientes,
-.table-equipamentos {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table-historico thead,
-.table-ambientes thead,
-.table-equipamentos thead{
-    background: #f9fafb;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.table-historico thead th,
-.table-ambientes thead th,
-.table-equipamentos thead th {
-    padding: 12px 24px;
-    text-align: left;
-    font-size: 12px;
-    font-weight: 600;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.table-historico tbody tr,
-.table-ambientes tbody tr,
-.table-equipamentos tbody tr {
-    border-bottom: 1px solid #f3f4f6;
-    transition: background-color 0.2s;
-}
-
-.table-historico tbody tr:hover,
-.table-ambientes tbody tr:hover,
-.table-equipamentos tbody tr:hover{
-    background: #f9fafb;
-}
-
-.table-historico tbody td,
-.table-ambientes tbody td,
-.table-equipamentos tbody td{
-    padding: 16px 24px;
-    font-size: 14px;
-    color: #374151;
-}
-
-/* ============================================
-   CÉLULAS COM IMAGEM E NOME
-   ============================================ */
-
-.td-nome,
-.td-ambiente,
-.td-equipamento{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.td-imagem {
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-
-.td-imagem-user {
-    border-radius: 50%;
-    border: 2px solid #e5e7eb;
-}
-
-.td-info h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 2px 0;
-}
-
-.td-info p,
-.td-info span {
-    font-size: 13px;
-    color: #6b7280;
-    margin: 0;
-}
-
-.icone-history {
-    width: 40px;
-    height: 40px;
-    background: #f3f4f6;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.icone-history svg {
-    width: 20px;
-    height: 20px;
-    color: #6b7280;
-}
-
-.nome-info h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 2px 0;
-}
-
-.nome-info span {
-    font-size: 13px;
-    color: #6b7280;
-}
-
-/* ============================================
-   BADGES E TAGS
-   ============================================ */
-
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    gap: 6px;
-}
-
-.status-badge::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-}
-
-.status-badge.approved,
-.status-badge.disponivel {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.status-badge.approved::before,
-.status-badge.disponivel::before {
-    background: #10b981;
-}
-
-.status-badge.pending {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.status-badge.pending::before {
-    background: #f59e0b;
-}
-
-.status-badge.cancelled,
-.status-badge.indisponivel {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.status-badge.cancelled::before,
-.status-badge.indisponivel::before {
-    background: #ef4444;
-}
-
-.status-badge.active,
-.status-badge.manutencao {
-    background: #dbeafe;
-    color: #1e40af;
-}
-
-.status-badge.active::before,
-.status-badge.manutencao::before {
-    background: #3b82f6;
-}
-
-.tipo-badge,
-.categoria-badge {
-    display: inline-flex;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    background: #f3f4f6;
-    color: #4b5563;
-}
-
-/* ============================================
-   INFORMAÇÕES ADICIONAIS
-   ============================================ */
-
-.td-horario,
-.td-data,
-.td-capacidade,
-.td-localizacao {
-    color: #6b7280;
-    font-size: 13px;
-    white-space: nowrap;
-}
-
-.td-recursos {
-    font-size: 13px;
-    color: #6b7280;
-}
-
-.td-recursos-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-}
-
-.recurso-tag {
-    padding: 2px 8px;
-    background: #f3f4f6;
-    border-radius: 4px;
-    font-size: 11px;
-    color: #6b7280;
-}
-
-/* ============================================
-   AÇÕES
-   ============================================ */
-
-.td-acoes {
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-}
-
-.btn-acao {
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: transparent;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.btn-acao:hover {
-    background: #f3f4f6;
-}
-
-.btn-acao svg {
-    width: 16px;
-    height: 16px;
-    color: #6b7280;
-}
-
-.btn-acao.editar:hover {
-    background: #dbeafe;
-}
-
-.btn-acao.editar:hover svg {
-    color: #3b82f6;
-}
-
-.btn-acao.excluir:hover {
-    background: #fee2e2;
-}
-
-.btn-acao.excluir:hover svg {
-    color: #ef4444;
-}
-
-.btn-table-action {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-table-action.primary {
-    background: #dbeafe;
-    color: #1e40af;
-}
-
-.btn-table-action.primary:hover {
-    background: #3b82f6;
-    color: #fff;
-}
-
-.btn-table-action.secondary {
-    background: #f3f4f6;
-    color: #4b5563;
-}
-
-.btn-table-action.secondary:hover {
-    background: #e5e7eb;
-}
-
-/* ============================================
-   CARDS DE USUÁRIOS (MANTÉM ESTILO ORIGINAL)
-   ============================================ */
-
-.cards-grid-usuarios {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 24px;
-}
-
-.card-adm-usuario {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
-    position: relative;
-}
-
-.card-adm-usuario:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-
-.img-usuario {
-    width: 100%;
-    height: 180px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.img-usuario .image-perfil {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.image-actions {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    gap: 8px;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.card-adm-usuario:hover .image-actions {
-    opacity: 1;
-}
-
-.btn-icon {
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    backdrop-filter: blur(10px);
-}
-
-.btn-icon.editar {
-    background: rgba(59, 130, 246, 0.9);
-    color: #fff;
-}
-
-.btn-icon.editar:hover {
-    background: #3b82f6;
-    transform: scale(1.1);
-}
-
-.btn-icon.delete {
-    background: rgba(239, 68, 68, 0.9);
-    color: #fff;
-}
-
-.btn-icon.delete:hover {
-    background: #ef4444;
-    transform: scale(1.1);
-}
-
-.card-body-adm {
-    padding: 20px;
-}
-
-.card-body-adm h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 4px 0;
-}
-
-.card-body-adm p {
-    font-size: 13px;
-    color: #6b7280;
-    margin: 0 0 12px 0;
-}
-
-.card-body-adm .info {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.card-body-adm .info span {
-    display: inline-flex;
-    padding: 4px 10px;
-    background: #f3f4f6;
-    color: #4b5563;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 6px;
-}
-
-/* ============================================
-   CARDS DE PENDENTES
-   ============================================ */
-
-.cards-grid-pendentes {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-    padding: 24px;
-}
-
-.card-pendente {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
-    overflow: hidden;
-    border-left: 4px solid #f59e0b;
-}
-
-.card-pendente:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-
-.card-body-pendentes {
-    padding: 20px;
-}
-
-.card-body-pendentes h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 8px 0;
-}
-
-.card-body-pendentes p {
-    font-size: 14px;
-    color: #6b7280;
-    margin: 0 0 12px 0;
-}
-
-.info-segundo {
-    margin-bottom: 12px;
-}
-
-.info-segundo span {
-    display: inline-flex;
-    padding: 4px 12px;
-    background: #fef3c7;
-    color: #92400e;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 20px;
-}
-
-.card-body-pendentes .info {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-}
-
-.card-body-pendentes .info span {
-    font-size: 13px;
-    color: #6b7280;
-}
-
-.acoes-pendentes {
-    display: flex;
-    gap: 8px;
-}
-
-.acoes-pendentes button {
-    flex: 1;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.acoes-pendentes button:first-child {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.acoes-pendentes button:first-child:hover {
-    background: #10b981;
-    color: #fff;
-}
-
-.acoes-pendentes button:last-child {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.acoes-pendentes button:last-child:hover {
-    background: #ef4444;
-    color: #fff;
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-@media (max-width: 1024px) {
-    .topbar-main {
-        padding: 16px 24px;
-    }
-    
-    .tabs-navigation {
-        padding: 0 24px;
-    }
-    
-    .content-main {
-        padding: 20px 24px;
-    }
-    
-    .cards-grid-usuarios {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-}
-
-@media (max-width: 768px) {
-    .section-header,
-    .section-header-historico {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-    
-    /* Tabelas em mobile viram cards */
-    .table-historico thead,
-    .table-ambientes thead,
-    .table-equipamentos thead {
-        display: none;
-    }
-    
-    .table-historico tbody,
-    .table-ambientes tbody,
-    .table-equipamentos tbody{
-        display: block;
-    }
-    
-    .table-historico tbody tr,
-    .table-ambientes tbody tr,
-    .table-equipamentos tbody tr {
-        display: block;
-        margin-bottom: 16px;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 16px;
-    }
-    
-    .table-historico tbody td,
-    .table-ambientes tbody td,
-    .table-equipamentos tbody td {
-        display: block;
-        padding: 8px 0;
-        border: none;
-    }
-    
-    .table-historico tbody td::before,
-    .table-ambientes tbody td::before,
-    .table-equipamentos tbody td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: #6b7280;
-        font-size: 12px;
-        display: block;
-        margin-bottom: 4px;
-    }
-    
-    .cards-grid-usuarios,
-    .cards-grid-pendentes {
-        grid-template-columns: 1fr;
-    }
-}
-    padding: 24px 32px;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
     display: block;
-}
-
-/* ============================================
-   SEÇÃO DE USUÁRIOS
-   ============================================ */
-
-.section-usuario {
-    background: transparent;
-    margin-bottom: 24px;
-}
-
-.section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.section-header h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0;
+    margin-top: 4px;
 }
 
 .btn-adicionar {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: #3b82f6;
-    color: #fff;
+    gap: 10px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #6C5CE7, #5B4CD8);
+    color: #FFFFFF;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.25);
 }
 
 .btn-adicionar:hover {
-    background: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    background: linear-gradient(135deg, #5B4CD8, #4A3DC7);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.35);
 }
 
 .btn-adicionar svg {
@@ -942,579 +252,143 @@
     height: 16px;
 }
 
-/* Grid de Cards de Usuários */
-.cards-grid-usuarios {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-.card-adm-usuario {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
-    position: relative;
-}
-
-.card-adm-usuario:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-
-.img-usuario {
-    width: 100%;
-    height: 180px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.img-usuario .image-perfil {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.image-actions {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    gap: 8px;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.card-adm-usuario:hover .image-actions {
-    opacity: 1;
-}
-
-.btn-icon {
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    backdrop-filter: blur(10px);
-}
-
-.btn-icon.editar {
-    background: rgba(59, 130, 246, 0.9);
-    color: #fff;
-}
-
-.btn-icon.editar:hover {
-    background: #3b82f6;
-    transform: scale(1.1);
-}
-
-.btn-icon.delete {
-    background: rgba(239, 68, 68, 0.9);
-    color: #fff;
-}
-
-.btn-icon.delete:hover {
-    background: #ef4444;
-    transform: scale(1.1);
-}
-
-.card-body-adm {
-    padding: 20px;
-}
-
-.card-body-adm h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 4px 0;
-}
-
-.card-body-adm p {
-    font-size: 13px;
-    color: #6b7280;
-    margin: 0 0 12px 0;
-}
-
-.card-body-adm .info {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.card-body-adm .info span {
-    display: inline-flex;
-    padding: 4px 10px;
-    background: #f3f4f6;
-    color: #4b5563;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 6px;
-}
-
-/* ============================================
-   SEÇÃO DE PENDENTES
-   ============================================ */
-
-.section-pendentes {
-    background: transparent;
-}
-
-.cards-grid-pendentes {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-}
-
-.card-pendente {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
-    overflow: hidden;
-    border-left: 4px solid #f59e0b;
-}
-
-.card-pendente:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-
-.card-body-pendentes {
-    padding: 20px;
-}
-
-.card-body-pendentes h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 8px 0;
-}
-
-.card-body-pendentes p {
-    font-size: 14px;
-    color: #6b7280;
-    margin: 0 0 12px 0;
-}
-
-.info-segundo {
-    margin-bottom: 12px;
-}
-
-.info-segundo span {
-    display: inline-flex;
-    padding: 4px 12px;
-    background: #fef3c7;
-    color: #92400e;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 20px;
-}
-
-.card-body-pendentes .info {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-}
-
-.card-body-pendentes .info span {
-    font-size: 13px;
-    color: #6b7280;
-}
-
-.acoes-pendentes {
-    display: flex;
-    gap: 8px;
-}
-
-.acoes-pendentes button {
-    flex: 1;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.acoes-pendentes button:first-child {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.acoes-pendentes button:first-child:hover {
-    background: #10b981;
-    color: #fff;
-}
-
-.acoes-pendentes button:last-child {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.acoes-pendentes button:last-child:hover {
-    background: #ef4444;
-    color: #fff;
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-@media (max-width: 1024px) {
-    .topbar-main {
-        flex-wrap: wrap;
-        padding: 16px 24px;
-    }
-    
-    .topbar-search {
-        order: 3;
-        width: 100%;
-        max-width: 100%;
-        margin: 12px 0 0 0;
-    }
-    
-    .tabs-navigation {
-        padding: 0 24px;
-        gap: 24px;
-    }
-    
-    .content-main {
-        padding: 20px 24px;
-    }
-    
-    .cards-grid-usuarios {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-}
-
-@media (max-width: 768px) {
-    .tabs-navigation {
-        gap: 16px;
-        overflow-x: auto;
-        scrollbar-width: none;
-    }
-    
-    .tabs-navigation::-webkit-scrollbar {
-        display: none;
-    }
-    
-    .tab-item {
-        white-space: nowrap;
-        font-size: 13px;
-    }
-    
-    .cards-grid-usuarios,
-    .cards-grid-pendentes {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ============================================
-   PAINEL ADMINISTRATIVO - SISTEMA DE ABAS
-   ============================================ */
-
-.adm-panel {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: #f9fafb;
-}
-
-/* ============================================
-   TOPBAR COM NAVEGAÇÃO
-   ============================================ */
-
-.topbar {
-    background: #fff;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.topbar-main {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 32px;
-    border-bottom: 1px solid #f3f4f6;
-}
-
-.topbar-main h2 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0;
-}
-
-/* ============================================
-   SISTEMA DE ABAS (TABS)
-   ============================================ */
-
-.tabs-navigation {
-    display: flex;
-    gap: 32px;
-    padding: 0 32px;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-
-.tabs-navigation::-webkit-scrollbar {
-    display: none;
-}
-
-.tab-item {
-    padding: 14px 0;
-    font-size: 14px;
-    font-weight: 500;
-    color: #6b7280;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-}
-
-.tab-item:hover {
-    color: #374151;
-}
-
-.tab-item.active {
-    color: #3b82f6;
-    border-bottom-color: #3b82f6;
-}
-
-.tab-item .tab-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 6px;
-    margin-left: 8px;
-    background: #e5e7eb;
-    color: #6b7280;
-    font-size: 11px;
-    font-weight: 600;
-    border-radius: 10px;
-}
-
-.tab-item.active .tab-badge {
-    background: #dbeafe;
-    color: #3b82f6;
-}
-
-/* ============================================
-   CONTEÚDO DAS ABAS
-   ============================================ */
-
-.content-wrapper {
-    flex: 1;
-    overflow-y: auto;
-}
-
-.content-main {
-    padding: 24px 32px;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-/* ============================================
-   SEÇÕES GERAIS
-   ============================================ */
-
-.section,
-.section-usuario,
-.section-pendentes {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin-bottom: 24px;
-}
-
-.section-header,
-.section-header-historico {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 28px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.section-header h2,
-.section-header-historico h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0;
-}
-
-.section-header-historico span {
-    font-size: 14px;
-    color: #6b7280;
-    font-weight: 400;
-}
-
-.btn-adicionar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: #3b82f6;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-adicionar:hover {
-    background: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-/* ============================================
+/* ======================================================
    TABELAS GERAIS
-   ============================================ */
-
-.table-historico,
+====================================================== */
 .table-ambientes,
 .table-equipamentos,
-.table-eventos {
+.table-eventos,
+.table-historico {
     width: 100%;
     border-collapse: collapse;
 }
 
-.table-historico thead,
 .table-ambientes thead,
 .table-equipamentos thead,
-.table-eventos thead {
-    background: #f9fafb;
-    border-bottom: 1px solid #e5e7eb;
+.table-eventos thead,
+.table-historico thead {
+    background: linear-gradient(135deg, #F8F9FA 0%, #F3F4F6 100%);
+    border-bottom: 2px solid #E5E7EB;
 }
 
-.table-historico thead th,
 .table-ambientes thead th,
 .table-equipamentos thead th,
-.table-eventos thead th {
-    padding: 12px 24px;
+.table-eventos thead th,
+.table-historico thead th {
+    padding: 16px 24px;
     text-align: left;
     font-size: 12px;
-    font-weight: 600;
-    color: #6b7280;
+    font-weight: 700;
+    color: #6C5CE7;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
-.table-historico tbody tr,
 .table-ambientes tbody tr,
 .table-equipamentos tbody tr,
-.table-eventos tbody tr {
-    border-bottom: 1px solid #f3f4f6;
-    transition: background-color 0.2s;
+.table-eventos tbody tr,
+.table-historico tbody tr {
+    border-bottom: 1px solid #F3F4F6;
+    transition: all 0.2s ease;
 }
 
-.table-historico tbody tr:hover,
 .table-ambientes tbody tr:hover,
 .table-equipamentos tbody tr:hover,
-.table-eventos tbody tr:hover {
-    background: #f9fafb;
+.table-eventos tbody tr:hover,
+.table-historico tbody tr:hover {
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.03), rgba(91, 76, 216, 0.05));
+    transform: translateX(2px);
 }
 
-.table-historico tbody td,
+.table-ambientes tbody tr:last-child,
+.table-equipamentos tbody tr:last-child,
+.table-eventos tbody tr:last-child,
+.table-historico tbody tr:last-child {
+    border-bottom: none;
+}
+
 .table-ambientes tbody td,
 .table-equipamentos tbody td,
-.table-eventos tbody td {
-    padding: 16px 24px;
+.table-eventos tbody td,
+.table-historico tbody td {
+    padding: 20px 24px;
     font-size: 14px;
-    color: #374151;
+    color: #1F1F1F;
+    vertical-align: middle;
 }
 
-/* ============================================
-   CÉLULAS COM IMAGEM E NOME
-   ============================================ */
-
-.td-nome,
+/* ======================================================
+   CÉLULAS COM IMAGENS E INFO
+====================================================== */
 .td-ambiente,
 .td-equipamento,
-.td-evento {
+.td-evento,
+.td-nome {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
-.td-imagem {
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
+.td-imagem,
+.ambiente-imagem,
+.equipamentos-imagem {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
     object-fit: cover;
     flex-shrink: 0;
+    border: 2px solid #F3F4F6;
 }
 
 .td-imagem-user {
     border-radius: 50%;
-    border: 2px solid #e5e7eb;
+    border: 3px solid #6C5CE7;
+    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
+}
+
+.ambiente-imagem,
+.equipamentos-imagem {
+    width: 80px;
+    height: 80px;
 }
 
 .td-info h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 2px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin: 0 0 4px 0;
 }
 
 .td-info p,
 .td-info span {
     font-size: 13px;
     color: #6b7280;
-    margin: 0;
+    line-height: 1.4;
 }
 
 .icone-history {
-    width: 40px;
-    height: 40px;
-    background: #f3f4f6;
-    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    border: 2px solid #6C5CE7;
 }
 
 .icone-history svg {
-    width: 20px;
-    height: 20px;
-    color: #6b7280;
+    width: 22px;
+    height: 22px;
+    color: #6C5CE7;
 }
 
 .nome-info h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 2px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin: 0 0 3px 0;
 }
 
 .nome-info span {
@@ -1522,591 +396,413 @@
     color: #6b7280;
 }
 
-/* ============================================
+/* ======================================================
    BADGES E TAGS
-   ============================================ */
-
+====================================================== */
 .status-badge {
     display: inline-flex;
     align-items: center;
-    padding: 4px 12px;
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 .status-badge::before {
     content: '';
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
 }
 
-.status-badge.approved,
-.status-badge.disponivel {
-    background: #d1fae5;
+.status-badge.approved {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
     color: #065f46;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
 }
 
-.status-badge.approved::before,
-.status-badge.disponivel::before {
+.status-badge.approved::before {
     background: #10b981;
 }
 
 .status-badge.pending {
-    background: #fef3c7;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
     color: #92400e;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
 }
 
 .status-badge.pending::before {
     background: #f59e0b;
 }
 
-.status-badge.cancelled,
-.status-badge.indisponivel {
-    background: #fee2e2;
+.status-badge.cancelled {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
     color: #991b1b;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
 }
 
-.status-badge.cancelled::before,
-.status-badge.indisponivel::before {
+.status-badge.cancelled::before {
     background: #ef4444;
 }
 
-.status-badge.active,
-.status-badge.manutencao {
-    background: #dbeafe;
-    color: #1e40af;
+.status-badge.disponivel,
+.status-badge.active {
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    color: #6C5CE7;
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.2);
 }
 
-.status-badge.active::before,
-.status-badge.manutencao::before {
-    background: #3b82f6;
+.status-badge.disponivel::before,
+.status-badge.active::before {
+    background: #6C5CE7;
+}
+
+.status-badge.manutencao,
+.status-badge.indisponivel {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #991b1b;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
+.status-badge.manutencao::before,
+.status-badge.indisponivel::before {
+    background: #ef4444;
 }
 
 .tipo-badge,
 .categoria-badge {
     display: inline-flex;
-    padding: 4px 10px;
-    border-radius: 6px;
+    padding: 6px 14px;
+    border-radius: 8px;
     font-size: 12px;
-    font-weight: 500;
-    background: #f3f4f6;
-    color: #4b5563;
+    font-weight: 600;
+    background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+    color: #1F1F1F;
+    border: 1px solid #D1D5DB;
 }
 
-/* ============================================
-   INFORMAÇÕES ADICIONAIS
-   ============================================ */
+.badge-admin {
+    background: linear-gradient(135deg, #6C5CE7, #5B4CD8);
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.25);
+}
 
+.badge-user {
+    background: linear-gradient(135deg, #E5E7EB, #D1D5DB);
+    color: #1F1F1F;
+    border: none;
+}
+
+/* ======================================================
+   INFORMAÇÕES ADICIONAIS
+====================================================== */
 .td-horario,
 .td-data,
 .td-capacidade,
 .td-localizacao {
     color: #6b7280;
     font-size: 13px;
-    white-space: nowrap;
+    font-weight: 500;
 }
 
-.td-recursos {
+.ambiente-capacidade,
+.td-capacidade {
+    font-weight: 600;
+    color: #1F1F1F;
+}
+
+.td-recursos,
+.recursos,
+.recursos-equip {
     font-size: 13px;
     color: #6b7280;
 }
 
-.td-recursos-list {
+.recursos ul,
+.recursos-equip ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 6px;
 }
 
-.recurso-tag {
-    padding: 2px 8px;
-    background: #f3f4f6;
-    border-radius: 4px;
+.recursos li,
+.recursos-equip li {
+    padding: 4px 10px;
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    border-radius: 6px;
     font-size: 11px;
-    color: #6b7280;
+    font-weight: 600;
+    color: #6C5CE7;
+    border: 1px solid rgba(108, 92, 231, 0.2);
 }
 
-/* ============================================
+/* ======================================================
    AÇÕES
-   ============================================ */
-
+====================================================== */
 .td-acoes {
     display: flex;
     gap: 8px;
     justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .btn-acao {
-    width: 32px;
-    height: 32px;
+    width: 38px;
+    height: 38px;
     border: none;
     background: transparent;
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
 }
 
 .btn-acao:hover {
-    background: #f3f4f6;
+    background: #EFF6FF;
+    transform: scale(1.1);
 }
 
 .btn-acao svg {
-    width: 16px;
-    height: 16px;
-    color: #6b7280;
+    width: 18px;
+    height: 18px;
+    color: #6C5CE7;
 }
 
 .btn-acao.editar:hover {
-    background: #dbeafe;
+    background: #EFF6FF;
 }
 
-.btn-acao.editar:hover svg {
-    color: #3b82f6;
+.btn-acao.editar svg {
+    color: #6C5CE7;
 }
 
 .btn-acao.excluir:hover {
-    background: #fee2e2;
+    background: #FEE2E2;
 }
 
-.btn-acao.excluir:hover svg {
-    color: #ef4444;
+.btn-acao.excluir svg {
+    color: #EF4444;
 }
 
 .btn-table-action {
-    padding: 6px 12px;
+    padding: 8px 16px;
     border: none;
-    border-radius: 6px;
+    border-radius: 10px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .btn-table-action.primary {
-    background: #dbeafe;
-    color: #1e40af;
+    background: linear-gradient(135deg, #6C5CE7, #5B4CD8);
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.25);
 }
 
 .btn-table-action.primary:hover {
-    background: #3b82f6;
-    color: #fff;
+    background: linear-gradient(135deg, #5B4CD8, #4A3DC7);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.35);
 }
 
 .btn-table-action.secondary {
-    background: #f3f4f6;
-    color: #4b5563;
+    background: #F3F4F6;
+    color: #6b7280;
+    border: 1px solid #E5E7EB;
 }
 
 .btn-table-action.secondary:hover {
-    background: #e5e7eb;
+    background: #E5E7EB;
 }
 
-/* ============================================
-   CARDS DE USUÁRIOS (MANTÉM ESTILO ORIGINAL)
-   ============================================ */
-
-.cards-grid-usuarios {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 24px;
-}
-
-.card-adm-usuario {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
-    position: relative;
-}
-
-.card-adm-usuario:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-
-.img-usuario {
-    width: 100%;
-    height: 180px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.img-usuario .image-perfil {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.image-actions {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    gap: 8px;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.card-adm-usuario:hover .image-actions {
-    opacity: 1;
-}
-
-.btn-icon {
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    backdrop-filter: blur(10px);
-}
-
-.btn-icon.editar {
-    background: rgba(59, 130, 246, 0.9);
-    color: #fff;
-}
-
-.btn-icon.editar:hover {
-    background: #3b82f6;
-    transform: scale(1.1);
-}
-
-.btn-icon.delete {
-    background: rgba(239, 68, 68, 0.9);
-    color: #fff;
-}
-
-.btn-icon.delete:hover {
-    background: #ef4444;
-    transform: scale(1.1);
-}
-
-.card-body-adm {
-    padding: 20px;
-}
-
-.card-body-adm h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 4px 0;
-}
-
-.card-body-adm p {
-    font-size: 13px;
-    color: #6b7280;
-    margin: 0 0 12px 0;
-}
-
-.card-body-adm .info {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.card-body-adm .info span {
-    display: inline-flex;
-    padding: 4px 10px;
-    background: #f3f4f6;
-    color: #4b5563;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 6px;
-}
-
-/* ============================================
-   CARDS DE PENDENTES
-   ============================================ */
-
-.cards-grid-pendentes {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-    padding: 24px;
-}
-
-.card-pendente {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
-    overflow: hidden;
-    border-left: 4px solid #f59e0b;
-}
-
-.card-pendente:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-
-.card-body-pendentes {
-    padding: 20px;
-}
-
-.card-body-pendentes h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 8px 0;
-}
-
-.card-body-pendentes p {
-    font-size: 14px;
-    color: #6b7280;
-    margin: 0 0 12px 0;
-}
-
-.info-segundo {
-    margin-bottom: 12px;
-}
-
-.info-segundo span {
-    display: inline-flex;
-    padding: 4px 12px;
-    background: #fef3c7;
-    color: #92400e;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 20px;
-}
-
-.card-body-pendentes .info {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-}
-
-.card-body-pendentes .info span {
-    font-size: 13px;
-    color: #6b7280;
-}
-
-.acoes-pendentes {
-    display: flex;
-    gap: 8px;
-}
-
-.acoes-pendentes button {
-    flex: 1;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.acoes-pendentes button:first-child {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.acoes-pendentes button:first-child:hover {
-    background: #10b981;
-    color: #fff;
-}
-
-.acoes-pendentes button:last-child {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.acoes-pendentes button:last-child:hover {
-    background: #ef4444;
-    color: #fff;
-}
-
-/* ============================================
-   TABELA DE EVENTOS - ESTILOS ESPECÍFICOS
-   ============================================ */
-
-.table-eventos tbody tr.event-card {
-    position: relative;
-}
-
-.table-eventos .td-evento {
-    min-width: 250px;
-}
-
-.table-eventos .td-evento .td-info h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 4px 0;
-}
-
-.table-eventos .td-evento .td-info p {
-    font-size: 13px;
-    color: #6b7280;
-    line-height: 1.4;
-}
-
-.table-eventos .td-horario {
-    min-width: 140px;
-    line-height: 1.6;
-}
-
-.table-eventos .td-capacidade {
-    white-space: nowrap;
-    font-weight: 500;
-}
-
-/* Badge de status para eventos */
-.table-eventos .status-badge {
-    min-width: 85px;
-    justify-content: center;
-}
-
-/* Botões na tabela de eventos */
-.table-eventos .td-acoes {
-    gap: 6px;
-}
-
-.table-eventos .btn-table-action {
-    min-width: 90px;
-}
-
-.table-eventos .btn-table-action:disabled {
+.btn-table-action:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    transform: none !important;
 }
 
-.table-eventos .btn-table-action.primary:disabled {
-    background: #e5e7eb;
-    color: #9ca3af;
+/* Botões específicos para aprovar/rejeitar */
+.btn-table-action[style*="background: #d1fae5"] {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0) !important;
+    color: #065f46 !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+    border: none;
 }
 
-.table-eventos .btn-table-action.secondary:disabled {
-    background: #f3f4f6;
-    color: #9ca3af;
+.btn-table-action[style*="background: #d1fae5"]:hover {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: #FFFFFF !important;
+    transform: translateY(-2px);
 }
 
-/* Elementos ocultos para o modal */
-.eventos-imagem,
-.event-titulo,
-.event-data,
-.event-hora,
-.event-local,
-.event-desc,
-.event-instrutor,
-.event-capacidade {
-    display: none !important;
-    visibility: hidden;
-    position: absolute;
-    pointer-events: none;
+.btn-table-action[style*="background: #fee2e2"] {
+    background: linear-gradient(135deg, #fee2e2, #fecaca) !important;
+    color: #991b1b !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+    border: none;
 }
 
-/* ============================================
-   RESPONSIVE - EVENTOS
-   ============================================ */
-
-@media (max-width: 768px) {
-    .table-eventos .td-evento {
-        min-width: auto;
-    }
-    
-    .table-eventos .td-acoes {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .table-eventos .btn-table-action,
-    .table-eventos .btn-acao {
-        width: 100%;
-    }
+.btn-table-action[style*="background: #fee2e2"]:hover {
+    background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+    color: #FFFFFF !important;
+    transform: translateY(-2px);
 }
 
+/* ======================================================
+   STATUS DE EQUIPAMENTO (BOTÕES)
+====================================================== */
+.equipamento-status button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.equipamento-status button:not(:disabled) {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+.equipamento-status button:disabled {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #991b1b;
+    cursor: not-allowed;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
+/* ======================================================
+   EMPTY STATE
+====================================================== */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.empty-state svg {
+    width: 80px;
+    height: 80px;
+    color: #D1D5DB;
+    margin: 0 auto 20px;
+}
+
+.empty-state h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
 @media (max-width: 1024px) {
-    .topbar-main {
-        padding: 16px 24px;
-    }
-    
-    .tabs-navigation {
-        padding: 0 24px;
-    }
-    
     .content-main {
-        padding: 20px 24px;
+        padding: 24px;
     }
-    
-    .cards-grid-usuarios {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-}
 
-@media (max-width: 768px) {
     .section-header,
     .section-header-historico {
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: 16px;
     }
-    
+}
+
+@media (max-width: 768px) {
+    .topbar-main {
+        flex-direction: column;
+        gap: 16px;
+        padding: 20px;
+    }
+
+    .tabs-navigation {
+        padding: 0 20px;
+    }
+
+    .content-main {
+        padding: 20px;
+    }
+
     /* Tabelas em mobile viram cards */
-    .table-historico thead,
     .table-ambientes thead,
     .table-equipamentos thead,
-    .table-eventos thead {
+    .table-eventos thead,
+    .table-historico thead {
         display: none;
     }
-    
-    .table-historico tbody,
+
     .table-ambientes tbody,
     .table-equipamentos tbody,
-    .table-eventos tbody {
+    .table-eventos tbody,
+    .table-historico tbody {
         display: block;
     }
-    
-    .table-historico tbody tr,
+
     .table-ambientes tbody tr,
     .table-equipamentos tbody tr,
-    .table-eventos tbody tr {
+    .table-eventos tbody tr,
+    .table-historico tbody tr {
         display: block;
-        margin-bottom: 16px;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 16px;
+        margin-bottom: 20px;
+        border: 2px solid #F3F4F6;
+        border-radius: 16px;
+        padding: 20px;
+        background: #FFFFFF;
     }
-    
-    .table-historico tbody td,
+
     .table-ambientes tbody td,
     .table-equipamentos tbody td,
-    .table-eventos tbody td {
+    .table-eventos tbody td,
+    .table-historico tbody td {
         display: block;
-        padding: 8px 0;
+        padding: 12px 0;
         border: none;
+        text-align: left !important;
     }
-    
-    .table-historico tbody td::before,
+
     .table-ambientes tbody td::before,
     .table-equipamentos tbody td::before,
-    .table-eventos tbody td::before {
+    .table-eventos tbody td::before,
+    .table-historico tbody td::before {
         content: attr(data-label);
-        font-weight: 600;
-        color: #6b7280;
+        font-weight: 700;
+        color: #6C5CE7;
         font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
         display: block;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
     }
-    
-    .cards-grid-usuarios,
-    .cards-grid-pendentes {
-        grid-template-columns: 1fr;
+
+    .td-acoes {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .btn-table-action {
+        flex: 1;
+        min-width: 120px;
     }
 }

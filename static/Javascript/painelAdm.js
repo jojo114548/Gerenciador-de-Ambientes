@@ -38,3 +38,22 @@ function deletarUsuario(id) {
     });
 }
 
+function resetarSenhaPadrao(usuarioId) {
+  if (!confirm("Deseja resetar a senha para o padrão (User + últimos 4 dígitos do CPF)?")) {
+    return;
+  }
+
+  fetch(`/usuarios/${usuarioId}/senha`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({}) // 👈 envia vazio
+  })
+    .then(res => res.json())
+    .then(res => {
+      if (res.erro) return alert(res.erro);
+
+      alert(res.mensagem || "Senha resetada com sucesso");
+    })
+    .catch(() => alert("Erro ao resetar senha"));
+}

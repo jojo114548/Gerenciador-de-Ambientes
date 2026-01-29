@@ -17,36 +17,46 @@ painelAdm_bp = Blueprint("painelAdm", __name__)
 @painelAdm_bp.route('/painelAdm')
 @jwt_required()
 def painelAdm():
-    logado = get_jwt()
-    id_logado = get_jwt_identity()
     
-    # Listar dados
-    usuarios = UsuarioService.listar()
-    pendentes_ambientes = PendenteService.listar()
-    pendentes_equipamentos = PendenteServiceEquip.listar()
-    ambientes = AmbientesService.listar()
-    equipamentos = EquipamentoService.listar()
-    historico = HistoricoRepository.listar_todos()
-    historico_equipamento = HistoricoEquipamentoRepository.listar()
-    
-    # Listar eventos com verificação de inscrição
-    evento = EventosRepository.listar()
-    for event in evento:
-        event["inscrito"] = EventosRepository.usuario_ja_inscrito(
-            event["id"],
-            id_logado
+    try:  
+        id_logado = get_jwt_identity()
+        logado = get_jwt()
+
+        if id != id_logado and logado["role"] != "admin":
+         return jsonify({"erro": "Você não tem permissão para deletar este usuário."}), 403
+        
+        # Listar dados
+        usuarios = UsuarioService.listar()
+        pendentes_ambientes = PendenteService.listar()
+        pendentes_equipamentos = PendenteServiceEquip.listar()
+        ambientes = AmbientesService.listar()
+        equipamentos = EquipamentoService.listar()
+        historico = HistoricoRepository.listar_todos()
+        historico_equipamento = HistoricoEquipamentoRepository.listar()
+        
+        # Listar eventos com verificação de inscrição
+        evento = EventosRepository.listar()
+        for event in evento:
+            event["inscrito"] = EventosRepository.usuario_ja_inscrito(
+                event["id"],
+                id_logado
+            )
+        
+        return render_template(
+            'painelAdm.html',
+            pendentes=pendentes_ambientes,
+            pendentes_equipamentos=pendentes_equipamentos,
+            id_logado=id_logado,
+            logado=logado,
+            usuarios=usuarios,
+            ambientes=ambientes,
+            equipamentos=equipamentos,
+            evento=evento,
+            historico=historico,
+            historico_equip=historico_equipamento
         )
     
-    return render_template(
-        'painelAdm.html',
-        pendentes=pendentes_ambientes,
-        pendentes_equipamentos=pendentes_equipamentos,
-        id_logado=id_logado,
-        logado=logado,
-        usuarios=usuarios,
-        ambientes=ambientes,
-        equipamentos=equipamentos,
-        evento=evento,
-        historico=historico,
-        historico_equip=historico_equipamento
-    )
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": "Erro ao alterar senha"}), 500

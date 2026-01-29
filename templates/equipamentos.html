@@ -30,12 +30,8 @@
         <!-- Topbar -->
         <div class="topbar">
            
-            <div class="topbar-search">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-                <input type="text" placeholder="Buscar ambientes, equipamentos ou eventos...">
+            <div >
+            
             </div>
 
             <div class="topbar-actions">
@@ -63,7 +59,7 @@
 
 <section class="section">
   <div class="section-header">
-    <h2>Equipamentos Disponíveis</h2>
+    <h2>Equipamentos </h2>
   </div>
 
   <div class="cards-grid">
@@ -83,7 +79,7 @@
         <div class="info">
           <span class="equipamento-categoria">{{ equipamento.categoria }}</span>
           <span class="equipamento-modelo">{{ equipamento.modelo }}</span>
-
+            <span class="equipamento-marca" style="display:none">{{ equipamento.marca }}</span>
           <span class="equipamento-quantidade">
             Quantidade disponível:
             <strong>{{ equipamento.quantidade_disponivel }}</strong>
@@ -104,7 +100,7 @@
             Ver Detalhes
           </button>
 
-          {% if equipamento.quantidade_disponivel > 0 %}
+         {% if equipamento.quantidade_disponivel > 0 and equipamento.status == 'Disponivel' %}
           <button class="btn-reserve"
                   onclick="abrirModalAgendamentoEquipamento(
                     '{{ equipamento.id }}',
@@ -122,11 +118,15 @@
         <!-- Recursos -->
         <div class="recursos-equip" style="display:none;">
           <h4>Recursos:</h4>
-          <ul>
-            {% for recurso in equipamento.specifications %}
-              <li>{{ recurso }}</li>
-            {% endfor %}
-          </ul>
+         {% if equipamento.especificacoes %}
+  <ul>
+    {% for recurso in equipamento.especificacoes %}
+      <li>{{ recurso }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Sem especificacoes</p>
+{% endif %}
         </div>
 
       </div>
@@ -147,6 +147,7 @@
   {% include 'modais/modal_equipamento_agendamento.html' %}  
   {% include 'modais/modal_editar_equipamento.html' %}    
   {% include 'modais/modal_cadastrar_equipamento.html' %}
+  {%include 'config.html' %}
   
 
 <script src="/static/Javascript/equipamentos.js"></script>

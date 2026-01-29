@@ -25,5 +25,20 @@ class HistoricoEquipamentoService:
         return HistoricoEquipamentoRepository.inserir(dados)
 
     @staticmethod
-    def cancelar_historico(historico_equipamentos_id, user_id):
-        HistoricoEquipamentoRepository.cancelar(historico_equipamentos_id, user_id)
+    def cancelar_historico(historicoEquip_id, user_id):
+        historico = HistoricoEquipamentoRepository.buscar_por_id(historicoEquip_id)
+
+        if not historico:
+            raise ValueError("Histórico não encontrado")
+
+        if historico["user_id"] != user_id:
+            raise PermissionError("Sem permissão")
+
+        HistoricoEquipamentoRepository.atualizar_status_por_id(
+            historicoEquip_id,
+            "Cancelado"
+        )
+
+    @staticmethod
+    def atualizar_concluidos():
+        return HistoricoEquipamentoRepository.marcar_concluidos()

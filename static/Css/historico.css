@@ -1,24 +1,30 @@
 /* ============================================
-   HISTÓRICO - ESTILO TABELA ADMINISTRATIVA
+   HISTÓRICO - ESTILO TABELA FINGOALS
+   Paleta: #6C5CE7 (Roxo Principal)
    ============================================ */
 
 .section {
-    background: #fff;
-    border-radius: 12px;
+    background: #FFFFFF;
+    border-radius: 20px;
     padding: 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
 }
 
+
+
 .section-header-historico {
-    padding: 24px 28px;
-    border-bottom: 1px solid #e5e7eb;
+    padding: 28px 32px;
+    border-bottom: 1px solid #F3F4F6;
+    background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
 }
 
 .section-header-historico h2 {
-    font-size: 23px;
+    font-size: 24px;
     font-weight: 700;
-    color: #1e1b4b;
-    margin: 0 0 4px 0;
+    color: #1F1F1F;
+    margin: 0 0 6px 0;
 }
 
 .section-header-historico span {
@@ -42,27 +48,28 @@
 }
 
 .table-historico thead {
-    background: #f9fafb;
-    border-bottom: 1px solid #e5e7eb;
+    background: linear-gradient(135deg, #F8F9FA 0%, #F3F4F6 100%);
+    border-bottom: 2px solid #E5E7EB;
 }
 
 .table-historico thead th {
-    padding: 12px 24px;
+    padding: 14px 24px;
     text-align: left;
     font-size: 12px;
-    font-weight: 600;
-    color: #6b7280;
+    font-weight: 700;
+    color: #6C5CE7;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 .table-historico tbody tr {
-    border-bottom: 1px solid #f3f4f6;
-    transition: background-color 0.2s;
+    border-bottom: 1px solid #F3F4F6;
+    transition: all 0.2s ease;
 }
 
 .table-historico tbody tr:hover {
-    background: #f9fafb;
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.03), rgba(91, 76, 216, 0.05));
+    transform: translateX(2px);
 }
 
 .table-historico tbody tr:last-child {
@@ -70,9 +77,9 @@
 }
 
 .table-historico tbody td {
-    padding: 16px 24px;
+    padding: 18px 24px;
     font-size: 14px;
-    color: #374151;
+    color: #1F1F1F;
 }
 
 /* ============================================
@@ -83,31 +90,32 @@
 .td-nome {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
 .td-nome .icone-history {
-    width: 40px;
-    height: 40px;
-    background: #f3f4f6;
-    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    border: 2px solid #6C5CE7;
 }
 
 .td-nome .icone-history svg {
     width: 20px;
     height: 20px;
-    color: #6b7280;
+    color: #6C5CE7;
 }
 
 .td-nome .nome-info h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 2px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin: 0 0 3px 0;
 }
 
 .td-nome .nome-info span {
@@ -120,23 +128,26 @@
 .status-badge {
     display: inline-flex;
     align-items: center;
-    padding: 4px 12px;
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 .status-badge::before {
     content: '';
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
 }
 
 .status-badge.approved {
-    background: #d1fae5;
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
     color: #065f46;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
 }
 
 .status-badge.approved::before {
@@ -144,17 +155,20 @@
 }
 
 .status-badge.pending {
-    background: #fef3c7;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
     color: #92400e;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
 }
 
 .status-badge.pending::before {
     background: #f59e0b;
 }
 
-.status-badge.cancelled {
-    background: #fee2e2;
+.status-badge.cancelled,
+.status-cancelado {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
     color: #991b1b;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
 }
 
 .status-badge.cancelled::before {
@@ -162,29 +176,32 @@
 }
 
 .status-badge.active {
-    background: #dbeafe;
-    color: #1e40af;
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    color: #6C5CE7;
+    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.2);
 }
 
 .status-badge.active::before {
-    background: #3b82f6;
+    background: #6C5CE7;
 }
 
 /* Tipo Badge */
 .tipo-badge {
     display: inline-flex;
-    padding: 4px 10px;
-    border-radius: 6px;
+    padding: 5px 12px;
+    border-radius: 8px;
     font-size: 12px;
-    font-weight: 500;
-    background: #f3f4f6;
-    color: #4b5563;
+    font-weight: 600;
+    background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+    color: #1F1F1F;
+    border: 1px solid #D1D5DB;
 }
 
 /* Horário */
 .td-horario {
     color: #6b7280;
     font-size: 13px;
+    font-weight: 500;
     white-space: nowrap;
 }
 
@@ -192,36 +209,90 @@
 .td-data {
     color: #6b7280;
     font-size: 13px;
+    font-weight: 500;
 }
 
 /* Ações */
 .td-acoes {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     justify-content: flex-end;
+    align-items: center;
 }
 
 .btn-acao {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border: none;
     background: transparent;
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
 }
 
 .btn-acao:hover {
-    background: #f3f4f6;
+    background: #EFF6FF;
+    transform: scale(1.1);
 }
 
 .btn-acao svg {
-    width: 16px;
-    height: 16px;
-    color: #6b7280;
+    width: 18px;
+    height: 18px;
+    color: #6C5CE7;
+}
+
+.btn-acao.excluir:hover {
+    background: #FEE2E2;
+}
+
+.btn-acao.excluir svg {
+    color: #EF4444;
+}
+
+/* Botão Cancelar */
+.btn-cancelar {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-cancelar:hover {
+    background: linear-gradient(135deg, #DC2626, #B91C1C);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Status Cancelado */
+.status-cancelado {
+    color: #991b1b;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.status-cancelado::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ef4444;
 }
 
 /* ============================================
@@ -229,15 +300,18 @@
    ============================================ */
 
 .card-historico {
-    padding: 20px 24px;
-    border-bottom: 1px solid #f3f4f6;
+    padding: 22px 26px;
+    border-bottom: 1px solid #F3F4F6;
     display: flex;
-    gap: 16px;
-    transition: background-color 0.2s;
+    gap: 18px;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    margin: 0 12px;
 }
 
 .card-historico:hover {
-    background: #f9fafb;
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.03), rgba(91, 76, 216, 0.05));
+    transform: translateX(4px);
 }
 
 .card-historico:last-child {
@@ -245,20 +319,21 @@
 }
 
 .card-historico .icone-history {
-    width: 48px;
-    height: 48px;
-    background: #f3f4f6;
-    border-radius: 10px;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    border: 2px solid #6C5CE7;
 }
 
 .card-historico .icone-history svg {
-    width: 24px;
-    height: 24px;
-    color: #6b7280;
+    width: 26px;
+    height: 26px;
+    color: #6C5CE7;
 }
 
 .card-historico .card-body {
@@ -266,38 +341,133 @@
 }
 
 .card-historico .card-body h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin: 0 0 5px 0;
 }
 
 .card-historico .card-body > span {
     font-size: 13px;
     color: #6b7280;
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .card-historico .info {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 8px;
+    gap: 14px;
+    margin-bottom: 10px;
 }
 
 .card-historico .info span {
     font-size: 12px;
     color: #6b7280;
+    font-weight: 500;
 }
 
 .card-historico .date-history {
-    margin-top: 8px;
+    margin-top: 10px;
 }
 
 .card-historico .date-history span {
     font-size: 12px;
     color: #9ca3af;
+    font-weight: 500;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
+.historico-empty {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.historico-empty svg {
+    width: 80px;
+    height: 80px;
+    color: #D1D5DB;
+    margin: 0 auto 20px;
+}
+
+.historico-empty h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1F1F1F;
+    margin-bottom: 10px;
+}
+
+.historico-empty p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* ============================================
+   FILTROS E BUSCA
+   ============================================ */
+
+.historico-filtros {
+    padding: 20px 32px;
+    border-bottom: 1px solid #F3F4F6;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.filtro-select {
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 2px solid #E5E7EB;
+    background: #FFFFFF;
+    color: #1F1F1F;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filtro-select:focus {
+    border-color: #6C5CE7;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+}
+
+/* ============================================
+   PAGINAÇÃO
+   ============================================ */
+
+.historico-pagination {
+    padding: 24px 32px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination-btn {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #E5E7EB;
+    background: #FFFFFF;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F1F1F;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+    border-color: #6C5CE7;
+    color: #6C5CE7;
+    transform: translateY(-2px);
+}
+
+.pagination-btn.active {
+    background: linear-gradient(135deg, #6C5CE7, #5B4CD8);
+    color: #FFFFFF;
+    border-color: #6C5CE7;
 }
 
 /* ============================================
@@ -310,25 +480,29 @@
     }
     
     .card-historico {
-        padding: 16px 20px;
+        padding: 18px 20px;
+        margin: 0 8px;
     }
     
     .card-historico .icone-history {
-        width: 44px;
-        height: 44px;
+        width: 46px;
+        height: 46px;
     }
-}
 
-.btn-cancelar {
-    background-color: #c0392b;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    cursor: pointer;
-    border-radius: 4px;
-}
+    .table-historico thead th {
+        padding: 12px 16px;
+    }
 
-.status-cancelado {
-    color: #c0392b;
-    font-weight: bold;
+    .table-historico tbody td {
+        padding: 14px 16px;
+    }
+
+    .historico-filtros {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filtro-select {
+        width: 100%;
+    }
 }

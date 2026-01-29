@@ -27,9 +27,14 @@
       <button onclick="modalSeguranca()">
         <i class="fa-solid fa-lock"></i> Segurança
       </button>
-      <button onclick="privacidade()">
-        <i class="fa-solid fa-shield-halved"></i> Privacidade
+      <button onclick="ApagarConta()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+        Deletar conta
       </button>
+ 
     </div>
 
     <!-- ==================== CONTENT ==================== -->
@@ -45,7 +50,7 @@
 
         <!-- Avatar -->
         <div class="user-avatar" >
-          <img src="{{ user.image or '/static/imgs/default.png' }}"
+          <img src="{{ user.image or '/static/imgs/foto-perfil.png' }}"
                alt="Foto de perfil"
                class="image-perfil">
         </div>
@@ -130,7 +135,13 @@
 
       <!-- SEÇÃO: SEGURANÇA -->
       <div class="modal-seguranca" style="display: none;">
-  <form id="form-alterar-senha" onsubmit="alterarSenha(event)">
+     <form id="form-alterar-senha"data-user-id="{{ id_logado }}" onsubmit="alterarSenha(event)">
+    
+    <input type="password"
+     id="senha-atual" 
+     placeholder="Senha Atual" 
+     required>
+
     <input 
       type="password" 
       id="senha-nova" 
@@ -145,30 +156,27 @@
       minlength="6"
       required 
     />
-    
+ 
     <!-- ✅ Este botão APENAS altera a senha -->
     <button type="submit">Alterar Senha</button>
   </form>
 </div>
 
-      <!-- SEÇÃO: PRIVACIDADE -->
-      <div id="privacidade" class="modal-privacidade">
-        <h3>Privacidade</h3>
-        <p>Configure suas preferências</p>
 
-        <div class="section">
-          <div class="toggle">
-            <span>Mostrar Email</span>
-            <input type="checkbox" checked>
-          </div>
+<div class="modal-excluir" style="display: none;">
+        {% for user in usuarios %}
+        {% if user.id == id_logado %}
 
-          <div class="toggle">
-            <span>Permitir Mensagens</span>
-            <input type="checkbox" checked>
-          </div>
-        </div>
-      </div>
+        <h3>Ao excluir sua conta, todos os seus dados serão removidos permanentemente do sistema.
+         Essa ação não poderá ser desfeita e você será deslogado automaticamente.</h3>
 
+         <h3>Tem certeza de que deseja continuar?</h3>
+  <span>
+  <button onclick="excluirUsuario('{{user.id }}')">
+  Deletar Conta</button></span>
+{%endif%}
+{%endfor%}
+</div>
     </div>
     <!-- FIM CONTENT -->
 

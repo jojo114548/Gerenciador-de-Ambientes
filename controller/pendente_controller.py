@@ -14,20 +14,35 @@ pendente_bp = Blueprint("pendente", __name__)
 @pendente_bp.route('/pendentes/<int:pendente_id>/status', methods=['POST'])
 @jwt_required()
 def atualizar_status_pendente(pendente_id):
-    dados = request.get_json()
-    status = dados.get("status")
+    try:
+        dados = request.get_json()
+        status = dados.get("status")
 
-    PendenteService.atualizar_status(pendente_id, status)
+        PendenteService.atualizar_status(pendente_id, status)
 
-    return jsonify({"mensagem": "Status atualizado com sucesso"}), 200
+        return jsonify({"mensagem": "Status atualizado com sucesso"}), 200
+    
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    
 
 @pendente_bp.route('/pendentes-equipamentos/<int:pendente_id>/status', methods=['PUT'])
+@jwt_required()
 def atualizar_status_pendente_equipamento(pendente_id):
-    dados = request.get_json()
-    status = dados.get("status")
+    try:
+        dados = request.get_json()
+        status = dados.get("status")
 
-    PendenteServiceEquip.atualizar_status(pendente_id, status)
+        PendenteServiceEquip.atualizar_status(pendente_id, status)
 
-    return jsonify({"mensagem": "Status do equipamento atualizado com sucesso"}), 200
+        return jsonify({"mensagem": "Status do equipamento atualizado com sucesso"}), 200
+    
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    
 
 

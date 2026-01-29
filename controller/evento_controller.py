@@ -117,22 +117,24 @@ def criar_evento():
 @eventos_bp.route("/eventos/<id>", methods=["PUT"])
 @jwt_required()
 def atualizar_evento(id):
-
-    logado = get_jwt()
-    id_logado = get_jwt_identity()
-
-    if id != id_logado and logado["role"] != "admin":
-        return jsonify({"erro": "Você não tem permissão para editar este usuário."}), 403
-    
-    dados = request.get_json()
-    equipamentos = dados.pop("equipamentos", None)
-
     try:
+        logado = get_jwt()
+       
+
+        if  logado["role"] != "admin":
+            return jsonify({"erro": "Você não tem permissão para editar este usuário."}), 403
+        
+        dados = request.get_json()
+        equipamentos = dados.pop("equipamentos", None)
+
+        
         EventosService.atualizar(id, dados,equipamentos)
         return jsonify({"mensagem": "Evento atualizado com sucesso"}), 200
 
     except ValueError as e:
-        return jsonify({"erro": str(e)}), 404
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": "Erro ao alterar senha"}), 500
     
 
 @eventos_bp.route("/eventos/<id>", methods=["DELETE"])
@@ -141,12 +143,20 @@ def deletar_evento(id):
 
     
     try:
+        logado = get_jwt()
+       
+
+        if  logado["role"] != "admin":
+            return jsonify({"erro": "Você não tem permissão para editar este usuário."}), 403
+        
         EventosService.remover(id)
         
         return jsonify({"mensagem": "Evento excluído"}), 200
 
     except ValueError as e:
-        return jsonify({"erro": str(e)}), 404
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": "Erro ao alterar senha"}), 500
    
 
 @eventos_bp.route("/eventos/<evento_id>/inscrever", methods=["POST"])
@@ -168,65 +178,16 @@ def inscrever_evento(evento_id):
 def detalhes_evento(evento_id):
     """Retorna detalhes completos do evento incluindo equipamentos"""
     try:
+        
         evento = EventosService.buscar_detalhes(evento_id)
         if not evento:
             return jsonify({"erro": "Evento não encontrado"}), 404
         
         return jsonify(evento), 200
+    
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
 
-# APIs auxiliares para recursos
-@eventos_bp.route("/api/ambientes", methods=["GET"])
-@jwt_required()
-def listar_ambientes():
-    """Lista todos os ambientes disponíveis"""
-    ambientes = RecursosRepository.listar_ambientes()
-    return jsonify(ambientes), 200
 
-@eventos_bp.route("/api/equipamentos", methods=["GET"])
-@jwt_required()
-def listar_equipamentos():
-    """Lista todos os equipamentos disponíveis"""
-    equipamentos = RecursosRepository.listar_equipamentos()
-    return jsonify(equipamentos), 200
-
-@eventos_bp.route("/api/verificar-disponibilidade", methods=["POST"])
-@jwt_required()
-def verificar_disponibilidade():
-    """Verifica disponibilidade de ambiente e equipamentos"""
-    dados = request.get_json()
-    
-    ambiente_id = dados.get("ambiente_id")
-    data_evento = dados.get("data_evento")
-    hora_evento = dados.get("hora_evento")
-    equipamentos = dados.get("equipamentos", [])
-    
-    resultado = {
-        "ambiente_disponivel": False,
-        "equipamentos_disponiveis": True,
-        "mensagens": []
-    }
-    
-    # Verifica ambiente
-    if ambiente_id:
-        resultado["ambiente_disponivel"] = RecursosRepository.verificar_disponibilidade_ambiente(
-            ambiente_id, data_evento, hora_evento
-        )
-        if not resultado["ambiente_disponivel"]:
-            resultado["mensagens"].append("Ambiente não disponível neste horário")
-    
-    # Verifica equipamentos
-    for equip in equipamentos:
-        disponivel = RecursosRepository.verificar_disponibilidade_equipamento(
-            equip['equipamento_id'],
-            equip['quantidade'],
-            data_evento,
-            hora_evento
-        )
-        if not disponivel:
-            resultado["equipamentos_disponiveis"] = False
-            equipamento = RecursosRepository.buscar_equipamento_por_id(equip['equipamento_id'])
-            resultado["mensagens"].append(f"Equipamento '{equipamento['name']}' não disponível")
-    
-    return jsonify(resultado), 200

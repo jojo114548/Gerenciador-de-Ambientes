@@ -13,10 +13,27 @@ config_bp = Blueprint("config", __name__)
 @config_bp.route('/config')
 @jwt_required()
 def config():
-      
-    logado = get_jwt()
-    id_logado = get_jwt_identity()
-    usuarios = UsuarioService.listar()
-    pendentes_ambientes= PendenteService.listar()
-    pendentes_equipamentos=PendenteServiceEquip.listar()
-    return render_template('config.html', pendentes=pendentes_ambientes,pendentes_equipamentos=pendentes_equipamentos,id_logado=id_logado,logado=logado,usuarios=usuarios)
+    try:  
+        logado = get_jwt()
+        id_logado = get_jwt_identity()
+
+
+        if id != id_logado and logado["role"] != "admin":
+          return jsonify({"erro": "Você não tem permissão para deletar este usuário."}), 403
+        
+
+        usuarios = UsuarioService.listar()
+        pendentes_ambientes= PendenteService.listar()
+        pendentes_equipamentos=PendenteServiceEquip.listar()
+
+        return render_template('config.html', 
+        pendentes=pendentes_ambientes,
+        pendentes_equipamentos=pendentes_equipamentos,
+        id_logado=id_logado,
+        logado=logado,
+        usuarios=usuarios)
+    
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": "Erro ao alterar senha"}), 500

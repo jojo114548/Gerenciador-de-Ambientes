@@ -23,66 +23,98 @@ def ambientes():
 
 @ambientes_bp.route('/ambientes/<id>', methods=['POST'])
 def atualizar_ambiente(id):
-    imagem = request.files.get("image")
-    image_path = request.form.get("image_atual")
 
-    if imagem:
-        filename = f"{uuid.uuid4()}_{secure_filename(imagem.filename)}"
-        caminho = f"static/imgs/{filename}"
-        imagem.save(caminho)
-        image_path = f"/{caminho}"
+    try:
+       
+        logado = get_jwt()
 
-    dados = {
-        "id": id,
-        "name": request.form.get("name"),
-       "type": request.form.get("type") or "sala",
-        "capacidade": request.form.get("capacidade"),
-        "status": request.form.get("status") or "Disponivel",
-        "descricao": request.form.get("descricao"),
-        "localizacao": request.form.get("localizacao"),
-        "area": request.form.get("area"),
-        "image": image_path,
-        "recursos": request.form.getlist("recursos[]")
-    }
+        if  logado["role"] != "admin":
+         return jsonify({"erro": "Você não tem permissão para deletar este usuário."}), 403
+        
+        imagem = request.files.get("image")
+        image_path = request.form.get("image_atual")
 
-    AmbientesService.atualizar_ambiente(dados)
-    return jsonify({"mensagem": "Ambiente atualizado com sucesso"}), 200
+        if imagem:
+            filename = f"{uuid.uuid4()}_{secure_filename(imagem.filename)}"
+            caminho = f"static/imgs/{filename}"
+            imagem.save(caminho)
+            image_path = f"/{caminho}"
 
+        dados = {
+            "id": id,
+            "name": request.form.get("name"),
+        "type": request.form.get("type") or "sala",
+            "capacidade": request.form.get("capacidade"),
+            "status": request.form.get("status") or "Disponivel",
+            "descricao": request.form.get("descricao"),
+            "localizacao": request.form.get("localizacao"),
+            "area": request.form.get("area"),
+            "image": image_path,
+            "recursos": request.form.getlist("recursos[]")
+        }
+
+        AmbientesService.atualizar_ambiente(dados)
+        return jsonify({"mensagem": "Ambiente atualizado com sucesso"}), 200
+    
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": "Erro ao alterar senha"}), 500
 
 @ambientes_bp.route("/novo-ambiente", methods=['GET','POST'])
 def novo_ambiente():
+    try:
+        logado = get_jwt()
 
-    imagem = request.files.get("image")
-    image_path = None
+        if  logado["role"] != "admin":
+         return jsonify({"erro": "Você não tem permissão para deletar este usuário."}), 403
+        
+        imagem = request.files.get("image")
+        image_path = None
 
-    if imagem and imagem.filename != "":
-        os.makedirs("static/imgs", exist_ok=True)
+        if imagem and imagem.filename != "":
+            os.makedirs("static/imgs", exist_ok=True)
 
-        filename = f"{uuid.uuid4()}_{secure_filename(imagem.filename)}"
-        caminho = os.path.join("static/imgs", filename)
+            filename = f"{uuid.uuid4()}_{secure_filename(imagem.filename)}"
+            caminho = os.path.join("static/imgs", filename)
 
-        imagem.save(caminho)
-        image_path = f"/static/imgs/{filename}"
+            imagem.save(caminho)
+            image_path = f"/static/imgs/{filename}"
 
-    dados = {
-        "name": request.form.get("name"),
-        "type": request.form.get("type"),
-        "capacidade": int(request.form.get("capacidade")),
-        "status": request.form.get("status", "Disponivel"),
-        "descricao": request.form.get("descricao"),
-        "localizacao": request.form.get("localizacao"),
-        "area": request.form.get("area"),
-        "image": image_path,
-        "recursos": request.form.getlist("recursos[]")  # LISTA
-    }
+        dados = {
+            "name": request.form.get("name"),
+            "type": request.form.get("type"),
+            "capacidade": int(request.form.get("capacidade")),
+            "status": request.form.get("status", "Disponivel"),
+            "descricao": request.form.get("descricao"),
+            "localizacao": request.form.get("localizacao"),
+            "area": request.form.get("area"),
+            "image": image_path,
+            "recursos": request.form.getlist("recursos[]")  # LISTA
+        }
 
-    AmbientesService.inserir_ambiente(dados)
+        AmbientesService.inserir_ambiente(dados)
 
 
-    return redirect("/ambientes") 
+    
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": "Erro ao alterar senha"}), 500
 
 @ambientes_bp.route("/ambientes/<id>/", methods=["DELETE"])
 def deletar_ambiente(id):
-    AmbientesService.deletar_ambiente(id)
-    return jsonify({'mensagem': 'Ambiente excluído com sucesso'}), 200
 
+    try:
+        logado = get_jwt()
+
+        if  logado["role"] != "admin":
+         return jsonify({"erro": "Você não tem permissão para deletar este usuário."}), 403
+        
+        AmbientesService.deletar_ambiente(id)
+        return jsonify({'mensagem': 'Ambiente excluído com sucesso'}), 200
+
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": "Erro ao alterar senha"}), 500

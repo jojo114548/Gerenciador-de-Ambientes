@@ -17,8 +17,26 @@ class HistoricoService:
                 raise ValueError(f"Campo obrigatório ausente: {campo}")
 
         HistoricoRepository.inserir(dados)
+
+
+
     @staticmethod
     def cancelar_historico(historico_id, user_id):
-        HistoricoRepository.cancelar(historico_id, user_id)
+        historico = HistoricoRepository.buscar_por_id(historico_id)
+
+        if not historico:
+            raise ValueError("Histórico não encontrado")
+
+        if historico["user_id"] != user_id:
+            raise PermissionError("Sem permissão para cancelar")
+
+        HistoricoRepository.atualizar_status_por_id(
+            historico_id,
+            "Cancelado"
+        )
+
+    @staticmethod
+    def atualizar_concluidos():
+      return HistoricoRepository.marcar_concluidos()
 
 

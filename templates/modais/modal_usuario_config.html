@@ -12,7 +12,7 @@
         <div class="card-adm-usuario">
 
           <div class="img-usuario">
-            <img src="{{ usuario.image or '/static/imgs/default.png' }}" alt="">
+            <img src="{{ usuario.image  }}" alt="">
           </div>
 
           <div class="card-body-adm">
@@ -33,7 +33,7 @@
               <button class="btn-reserve"
                 onclick="abrirEditarUsuario(
                   '{{ usuario.id }}',
-                  '{{ usuario.image }}',
+                  '{{ usuario.image  }}',
                   '{{ usuario.name }}',
                   '{{ usuario.email }}',
                   '{{ usuario.cpf }}',
@@ -80,8 +80,9 @@
       <input type="hidden" id="edit-user-id" name="id">
 
       <label>Imagem</label>
-      <input type="hidden" id="edit-image-atual" name="image_atual">
-      <img id="preview-imagem" class="preview">
+      <input type="file" id="edit-image-atual" name="image">
+      <img id="preview-imagem" class="preview" >
+       
 
       <div class="form-group">
         <label>Nome</label>
@@ -92,7 +93,7 @@
         <label>Email</label>
         <input type="email" id="edit-user-email" name="email" required>
       </div>
-
+ 
       <div class="form-row">
         <div class="form-group">
           <label>CPF</label>

@@ -14,7 +14,7 @@ function addEspecificacao() {
 
   const input = document.createElement('input');
   input.type = 'text';
-  input.name = 'especificacoes[]';
+  input.name = 'especificacao[]';
   input.placeholder = 'Ex: HDMI';
 
   container.appendChild(input);
@@ -42,7 +42,7 @@ document.getElementById('form-cadastro-equipamento') .addEventListener('submit',
     // Garantia explícita (opcional, mas seguro)
     formData.set('quantidade_disponivel', quantidade);
 
-    fetch('/novo-equipamento', {
+    fetch('/equipamento', {
       method: 'POST',
       body: formData
     })

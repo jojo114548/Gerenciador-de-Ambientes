@@ -1,11 +1,11 @@
 function abrirModalDetalhes(btn) {
-  console.log("=== ABRINDO MODAL DE DETALHES ===");
+ 
   
   // Verificar modal
   const modal = document.getElementById("modaldetalhes");
   if (!modal) {
     alert("Erro: Modal não encontrado!");
-    console.error("❌ Modal 'modaldetalhes' não existe no HTML");
+   
     return;
   }
 
@@ -16,11 +16,11 @@ function abrirModalDetalhes(btn) {
   
   if (!card) {
     alert("Erro: Evento não encontrado!");
-    console.error("❌ Card do evento não encontrado");
+   
     return;
   }
 
-  console.log("✅ Card encontrado");
+  
 
   // Função segura para definir texto
   const setTextSafe = (id, value) => {
@@ -29,7 +29,7 @@ function abrirModalDetalhes(btn) {
       el.textContent = value || "Não informado";
       return true;
     } else {
-      console.warn(`⚠️ Elemento '${id}' não encontrado no modal`);
+      
       return false;
     }
   };
@@ -40,7 +40,7 @@ function abrirModalDetalhes(btn) {
       const el = card.querySelector(selector);
       return el ? el.textContent.trim() : "";
     } catch (e) {
-      console.warn(`⚠️ Erro ao buscar '${selector}':`, e);
+     
       return "";
     }
   };
@@ -149,23 +149,3 @@ function fecharModalDetalhes() {
   }
 }
 
-// Fechar modal ao clicar fora
-document.addEventListener('DOMContentLoaded', function() {
-  console.log("=== Script detalhes_eventos.js carregado ===");
-  
-  const modal = document.getElementById("modaldetalhes");
-  
-  if (modal) {
-    console.log("✅ Modal encontrado no DOM");
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        fecharModalDetalhes();
-      }
-    });
-  } else {
-    console.warn("⚠️ Modal 'modaldetalhes' não encontrado no carregamento");
-  }
-
-  const cards = document.querySelectorAll('.event-card');
-  console.log(`📊 Total de eventos: ${cards.length}`);
-});

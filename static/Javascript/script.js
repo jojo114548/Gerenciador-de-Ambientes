@@ -5,7 +5,8 @@ function excluirUsuario(cpf, id) {
     }
 
     fetch(`/usuarios/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+         credentials: 'include'
     })
     .then(response => response.json().then(data => {
         if (!response.ok) {

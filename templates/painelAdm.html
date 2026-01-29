@@ -4,26 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Administrador - Sistema de Agendamentos</title>
-    <link rel="stylesheet" href="/static/Css/geral.css">
     <link rel="stylesheet" href="/static/Css/painelAdm.css">
-    <link rel="stylesheet" href="/static/Css/base.css">
-    <link rel="stylesheet" href="/static/css/modal_notificacao.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="dashboard" class="dashboard">
-        {% include 'base.html' %}
+   
+
         
         <main class="adm-panel">
             <!-- Topbar -->
             <div class="topbar">
+                
                 <!-- Topbar Principal -->
                 <div class="topbar-main">
                     <h2>Painel do Administrador</h2>
                 </div>
+                <div>
+                  <a href="/index">voltar</a></div>
 
                 <!-- Navegação por Abas -->
                 <nav class="tabs-navigation">
@@ -128,6 +129,10 @@
                                                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                                                     </svg>
                                                 </button>
+                                                <button onclick="resetarSenhaPadrao('{{ usuario.id }}')" class="btn-reset">
+  Resetar Senha Padrão
+</button>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -262,7 +267,7 @@
                     <div class="tab-content" id="tab-ambientes">
                         <section class="section">
                             <div class="section-header">
-                                <h2>Ambientes Disponíveis</h2>
+                                <h2>Ambientes </h2>
                                 <button class="btn-adicionar" onclick="abrirModalAmbiente()">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -291,7 +296,7 @@
                                                 <img src="{{ space.image }}" class="ambiente-imagem" alt="{{ space.name }}">
                                                 <div class="td-info">
                                                     <h3 class="ambiente-nome">{{ space.name }}</h3>
-                                                    <p class="ambiente-descricao">{{ space.descricao|truncate(40) }}</p>
+                                                    <p class="ambiente-descricao">{{ space.descricao}}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -302,13 +307,17 @@
                                             👥 {{ space.capacidade }} pessoas
                                         </td>
                                         <td data-label="Recursos" class="td-recursos">
-                                            <div class="td-recursos-list">
-                                                {% for recurso in space.recursos[:3] %}
-                                                <span class="recurso-tag">{{ recurso }}</span>
-                                                {% endfor %}
-                                                {% if space.recursos|length > 3 %}
-                                                <span class="recurso-tag">+{{ space.recursos|length - 3 }}</span>
-                                                {% endif %}
+                                            <div class="recursos">
+                                                
+                                                <ul>
+                                     
+                                                   {% for recurso in space.recursos %}
+                                        <li>{{ recurso }}</li>
+                                        {%endfor%}
+                                                  
+                                                 </ul>
+                                              
+                                               
                                             </div>
                                         </td>
                                         <td data-label="Status" class="ambiente-status">
@@ -356,7 +365,7 @@
                     <div class="tab-content" id="tab-equipamentos">
                         <section class="section">
                             <div class="section-header">
-                                <h2>Equipamentos Disponíveis</h2>
+                                <h2>Equipamentos </h2>
                                 <button class="btn-adicionar" onclick="abrirModalEquipamento()">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -375,6 +384,7 @@
                                         <th>Quantidade</th>
                                         <th>Condição</th>
                                         <th>Status</th>
+                                        <th>Especificações</th>
                                         <th style="text-align: right;">Ações</th>
                                     </tr>
                                 </thead>
@@ -386,15 +396,16 @@
                                                 <img src="{{ equipamento.image }}" class="equipamentos-imagem" alt="{{ equipamento.name }}">
                                                 <div class="td-info">
                                                     <h3 class="equipamento-nome">{{ equipamento.name }}</h3>
-                                                    <span class="equipamento-descricao">{{ equipamento.descricao|truncate(35) }}</span>
+                                                    <span class="equipamento-descricao">{{ equipamento.descricao }}</span>
+                                                     <span class="equipamento-marca" style="display: none;">{{ equipamento.marca }}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td data-label="Categoria">
                                             <span class="equipamento-categoria">{{ equipamento.categoria }}</span>
                                         </td>
-                                        <td data-label="Modelo">
-                                            {{ equipamento.modelo or '-' }}
+                                        <td data-label="Modelo" class="equipamento-modelo">
+                                            {{ equipamento.modelo }}
                                         </td>
                                         <td data-label="Quantidade" class="equipamento-quantidade">
                                             {{ equipamento.quantidade_disponivel }}
@@ -402,15 +413,22 @@
                                         <td data-label="Condição" class="equipamento-condicao">
                                             {{ equipamento.condicao }}
                                         </td>
+                                        
                                         <td data-label="Status" class="equipamento-status">
-                                            {% if equipamento.quantidade_disponivel == 0 %}
-                                            <span class="status-badge indisponivel">Indisponível</span>
-                                            {% elif equipamento.status == 'Disponivel' %}
-                                            <span class="status-badge disponivel">Disponível</span>
+                                            {% if equipamento.quantidade_disponivel > 0 and equipamento.status == 'Disponivel' %}
+                                            <button >Disponivel</button>
                                             {% else %}
-                                            <span class="status-badge manutencao">Em Uso</span>
+                                            <button disabled>Indisponível</button>
                                             {% endif %}
                                         </td>
+                                        <td data-label="specifications" class="recursos-equip">
+                                             <ul>
+            {% for recurso in equipamento.especificacoes %}
+              <li>{{ recurso }}</li>
+            {% endfor %}
+          </ul>
+                                        </td>
+                                        
                                         <td data-label="Ações">
                                             <div class="td-acoes">
                                                 <button class="btn-acao" title="Ver Detalhes"
@@ -468,7 +486,7 @@
                                 </button>
                             </div>
 
-                            <table class="table-eventos">
+                            <table class="table-eventos" >
                                 <thead>
                                     <tr>
                                         <th>Evento</th>
@@ -480,11 +498,11 @@
                                         <th style="text-align: right;">Ações</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
                                     {% for event in evento %}
                                     <tr class="event-card" data-event-id="{{ event.id }}" data-inscrito="{{ 'true' if event.inscrito else 'false' }}">
                                         <!-- Coluna invisível com todos os dados para o modal -->
-                                        <td style="display: none;">
+                                        <td  style="display: none;">
                                             <img src="{{ event.image }}" class="eventos-imagem" alt="{{ event.titulo }}">
                                             <span class="event-titulo">{{ event.titulo }}</span>
                                             <span class="event-data">{{ event.data_evento }}</span>
@@ -497,7 +515,7 @@
                                         </td>
 
                                         <!-- Conteúdo visível -->
-                                        <td data-label="Evento">
+                                        <td data-label="Evento" >
                                             <div class="td-evento">
                                                 <div class="td-info">
                                                     <h3>{{ event.titulo }}</h3>
@@ -520,7 +538,7 @@
                                         <td data-label="Participantes" class="td-capacidade">
                                             👥 {{ event.participantes }}/{{ event.capacidade }}
                                         </td>
-                                        <td data-label="Status">
+                                        <td data-label="Status" >
                                             {% if event.inscrito %}
                                             <span class="status-badge approved">Inscrito</span>
                                             {% elif event.participantes >= event.capacidade %}
@@ -609,11 +627,11 @@
                                             <span class="tipo-badge">{{ history.type }}</span>
                                         </td>
                                         <td>
-                                            {% if history.status == 'Aprovado' or history.status == 'Approved' %}
+                                            {% if history.status == 'Concluido' %}
                                             <span class="status-badge approved">{{ history.status }}</span>
-                                            {% elif history.status == 'Pendente' or history.status == 'Pending' %}
+                                            {% elif history.status == 'Confirmado'  %}
                                             <span class="status-badge pending">{{ history.status }}</span>
-                                            {% elif history.status == 'Cancelado' or history.status == 'Cancelled' %}
+                                            {% elif history.status == 'Cancelado' %}
                                             <span class="status-badge cancelled">{{ history.status }}</span>
                                             {% else %}
                                             <span class="status-badge active">{{ history.status }}</span>
@@ -647,7 +665,7 @@
                                             {{ history.hora_inicio }} - {{ history.hora_fim }}
                                         </td>
                                         <td>
-                                            <span class="tipo-badge">{{ history.type }}</span>
+                                            <span class="tipo-badge">Equipamento</span>
                                         </td>
                                         <td>
                                             {% if history.status == 'Aprovado' or history.status == 'Approved' %}
@@ -674,7 +692,7 @@
                 </div>
             </div>
         </main>
-    </div>
+
 
     <!-- Modais -->
     {% include 'modais/modal_evento_detalhes.html' %}

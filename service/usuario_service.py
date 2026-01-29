@@ -49,8 +49,6 @@ class UsuarioService:
         users = Usuario(**dados)
         UsuarioRepository.adicionar(users)
 
-        
-        # ✅ RETORNE UM DICIONÁRIO, NÃO O OBJETO
         return {
             "id": users.id,
             "name": users.name,
@@ -58,13 +56,15 @@ class UsuarioService:
         }
 
     @staticmethod
-    def atualizar(id, dados):
-        if not id:
-            raise ValueError("ID do usuário é obrigatório")
+    def atualizar(usuario_id, dados):
+        if not UsuarioRepository._existe(usuario_id):
+            raise ValueError("Usuário não encontrado")
 
-        UsuarioRepository.atualizar(id, dados)
+        # Remove image se não foi enviada
+        if "image" in dados and dados["image"] is None:
+            dados.pop("image")
 
-       
+        UsuarioRepository.atualizar(usuario_id, dados)
 
     @staticmethod
     def deletar(usuario_id):
@@ -73,7 +73,6 @@ class UsuarioService:
 
         UsuarioRepository.deletar(usuario_id)
 
-        
     @staticmethod
     def autenticar(email, senha):
         usuario = UsuarioRepository.buscar_por_email(email)
@@ -89,14 +88,79 @@ class UsuarioService:
 
         return None
 
+    # ✅ Método para o próprio usuário alterar sua senha
     @staticmethod
-    def alterar_senha(usuario_id, senha):
-        if not usuario_id or not senha:
+    def alterar_senha(usuario_id, senha_atual, senha_nova):
+        if not usuario_id or not senha_atual or not senha_nova:
+            raise ValueError("Todos os campos são obrigatórios")
+
+        # Busca o usuário
+        usuario = UsuarioRepository.buscar_por_id(usuario_id)
+        if not usuario:
+            raise ValueError("Usuário não encontrado")
+
+        # Verifica se a senha atual está correta
+        if not bcrypt.checkpw(
+            senha_atual.encode("utf-8"),
+            usuario["senha"].encode("utf-8")
+        ):
+            raise ValueError("Senha atual incorreta")
+
+        # Gera hash da nova senha
+        senha_hash = bcrypt.hashpw(
+            senha_nova.encode("utf-8"),
+            bcrypt.gensalt()
+        ).decode("utf-8")
+
+        # Atualiza a senha
+        UsuarioRepository.atualizar_senha(usuario_id, senha_hash)
+
+    # ✅ Método para admin resetar senha sem precisar da senha atual
+    @staticmethod
+    def resetar_senha(usuario_id, senha_nova):
+        if not usuario_id or not senha_nova:
             raise ValueError("Usuário e senha são obrigatórios")
 
+        # Verifica se usuário existe
+        if not UsuarioRepository._existe(usuario_id):
+            raise ValueError("Usuário não encontrado")
+
+        # Gera hash da nova senha
         senha_hash = bcrypt.hashpw(
-            senha.encode("utf-8"),
+            senha_nova.encode("utf-8"),
+            bcrypt.gensalt()
+        ).decode("utf-8")
+
+        # Atualiza a senha
+        UsuarioRepository.atualizar_senha(usuario_id, senha_hash)
+
+    @staticmethod
+    def resetar_senha_padrao(usuario_id):
+        if not usuario_id:
+            raise ValueError("Usuário é obrigatório")
+
+        usuario = UsuarioRepository.buscar_por_id(usuario_id)
+        if not usuario:
+            raise ValueError("Usuário não encontrado")
+
+        cpf = usuario.get("cpf")
+
+        if not cpf or len(cpf) < 4:
+            raise ValueError("CPF inválido para gerar senha padrão")
+
+        # Últimos 4 dígitos do CPF
+        ultimos_4 = cpf[-4:]
+
+        senha_padrao = f"User#{ultimos_4}"
+
+        senha_hash = bcrypt.hashpw(
+            senha_padrao.encode("utf-8"),
             bcrypt.gensalt()
         ).decode("utf-8")
 
         UsuarioRepository.atualizar_senha(usuario_id, senha_hash)
+
+        # (Opcional) Notificação
+        # NotificacaoService.enviar_reset_senha(usuario_id)
+
+        return True

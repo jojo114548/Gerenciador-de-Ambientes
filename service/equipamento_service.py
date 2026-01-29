@@ -11,26 +11,23 @@ class EquipamentoService:
         equipamentos = EquipamentoRepository.listar()
 
         for eq in equipamentos:
-            if eq.get("specifications"):
-                eq["specifications"] = eq["specifications"].split(" | ")
+            if eq.get("especificacoes"):
+                eq["especificacoes"] = eq["especificacoes"].split(" | ")
             else:
-                eq["specifications"] = []
+                eq["especificacoes"] = []
 
         return equipamentos
 
     @staticmethod
     def inserir_equipamento(dados):
         # 🔒 Validação mínima
-        if "quantidade_disponivel" not in dados:
-            raise ValueError("Quantidade disponível é obrigatória")
+        qtd = dados.get("quantidade_disponivel")
 
-        dados["quantidade_disponivel"] = int(dados["quantidade_disponivel"])
+        if qtd is None or qtd == "":
+         raise ValueError("Quantidade disponível é obrigatória")
 
-        # 🔄 Status automático opcional
-        if dados["quantidade_disponivel"] <= 0:
-            dados["status"] = "Ocupado"
-        else:
-            dados["status"] = dados.get("status", "Disponivel")
+        dados["quantidade_disponivel"] = int(qtd)
+
 
         equipamento_id = EquipamentoRepository.inserir_equipamento(dados)
 

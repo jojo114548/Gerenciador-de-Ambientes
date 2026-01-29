@@ -23,17 +23,13 @@
     <!-- Notificações -->
     {% include 'notificacao.html' %}
   
-
+{%include 'config.html' %}
     <!-- Conteúdo Principal -->
     <main class="main-content">
            <div class="topbar">
             
-            <div class="topbar-search">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-                <input type="text" placeholder="Buscar ambientes, equipamentos ou eventos...">
+            <div >
+               
             </div>
 
             <div class="topbar-actions">
@@ -103,27 +99,23 @@
                     <span class="tipo-badge">{{ history.type }}</span>
                 </td>
 
-                <!-- Status -->
-                <td>
-                    {% if history.status == 'Confirmado'  %}
-                    <span class="status-badge  pending">{{ history.status }}</span>
-                    {% elif history.status == 'Rejeitado'  %}
-                    <span class="status-badge cancelled">{{ history.status }}</span>
-                    {% elif history.status == 'Concluido' %}
-                    <span class="status-badge approved">{{ history.status }}</span>
-                    {% elif history.status == 'Cancelado' %}
-                    <span class="status-badge cancelled">{{ history.status }}</span>
-                    {% endif %}
+              <td>
+                                            {% if history.status == 'Concluido' %}
+                                            <span class="status-badge approved">{{ history.status }}</span>
+                                            {% elif history.status == 'Confirmado'  %}
+                                            <span class="status-badge pending">{{ history.status }}</span>
+                                            {% elif history.status == 'Cancelado' %}
+                                            <span class="status-badge cancelled">{{ history.status }}</span>
+                                            {% else %}
+                                            <span class="status-badge active">{{ history.status }}</span>
+                                            {% endif %}
 
-                       {% if history.status != 'Cancelado' %}
-                      <button
-  onclick="cancelarHistorico('{{ history.id }}')">
-  Cancelar
-</button>
-                      {% else %}
-                      <span class="status-cancelado">Cancelado</span>
-                     {% endif %}
-                </td>
+                                             {%if history.status =='Confirmado'%}
+                                             <button onclick="cancelarHistoricoEquip('{{ history.id }}')"> Cancelar</button>
+                                         
+                                             {%endif%}   
+                                           </td>
+                    
 
                 <!-- Data -->
                 <td class="td-data">
@@ -161,30 +153,30 @@
 
                 <!-- Tipo -->
                 <td>
-                    <span class="tipo-badge">{{ history.type }}</span>
+                    <span class="tipo-badge">Equipamentos</span>
                 </td>
 
                 <!-- Status -->
-                <td>
-                     {% if history.status == 'Confirmado'  %}
-                    <span class="status-badge  pending">{{ history.status }}</span>
-                    {% elif history.status == 'Rejeitado'  %}
-                    <span class="status-badge cancelled">{{ history.status }}</span>
-                    {% elif history.status == 'Concluido' %}
-                    <span class="status-badge approved">{{ history.status }}</span>
-                    {% elif history.status == 'Cancelado' %}
-                    <span class="status-badge cancelled">{{ history.status }}</span>
-                    {% endif %}
+                                           <td>
+                                            {% if history.status == 'Concluido' %}
+                                            <span class="status-badge approved">{{ history.status }}</span>
+                                            {% elif history.status == 'Confirmado'  %}
+                                            <span class="status-badge pending">{{ history.status }}</span>
+                                            {% elif history.status == 'Cancelado' %}
+                                            <span class="status-badge cancelled">{{ history.status }}</span>
+                                            {% else %}
+                                            <span class="status-badge active">{{ history.status }}</span>
+                                            {% endif %}
 
-                       {% if history.status != 'Cancelado' %}
-                      <button
-  onclick="cancelarHistoricoEquip('{{ history.id }}')">
-  Cancelar
-</button>
-                      {% else %}
-                      <span class="status-cancelado">Cancelado</span>
-                     {% endif %}
-                </td>
+                                             {%if history.status =='Confirmado'%}
+                                             <button onclick="cancelarHistoricoEquip('{{ history.id }}')"> Cancelar</button>
+                                         
+                                             {%endif%}   
+                                           </td>
+                    
+                
+              
+
 
                 <!-- Data -->
                 <td class="td-data">

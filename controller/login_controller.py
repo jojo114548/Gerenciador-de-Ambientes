@@ -45,27 +45,46 @@ def login_post():
 @login_bp.route('/index')
 @jwt_required()
 def index():
-    logado = get_jwt()
-    id_logado = get_jwt_identity()
-    ambientes = AmbientesService.listar()
-    equipamentos = EquipamentoService.listar()
-    usuarios = UsuarioService.listar()
-    evento=EventosRepository.listar()
+    try:
 
-    for event in evento:
-        event["inscrito"] = EventosRepository.usuario_ja_inscrito(
-            event["id"],
-            id_logado
-        )
+        logado = get_jwt()
+        id_logado = get_jwt_identity()
+        ambientes = AmbientesService.listar()
+        equipamentos = EquipamentoService.listar()
+        usuarios = UsuarioService.listar()
+        evento=EventosRepository.listar()
 
-   
-    return render_template('logado.html',ambientes=ambientes,equipamentos=equipamentos,evento=evento,usuarios=usuarios,id_logado=id_logado, logado=logado)
+        for event in evento:
+            event["inscrito"] = EventosRepository.usuario_ja_inscrito(
+                event["id"],
+                id_logado
+            )
 
+    
+        return render_template('logado.html',
+        ambientes=ambientes,
+        equipamentos=equipamentos,
+        evento=evento,
+        usuarios=usuarios,
+        id_logado=id_logado, 
+        logado=logado)
 
+    except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    
 @login_bp.route("/logout")
 @jwt_required()
 def logout():
+  try:
    
-  response = redirect(url_for("login.home"))
-  unset_jwt_cookies(response)
-  return response
+    response = redirect(url_for("login.home"))
+    unset_jwt_cookies(response)
+    return response
+  
+  except ValueError as e:
+        return jsonify({"erro": str(e)}), 400
+  except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    

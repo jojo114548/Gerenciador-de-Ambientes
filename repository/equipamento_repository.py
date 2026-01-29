@@ -31,7 +31,7 @@ class EquipamentoRepository:
                     e.quantidade_disponivel,
                     e.image,
                     e.created_at,
-                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS specifications
+                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS especificacoes
                 FROM equipamentos e
                 LEFT JOIN equipamentos_especificacoes es ON e.id = es.equipamento_id
                 GROUP BY e.id, e.name, e.categoria, e.status, e.descricao, 
@@ -63,7 +63,7 @@ class EquipamentoRepository:
                     e.quantidade_disponivel,
                     e.image,
                     e.created_at,
-                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS specifications
+                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS especificacoes
                 FROM equipamentos e
                 LEFT JOIN equipamentos_especificacoes es ON e.id = es.equipamento_id
                 WHERE e.id = %s
@@ -90,7 +90,7 @@ class EquipamentoRepository:
             """, (
                 dados["name"],
                 dados["categoria"],
-                dados.get("status", "disponivel"),
+                dados.get("status", "Disponivel"),
                 dados.get("descricao"),
                 dados.get("marca"),
                 dados.get("modelo"),
@@ -252,7 +252,7 @@ class EquipamentoRepository:
             conn.close()
 
     @staticmethod
-    def atualizar_quantidade(equipamento_id, quantidade):
+    def atualizar_quantidade(equipamento_id, quantidade_disponivel):
         """Atualiza a quantidade disponível de um equipamento"""
         conn = get_connection()
         cursor = conn.cursor()
@@ -261,7 +261,7 @@ class EquipamentoRepository:
                 UPDATE equipamentos
                 SET quantidade_disponivel = %s
                 WHERE id = %s
-            """, (quantidade, equipamento_id))
+            """, (quantidade_disponivel, equipamento_id))
 
             if cursor.rowcount == 0:
                 raise ValueError("Equipamento não encontrado")
@@ -316,7 +316,7 @@ class EquipamentoRepository:
                     e.modelo,
                     e.quantidade_disponivel,
                     e.image,
-                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS specifications
+                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS especificacoes
                 FROM equipamentos e
                 LEFT JOIN equipamentos_especificacoes es ON e.id = es.equipamento_id
                 WHERE e.name LIKE %s 
@@ -351,7 +351,7 @@ class EquipamentoRepository:
                     e.condicao,
                     e.quantidade_disponivel,
                     e.image,
-                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS specifications
+                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS especificacoes
                 FROM equipamentos e
                 LEFT JOIN equipamentos_especificacoes es ON e.id = es.equipamento_id
                 WHERE e.status = %s
@@ -384,7 +384,7 @@ class EquipamentoRepository:
                     e.condicao,
                     e.quantidade_disponivel,
                     e.image,
-                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS specifications
+                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS especificacoes
                 FROM equipamentos e
                 LEFT JOIN equipamentos_especificacoes es ON e.id = es.equipamento_id
                 WHERE e.categoria = %s
@@ -401,7 +401,7 @@ class EquipamentoRepository:
 
     @staticmethod
     def listar_disponiveis():
-        """Lista apenas equipamentos disponíveis (status = 'disponivel' e quantidade > 0)"""
+        
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
         try:
@@ -417,10 +417,10 @@ class EquipamentoRepository:
                     e.condicao,
                     e.quantidade_disponivel,
                     e.image,
-                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS specifications
+                    GROUP_CONCAT(es.especificacao SEPARATOR ' | ') AS especificacoes
                 FROM equipamentos e
                 LEFT JOIN equipamentos_especificacoes es ON e.id = es.equipamento_id
-                WHERE e.status = 'disponivel' AND e.quantidade_disponivel > 0
+                WHERE e.status = 'Disponivel' AND e.quantidade_disponivel > 0
                 GROUP BY e.id, e.name, e.categoria, e.status, e.descricao, 
                          e.marca, e.modelo, e.condicao, e.quantidade_disponivel, e.image
                 ORDER BY e.name

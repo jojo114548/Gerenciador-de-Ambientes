@@ -35,14 +35,7 @@
 
         <!-- Topbar -->
         <div class="topbar">
-            <div class="titulo-page">
-                 
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                    <span>Dashboard</span>
-            </div>
+          <div></div>
 
             <div class="topbar-actions">
                 <button class="icon-button" onclick="modalConfig(event)">
@@ -73,7 +66,8 @@
 
                     <div class="cards-grid">
                         {% for event in evento[:3] %}
-                        <div class="event-card" id="{{ event.id }}">
+                        <div class="event-card" data-event-id="{{ event.id }}" data-inscrito="{{ 'true' if event.inscrito else 'false' }}" >
+
 
                             <div class="event-header">
                                 <img src="{{ event.image }}" class="eventos-imagem" style="display:none;">
@@ -125,7 +119,7 @@
                 <!-- AMBIENTES -->
                 <section class="section">
                     <div class="section-header">
-                        <h2>Ambientes Disponíveis</h2>
+                        <h2>Ambientes </h2>
                         <a href="/ambientes" class="link-primary">Ver todos</a>
                     </div>
 
@@ -135,15 +129,15 @@
                             <img src="{{ space.image }}" class="ambiente-imagem">
 
                             <div class="card-body">
-                                <h3 class="ambiente-nome">{{ space.name }}</h3>
-                                <span class="ambiente-status" style="display:none;">{{ space.status }}</span>
-                                <span class="ambiente-descricao">{{ space.descricao }}</span>
+                                                               <h3 class="ambiente-nome">{{ space.name }}</h3>
+                                    <span class="ambiente-status" style="display:none;">{{ space.status }}</span>
+                                       
+                                    <p class="ambiente-descricao">{{ space.descricao }}</p>
 
-                                <div class="info">
-                                 
-                                    <span class="ambiente-capacidade">{{ space.capacidade }} </span>
-                                    <span class="ambiente-localizacao">{{ space.localizacao }}</span>
-                                </div>
+                                    <div class="info">
+                                        <span class="ambiente-capacidade">{{ space.capacidade }} pessoas</span>
+                                        <span class="ambiente-localizacao">{{ space.localizacao }}</span>
+                                    </div>
 
                                 <div class="actions">
                                     <button class="btn-details" onclick="abrirModalDetalhesAmbiente(this)">
@@ -170,7 +164,7 @@
                 <!-- EQUIPAMENTOS -->
                 <section class="section">
                     <div class="section-header">
-                        <h2>Equipamentos Disponíveis</h2>
+                        <h2>Equipamentos </h2>
                         <a href="/equipamentos" class="link-primary">Ver todos</a>
                     </div>
 
@@ -183,6 +177,7 @@
                              <h3 class="equipamento-titulo">{{ equipamento.title }}</h3>
                             <span class="equipamento-nome">{{ equipamento.name }}</span>
                             <p class="equipamento-descricao">{{ equipamento.descricao }}</p>
+                             <span class="equipamento-marca" style="display:none">{{ equipamento.marca }}</span>
                          <div class="info">
                             <span class="equipamento-categoria"> {{ equipamento.categoria }} </span>
                             <span class="equipamento-modelo"> {{ equipamento.modelo}}</span>
@@ -200,7 +195,7 @@
                                 </div>
                                 <div class="recursos-equip" style="display: none;">
                                  <h4>Recursos:</h4>
-                                 <ul> {% for recurso in equipamento.specifications %}    
+                                 <ul> {% for recurso in equipamento.especificacoes %}    
                                  <li>{{ recurso }}</li>
                                  </ul>
                                  {% endfor %}
@@ -222,6 +217,7 @@
 {% include 'modais/modal_ambiente_detalhes.html' %}
 {% include 'modais/modal_equipamento_agendamento.html' %}
 {% include 'modais/modal_equipamento_detalhes.html' %}
+{%include 'config.html' %}
 
 
 
