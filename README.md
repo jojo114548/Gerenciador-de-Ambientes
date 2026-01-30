@@ -1,44 +1,73 @@
-# Gerenciador de Ambientes (Flask + MySQL)
+# 🚀 Nexus
 
-Sistema web para gerenciamento de ambientes, equipamentos, eventos e agendamentos**, com controle de usuários, histórico e notificações. O projeto segue uma arquitetura organizada em Controllers, Services, Repositories e Models, utilizando Flask no backend e PostgreSQL como banco de dados.
+Sistema web completo para gerenciamento de ambientes, equipamentos, eventos e agendamentos, desenvolvido com foco em boas práticas de arquitetura, organização de código e regras de negócio bem definidas.
 
-## 🚀 Funcionalidades
+Este projeto foi desenvolvido com Flask + PostgreSQL, adotando separação clara de responsabilidades (Controller, Service, Repository e Model),.
 
-* 👤 Autenticação e gestão de usuários
-* 🏢 Cadastro e gerenciamento de ambientes
-* 🧰 Cadastro e gerenciamento de equipamentos
-* 📅 Agendamento de ambientes e equipamentos
-* 🎉 Gestão de eventos
-* 🔔 Sistema de notificações
-* 🕓 Histórico de uso (ambientes e equipamentos)
-* 🛠️ Painel administrativo
 
-## 🧱 Arquitetura do Projeto
+## 🎯 Objetivo do Projeto
 
-O projeto está organizado em camadas:
+* Evitar conflitos de agendamento
+* Centralizar informações de uso
+* Manter histórico e rastreabilidade
+* Facilitar a gestão administrativa
+
+
+
+## ✨ Principais Funcionalidades
+
+### 👤 Usuários & Segurança
+
+* Cadastro e autenticação de usuários
+* Controle de acesso via JWT
+* Separação de permissões (usuário / administrador)
+
+### 🏢 Ambientes
+
+* Cadastro, edição e exclusão de ambientes
+* Visualização de disponibilidade
+* Histórico de utilização
+
+### 🧰 Equipamentos
+
+* Gerenciamento completo de equipamentos
+* Associação de equipamentos a ambientes
+* Controle de uso e histórico
+
+### 📅 Agendamentos
+
+* Agendamento de ambientes e equipamentos
+* Validação de conflitos de horários
+
+
+### 🎉 Eventos
+
+* Criação e gerenciamento de eventos
+* Associação com ambientes e recursos
+
+### 🔔 Notificações
+
+* Sistema de notificações internas
+* Alertas relacionados a eventos e agendamentos
+
+
+
+## 🧱 Arquitetura e Organização
+
+O projeto segue uma arquitetura em camadas, facilitando manutenção, testes e evolução.
 
 ```
 Gerenciador-de-Ambientes-mysql/
 │
-├── app.py                  # Arquivo principal da aplicação Flask
-├── controller/             # Camada de controle (rotas/endpoints)
+├── app.py                  # Ponto de entrada da aplicação
+├── controller/             # Rotas e controllers (HTTP)
 ├── service/                # Regras de negócio
-├── repository/             # Acesso a dados (MySQL)
-├── model/                  # Modelos/entidades
+├── repository/             # Acesso ao banco de dados (MySQL)
+├── model/                  # Modelos e entidades
 ├── templates/              # Templates HTML (Jinja2)
-│   └── modais/             # Modais reutilizáveis
-├── static/                 # Arquivos estáticos (CSS, JS, imagens)
-       
-
-
-## 🛠️ Tecnologias Utilizadas
-
-* **Python 3**
-* **Flask**
-* **Flask-JWT-Extended** (autenticação)
-* **PostgreSQL**
-* **HTML5 / CSS3 / JavaScript**
-* **Jinja2** (templates)
+│   └── modais/             # Componentes reutilizáveis
+├── static/                 # CSS, JS e assets
+  
 
 
 
