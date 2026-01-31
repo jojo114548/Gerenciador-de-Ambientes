@@ -3,6 +3,17 @@ function abrirModalAmbiente(){
     document.getElementById('add-ambiente-modal').style.display = 'block';
 }
 
+ function addrecursos() {
+  const container = document.getElementById('especificacoes-container');
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.name = 'recursos[]';
+  input.placeholder = 'Ex: Pojetor';
+  input.style.marginBottom = '8px';
+  input.style.width = '100%';
+  container.appendChild(input);
+}
+
 document.getElementById('form-editar-ambiente').addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -25,9 +36,26 @@ document.getElementById('form-editar-ambiente').addEventListener('submit', funct
         formData.append('image', imagem);
     }
 
-    document.querySelectorAll('#recursos-container input[name="recursos[]"]')
-        .forEach(cb => formData.append('recursos[]', cb.value));
 
+       // Preencher especificações
+  const container = document.querySelectorAll('especificacoes-container input[name="recursos[]');
+  container.innerHTML = '';
+
+  if (ambiente.recursos && ambiente.recursos.length > 0) {
+    ambiente.recursos.forEach(recursos => {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.name = 'recursos[]';
+      input.value = recursos;
+      input.placeholder = 'Ex: Pojetor';
+      input.style.marginBottom = '8px';
+      input.style.width = '100%';
+      container.appendChild(input);
+    });
+  } else {
+    addrecursos();
+  }
+  
     fetch(`/ambientes/${id}`, {
         method: 'POST',
         body: formData
@@ -51,4 +79,5 @@ document.getElementById('form-editar-ambiente').addEventListener('submit', funct
 
 function fecharModalAmbiente(){
    document.getElementById('add-ambiente-modal').style.display = 'none';
+   
 }

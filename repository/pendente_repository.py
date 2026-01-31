@@ -1,12 +1,15 @@
-import mysql.connector
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 
 def get_connection():
-    return mysql.connector.connect(
+    return psycopg2.connect(
         host="localhost",
-        user="root",
+        user="postgres",
         password="jojo4548",
-        database="nexus"
+        dbname="Nexus",
+        port=5432,
+        options="-c search_path=nexus"
     )
 
 
@@ -15,23 +18,25 @@ class PendenteRepository:
     @staticmethod
     def inserir(dados):
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         try:
             cursor.execute("""
-                INSERT INTO pendentes_ambientes
+                INSERT INTO nexus.pendentes_ambientes
                     (agendamento_id, user_id, status)
                 VALUES (%s, %s, %s)
+                RETURNING id
             """, (
                 dados["agendamento_id"],
                 dados["user_id"],
                 dados["status"]
             ))
 
+            pendente_id = cursor.fetchone()["id"]
             conn.commit()
 
             return {
-                "id": cursor.lastrowid,
+                "id": pendente_id,
                 "agendamento_id": dados["agendamento_id"],
                 "user_id": dados["user_id"],
                 "status": dados["status"]
@@ -48,7 +53,7 @@ class PendenteRepository:
     @staticmethod
     def buscar_por_id(pendente_id):
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         cursor.execute("""
             SELECT
@@ -64,7 +69,7 @@ class PendenteRepository:
                 a.finalidade,
 
                 amb.name AS ambiente_nome
-            FROM pendentes_ambientes p
+            FROM nexus.pendentes_ambientes p
             JOIN agendamentos a ON a.id = p.agendamento_id
             JOIN ambientes amb ON amb.id = a.ambiente_id
             WHERE p.id = %s
@@ -79,25 +84,25 @@ class PendenteRepository:
     @staticmethod
     def listar():
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         cursor.execute("""
-          SELECT
-    p.id AS pendente_id,
-    p.agendamento_id,
-    p.user_id,
-    p.status,
+            SELECT
+                p.id AS pendente_id,
+                p.agendamento_id,
+                p.user_id,
+                p.status,
 
-    amb.id AS ambiente_id,
-    amb.name AS ambiente_nome,
+                amb.id AS ambiente_id,
+                amb.name AS ambiente_nome,
 
-    a.data,
-    a.hora_inicio,
-    a.hora_fim,
-    a.finalidade
-FROM pendentes_ambientes p
-JOIN agendamentos a ON a.id = p.agendamento_id
-JOIN ambientes amb ON amb.id = a.ambiente_id
+                a.data,
+                a.hora_inicio,
+                a.hora_fim,
+                a.finalidade
+            FROM nexus.pendentes_ambientes p
+            JOIN agendamentos a ON a.id = p.agendamento_id
+            JOIN ambientes amb ON amb.id = a.ambiente_id
         """)
 
         result = cursor.fetchall()
@@ -112,7 +117,7 @@ JOIN ambientes amb ON amb.id = a.ambiente_id
         cursor = conn.cursor()
 
         cursor.execute("""
-            UPDATE pendentes_ambientes
+            UPDATE nexus.pendentes_ambientes
             SET status = %s
             WHERE id = %s
         """, (status, pendente_id))

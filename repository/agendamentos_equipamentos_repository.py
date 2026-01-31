@@ -1,14 +1,16 @@
-import mysql.connector
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 
 def get_connection():
-    return mysql.connector.connect(
+    return psycopg2.connect(
         host="localhost",
-        user="root",
+        user="postgres",
         password="jojo4548",
-        database="nexus"
+        dbname="Nexus",
+        port=5432,
+        options="-c search_path=nexus"
     )
-
 
 
 class AgendamentoEquipamentoRepository:
@@ -21,131 +23,240 @@ class AgendamentoEquipamentoRepository:
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("""
-            INSERT INTO agendamentos_equipamentos
-            (equipamento_id, user_id, data_equip, hora_inicio, hora_fim, finalidade, status)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """, (
-            agendamento["equipamento_id"],
-            agendamento["user_id"],
-            agendamento["data_equip"],
-            agendamento["hora_inicio"],
-            agendamento["hora_fim"],
-            agendamento["finalidade"],
-            agendamento.get("status", "pendente")
-        ))
+        try:
+            cursor.execute("""
+                INSERT INTO nexus.agendamentos_equipamentos
+                (equipamento_id, user_id, data, hora_inicio, hora_fim, finalidade, status)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                RETURNING id
+            """, (
+                agendamento["equipamento_id"],
+                agendamento["user_id"],
+                agendamento["data"],
+                agendamento["hora_inicio"],
+                agendamento["hora_fim"],
+                agendamento["finalidade"],
+                agendamento.get("status", "Pendente")  # ✅ Padrão correto
+            ))
 
-        conn.commit()
-        agendamento_id = cursor.lastrowid
-        cursor.close()
-        conn.close()
+            agendamento_id = cursor.fetchone()[0]
+            conn.commit()
+            return agendamento_id
 
-        return agendamento_id
+        except Exception as e:
+            conn.rollback()
+            raise e
+
+        finally:
+            cursor.close()
+            conn.close()
 
     @staticmethod
-    def existe_conflito(equipamento_id, data_equip, hora_inicio, hora_fim,agendamento_id=None):
+    def existe_conflito(equipamento_id, data, hora_inicio, hora_fim, agendamento_id=None):
         """
         Verifica conflito de horário para equipamento
         """
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("""
-            SELECT 1
-            FROM agendamentos_equipamentos
-            WHERE equipamento_id = %s
-            AND data_equip = %s
-            AND status != 'rejeitado'
-            AND %s < hora_fim
-            AND %s > hora_inicio
-            LIMIT 1
-        """, (
-            equipamento_id,
-            data_equip,
-            hora_inicio,
-            hora_fim
-        ))
+        try:
+            # ✅ CORRIGIDO: Exclui o próprio agendamento se estiver editando
+            if agendamento_id:
+                cursor.execute("""
+                    SELECT 1
+                    FROM nexus.agendamentos_equipamentos
+                    WHERE equipamento_id = %s
+                      AND data = %s
+                      AND status NOT IN ('Rejeitado', 'Cancelado')
+                      AND id != %s
+                      AND (
+                          (%s >= hora_inicio AND %s < hora_fim) OR
+                          (%s > hora_inicio AND %s <= hora_fim) OR
+                          (%s <= hora_inicio AND %s >= hora_fim)
+                      )
+                    LIMIT 1
+                """, (
+                    equipamento_id, data, agendamento_id,
+                    hora_inicio, hora_inicio,
+                    hora_fim, hora_fim,
+                    hora_inicio, hora_fim
+                ))
+            else:
+                cursor.execute("""
+                    SELECT 1
+                    FROM nexus.agendamentos_equipamentos
+                    WHERE equipamento_id = %s
+                      AND data = %s
+                      AND status NOT IN ('Rejeitado', 'Cancelado')
+                      AND (
+                          (%s >= hora_inicio AND %s < hora_fim) OR
+                          (%s > hora_inicio AND %s <= hora_fim) OR
+                          (%s <= hora_inicio AND %s >= hora_fim)
+                      )
+                    LIMIT 1
+                """, (
+                    equipamento_id, data,
+                    hora_inicio, hora_inicio,
+                    hora_fim, hora_fim,
+                    hora_inicio, hora_fim
+                ))
 
-        conflito = cursor.fetchone()
+            return cursor.fetchone() is not None
 
-        cursor.close()
-        conn.close()
+        finally:
+            cursor.close()
+            conn.close()
 
-        return conflito is not None
+    @staticmethod
+    def buscar_por_id(agendamento_id):
+        """Busca agendamento por ID"""
+        conn = get_connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+        try:
+            cursor.execute("""
+                SELECT 
+                    ae.*,
+                    e.name AS equipamento_nome,
+                    e.categoria,
+                    e.marca,
+                    e.modelo,
+                    u.name AS usuario_nome,
+                    u.email AS usuario_email
+                FROM nexus.agendamentos_equipamentos ae
+                JOIN nexus.equipamentos e ON e.id = ae.equipamento_id
+                JOIN nexus.users u ON u.id = ae.user_id
+                WHERE ae.id = %s
+            """, (agendamento_id,))
+
+            return cursor.fetchone()
+
+        finally:
+            cursor.close()
+            conn.close()
 
     @staticmethod
     def listar_por_equipamento(equipamento_id):
-        """
-        Lista todos os agendamentos de um equipamento
-        """
+        """Lista todos os agendamentos de um equipamento"""
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-        cursor.execute("""
-            SELECT *
-            FROM agendamentos_equipamentos
-            WHERE equipamento_id = %s
-            ORDER BY data_equip, hora_inicio
-        """, (equipamento_id,))
+        try:
+            cursor.execute("""
+                SELECT 
+                    ae.*,
+                    u.name AS usuario_nome,
+                    u.email AS usuario_email
+                FROM nexus.agendamentos_equipamentos ae
+                JOIN nexus.users u ON u.id = ae.user_id
+                WHERE ae.equipamento_id = %s
+                ORDER BY ae.data DESC, ae.hora_inicio DESC
+            """, (equipamento_id,))
 
-        resultados = cursor.fetchall()
-        cursor.close()
-        conn.close()
+            return cursor.fetchall()
 
-        return resultados
+        finally:
+            cursor.close()
+            conn.close()
 
     @staticmethod
     def listar_por_usuario(user_id):
-        """
-        Lista todos os agendamentos feitos por um usuário
-        """
+        """Lista todos os agendamentos feitos por um usuário"""
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-        cursor.execute("""
-            SELECT *
-            FROM agendamentos_equipamentos
-            WHERE user_id = %s
-            ORDER BY data_equip DESC, hora_inicio
-        """, (user_id,))
+        try:
+            cursor.execute("""
+                SELECT 
+                    ae.*,
+                    e.name AS equipamento_nome,
+                    e.categoria,
+                    e.marca
+                FROM nexus.agendamentos_equipamentos ae
+                JOIN nexus.equipamentos e ON e.id = ae.equipamento_id
+                WHERE ae.user_id = %s
+                ORDER BY ae.data DESC, ae.hora_inicio DESC
+            """, (user_id,))
 
-        resultados = cursor.fetchall()
-        cursor.close()
-        conn.close()
+            return cursor.fetchall()
 
-        return resultados
+        finally:
+            cursor.close()
+            conn.close()
+
+    @staticmethod
+    def listar_todos():
+        """Lista todos os agendamentos"""
+        conn = get_connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+        try:
+            cursor.execute("""
+                SELECT 
+                    ae.*,
+                    e.name AS equipamento_nome,
+                    e.categoria,
+                    u.name AS usuario_nome,
+                    u.email AS usuario_email
+                FROM nexus.agendamentos_equipamentos ae
+                JOIN nexus.equipamentos e ON e.id = ae.equipamento_id
+                JOIN nexus.users u ON u.id = ae.user_id
+                ORDER BY ae.data DESC, ae.hora_inicio DESC
+            """)
+
+            return cursor.fetchall()
+
+        finally:
+            cursor.close()
+            conn.close()
 
     @staticmethod
     def atualizar_status(agendamento_id, status):
-        """
-        Atualiza o status do agendamento (pendente, aprovado, cancelado)
-        """
+        """Atualiza o status do agendamento"""
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("""
-            UPDATE agendamentos_equipamentos
-            SET status = %s
-            WHERE id = %s
-        """, (status, agendamento_id))
+        try:
+            cursor.execute("""
+                UPDATE nexus.agendamentos_equipamentos
+                SET status = %s
+                WHERE id = %s
+            """, (status, agendamento_id))
 
-        conn.commit()
-        cursor.close()
-        conn.close()
+            if cursor.rowcount == 0:
+                raise ValueError("Agendamento não encontrado")
+
+            conn.commit()
+
+        except Exception as e:
+            conn.rollback()
+            raise e
+
+        finally:
+            cursor.close()
+            conn.close()
 
     @staticmethod
     def deletar(agendamento_id):
-        """
-        Remove o agendamento (uso administrativo)
-        """
+        """Remove o agendamento"""
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("""
-            DELETE FROM agendamentos_equipamentos
-            WHERE id = %s
-        """, (agendamento_id,))
+        try:
+            cursor.execute("""
+                DELETE FROM nexus.agendamentos_equipamentos
+                WHERE id = %s
+            """, (agendamento_id,))
 
-        conn.commit()
-        cursor.close()
-        conn.close()
+            if cursor.rowcount == 0:
+                raise ValueError("Agendamento não encontrado")
+
+            conn.commit()
+
+        except Exception as e:
+            conn.rollback()
+            raise e
+
+        finally:
+            cursor.close()
+            conn.close()

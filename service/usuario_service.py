@@ -80,13 +80,26 @@ class UsuarioService:
         if not usuario:
             return None
 
-        if bcrypt.checkpw(
-            senha.encode("utf-8"),
-            usuario["senha"].encode("utf-8")
-        ):
-            return usuario
+        senha_hash = usuario.get("senha")
+
+        # Proteção contra senha inválida no banco
+        if not senha_hash or not isinstance(senha_hash, str) or not senha_hash.startswith("$2"):
+            print(f"[ERRO] Hash inválido para usuário {email}")
+            return None
+
+        try:
+            if bcrypt.checkpw(
+                senha.encode("utf-8"),
+                senha_hash.encode("utf-8")
+            ):
+                return usuario
+        except ValueError:
+            # Segurança extra caso algo passe
+            print(f"[ERRO] bcrypt inválido para usuário {email}")
+            return None
 
         return None
+
 
     # ✅ Método para o próprio usuário alterar sua senha
     @staticmethod

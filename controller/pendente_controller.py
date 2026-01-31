@@ -25,6 +25,7 @@ def atualizar_status_pendente(pendente_id):
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": str(e)}), 500
     
 
@@ -42,6 +43,7 @@ def atualizar_status_pendente_equipamento(pendente_id):
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": str(e)}), 500
     
 

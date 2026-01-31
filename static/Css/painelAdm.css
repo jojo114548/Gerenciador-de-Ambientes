@@ -30,19 +30,28 @@
         
        
 }
+.topbar-sair{
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 24px 32px;
 
+ 
+    
+}
 .topbar-main {
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 24px 32px;
-    border-bottom: 1px solid #F3F4F6;
+    padding: 20px 20px;
+ 
   
     
 }
 
+
 .topbar-main h2 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
     color: #1F1F1F;
     margin: 0;

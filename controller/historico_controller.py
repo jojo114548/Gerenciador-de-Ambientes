@@ -33,8 +33,10 @@ def listar_historico():
          usuarios=usuarios) 
 
     except ValueError as e:
+        print(e)
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": str(e)}), 500
 
 @historico_bp.route('/historico/cancelar/<int:historico_id>', methods=['POST'])
@@ -48,8 +50,10 @@ def cancelar_historico(historico_id):
         return jsonify({"mensagem": "Agendamento cancelado com sucesso"}), 200
     
     except ValueError as e:
+        print(e)
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": str(e)}), 500
 
 
@@ -67,6 +71,8 @@ def cancelar_historico_equipamentos(historico_id):
         return jsonify({"mensagem": "Agendamento cancelado com sucesso"}), 200
 
     except ValueError as e:
+        print(e)
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": str(e)}), 500

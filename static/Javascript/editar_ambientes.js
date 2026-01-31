@@ -34,29 +34,34 @@ function abrirModalEditar(button) {
     }
   });
 
+    // Preencher especificações
   const container = document.getElementById('recursos-container');
   container.innerHTML = '';
 
   if (ambiente.recursos && ambiente.recursos.length > 0) {
-    ambiente.recursos.forEach(recurso => {
+    ambiente.recursos.forEach(recursos => {
       const input = document.createElement('input');
       input.type = 'text';
       input.name = 'recursos[]';
-      input.value = recurso;
-      input.placeholder = 'Ex: Projetor';
+      input.value = recursos;
+      input.placeholder = 'Ex: Pojetor';
+      input.style.marginBottom = '8px';
+      input.style.width = '100%';
       container.appendChild(input);
     });
   } else {
-    addEditRecurso();
+    addrecursosEdit();
   }
 }
 
-function addEditRecurso() {
+function addrecursosEdit() {
   const container = document.getElementById('recursos-container');
   const input = document.createElement('input');
   input.type = 'text';
   input.name = 'recursos[]';
-  input.placeholder = 'Ex: Projetor';
+  input.placeholder = 'Ex: Pojetor';
+  input.style.marginBottom = '8px';
+  input.style.width = '100%';
   container.appendChild(input);
 }
 

@@ -1,6 +1,6 @@
 
 //delete equipamento
-function excluir(id) {
+function excluirEquipamento(id) {
     fetch(`/equipamentos/${id}`, {
         method: 'DELETE',
         headers: {

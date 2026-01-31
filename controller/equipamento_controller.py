@@ -144,6 +144,7 @@ def deletar_equipamento(id):
         except ValueError as e:
           return jsonify({"erro": str(e)}), 400
         except Exception as e:
+          print(e)
           return jsonify({"erro": "Erro ao alterar senha"}), 500
 
 @equipamento_bp.route("/novo-equipamento", methods=["GET", "POST"])
@@ -189,5 +190,6 @@ def novo_equipamento():
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": "Erro ao alterar senha"}), 500
 

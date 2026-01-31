@@ -96,17 +96,27 @@
             </div>
 
             <div class="form-group">
-    <label>Recursos do Ambiente</label>
-
-    <!-- Recursos padrão -->
-       <div id="especificacoes-container">
-        <input type="text" name="recursos[]" placeholder="Ex: Projetor">
-      </div>
-         
-      <button type="button" onclick="addrecursos()">+ Adicionar especificação</button>
-
-      <br><br>
-</div>
+                <label>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Recursos do Ambiente
+                </label>
+                
+                <div id="especificacoes-container" class="recursos-container">
+                    <div class="recurso-item">
+                        <input type="text" name="recursos[]" placeholder="Ex: Projetor, Ar-condicionado, Wi-Fi...">
+                    </div>
+                </div>
+                
+                <button type="button" class="btn-add-recurso" onclick="addrecursos()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Adicionar Recurso
+                </button>
+            </div>
 
             <!-- Descrição -->
             <div class="form-group">

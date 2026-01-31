@@ -71,8 +71,10 @@ def criar_agendamento():
 
     
     except ValueError as e:
+        print(e)
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": str(e)}), 500
     
 @agendamento_bp.route('/agendamentos_equipamentos', methods=['POST'])
@@ -85,14 +87,15 @@ def criar_agendamento_equipamentos():
         dados = request.get_json()
 
         equipamento_id = dados.get("equipamento_id")
-        data_equip = dados.get("data_equip")
+        data = dados.get("data")
         hora_inicio = dados.get("hora_inicio")
         hora_fim = dados.get("hora_fim")
+       
     
         # 1️⃣ VERIFICA CONFLITO ANTES
         conflito =AgendamentoEquipamentoRepository.existe_conflito(
             equipamento_id,
-            data_equip,
+            data,
             hora_inicio,
             hora_fim,
         
@@ -103,13 +106,13 @@ def criar_agendamento_equipamentos():
                 "erro": "Já existe um agendamento para este Equipamento nesse horário."
             }), 409
         
-        if not dados.get("data_equip") or not dados.get("finalidade"):
+        if not dados.get("data") or not dados.get("finalidade"):
             return jsonify({"erro": "Data e finalidade são obrigatórias"}), 400
 
         agendamento_id = AgendamentoEquipamentoService.criar_agendamento({
             "equipamento_id": dados.get("equipamento_id"),
             "user_id": id_logado,
-            "data_equip": dados.get("data_equip"),
+            "data": dados.get("data"),
             "hora_inicio": dados.get("hora_inicio"),
             "hora_fim": dados.get("hora_fim"),
             "finalidade": dados.get("finalidade"),
@@ -128,7 +131,7 @@ def criar_agendamento_equipamentos():
         NotificacaoService.criar_notificacao(
             user_id=id_logado,
             titulo="Agendamento solicitado",
-            mensagem=f"Agendamento solicitado para dia '{dados['data_equip']}',Equipamentos '{dados['equipamento_id']}.",
+            mensagem=f"Agendamento solicitado para dia '{dados['data']}',Equipamentos '{dados['equipamento_id']}.",
             tipo="aviso"
         )
         return jsonify({
@@ -138,7 +141,10 @@ def criar_agendamento_equipamentos():
 
     
     except ValueError as e:
+        print(e)
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
+  
         return jsonify({"erro": str(e)}), 500
     

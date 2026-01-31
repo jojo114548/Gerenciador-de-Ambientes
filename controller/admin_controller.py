@@ -18,7 +18,7 @@ painelAdm_bp = Blueprint("painelAdm", __name__)
 @jwt_required()
 def painelAdm():
     
-    try:  
+
         id_logado = get_jwt_identity()
         logado = get_jwt()
 
@@ -56,7 +56,4 @@ def painelAdm():
             historico_equip=historico_equipamento
         )
     
-    except ValueError as e:
-        return jsonify({"erro": str(e)}), 400
-    except Exception as e:
-        return jsonify({"erro": "Erro ao alterar senha"}), 500
+   

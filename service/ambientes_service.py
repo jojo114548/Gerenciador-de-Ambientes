@@ -7,19 +7,18 @@ class AmbientesService:
     
     @staticmethod
     def listar():
-   
-      ambientes = AmbientesRepository.listar()
+        ambientes = AmbientesRepository.listar()
 
-      for ambiente in ambientes:
+        for ambiente in ambientes:
             if ambiente["recursos"]:
                 ambiente["recursos"] = ambiente["recursos"].split(" | ")
             else:
                 ambiente["recursos"] = []
 
-      return ambientes
+        return ambientes
+    
     @staticmethod
     def inserir_ambiente(dados):
-        
         ambiente = Ambiente(**dados)
 
         # INSERE O AMBIENTE E RECEBE O ID REAL
@@ -30,24 +29,19 @@ class AmbientesService:
 
         # insere os recursos com o ID correto
         if recursos:
-            AmbientesRepository.inserir_recursos(
-                ambiente_id,
-                recursos
-            )
-        
-        
+            AmbientesRepository.inserir_recursos(ambiente_id, recursos)
 
     @staticmethod
     def deletar_ambiente(ambiente_id):
         AmbientesRepository.deletar_ambiente(ambiente_id)
-        
-        
-
-  
 
     @staticmethod
     def atualizar_ambiente(dados):
         ambiente = Ambiente(**dados)
+        
+        # Atualiza o ambiente
         AmbientesRepository.atualizar_ambiente(ambiente)
         
-        
+        # Atualiza os recursos
+        recursos = dados.get("recursos", [])
+        AmbientesRepository.atualizar_recursos(ambiente.id, recursos)

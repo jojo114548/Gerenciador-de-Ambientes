@@ -405,38 +405,6 @@
     color: #6b7280;
 }
 
-/* ============================================
-   FILTROS E BUSCA
-   ============================================ */
-
-.historico-filtros {
-    padding: 20px 32px;
-    border-bottom: 1px solid #F3F4F6;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-
-.filtro-select {
-    padding: 10px 16px;
-    border-radius: 12px;
-    border: 2px solid #E5E7EB;
-    background: #FFFFFF;
-    color: #1F1F1F;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.filtro-select:focus {
-    border-color: #6C5CE7;
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
-}
-
-/* ============================================
-   PAGINAÇÃO
-   ============================================ */
 
 .historico-pagination {
     padding: 24px 32px;

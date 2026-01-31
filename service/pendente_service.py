@@ -12,6 +12,8 @@ class PendenteService:
 
         if not dados.get("user_id"):
             raise ValueError("Usuário não informado para criação de pendente")
+        
+      
 
         try:
             return PendenteRepository.inserir(dados)

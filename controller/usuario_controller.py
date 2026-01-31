@@ -60,6 +60,8 @@ def editar_usuario(id):
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+
+        print(e)
         return jsonify({"erro": "Erro ao alterar senha"}), 500
 
 @usuario_bp.route("/usuarios/<id>/senha", methods=["PUT"])
@@ -97,6 +99,7 @@ def alterar_senha(id):
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": "Erro ao alterar senha"}), 500
 
 @usuario_bp.route("/usuarios/<id>", methods=["DELETE"])
@@ -123,6 +126,7 @@ def deletar_usuario(id):
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": "Erro ao alterar senha"}), 500
 
 
@@ -206,5 +210,6 @@ def novo_usuario():
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
+        print(e)
         return jsonify({"erro": "Erro ao alterar senha"}), 500
 

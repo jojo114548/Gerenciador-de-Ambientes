@@ -1,11 +1,15 @@
-import mysql.connector
+import psycopg2
+from psycopg2.extras import RealDictCursor
+
 
 def get_connection():
-    return mysql.connector.connect(
+    return psycopg2.connect(
         host="localhost",
-        user="root",
+        user="postgres",
         password="jojo4548",
-        database="nexus"
+        dbname="Nexus",
+        port=5432,
+        options="-c search_path=nexus"
     )
 
 
@@ -17,7 +21,7 @@ class NotificacaoRepository:
         cursor = conn.cursor()
 
         sql = """
-        INSERT INTO notificacoes (user_id, titulo, mensagem, tipo)
+        INSERT INTO nexus.notificacoes (user_id, titulo, mensagem, tipo)
         VALUES (%s, %s, %s, %s)
         """
         cursor.execute(sql, (users_id, titulo, mensagem, tipo))
@@ -29,11 +33,11 @@ class NotificacaoRepository:
     @staticmethod
     def listar_nao_lidas(users_id):
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         sql = """
         SELECT id, titulo, mensagem, tipo, data_criacao
-        FROM notificacoes
+        FROM nexus.notificacoes
         WHERE user_id = %s AND lida = FALSE
         ORDER BY data_criacao DESC
         """
@@ -50,7 +54,7 @@ class NotificacaoRepository:
         conn = get_connection()
         cursor = conn.cursor()
 
-        sql = "UPDATE notificacoes SET lida = TRUE WHERE id = %s"
+        sql = "UPDATE nexus.notificacoes SET lida = TRUE WHERE id = %s"
         cursor.execute(sql, (notificacao_id,))
 
         conn.commit()
@@ -67,7 +71,7 @@ class NotificacaoRepository:
         cursor = conn.cursor()
 
         sql = """
-        SELECT COUNT(*) FROM notificacoes
+        SELECT COUNT(*) FROM nexus.notificacoes
         WHERE users_id = %s AND lida = FALSE
         """
         cursor.execute(sql, (users_id,))

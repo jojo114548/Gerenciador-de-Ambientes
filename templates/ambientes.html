@@ -54,54 +54,68 @@
         <div class="content-wrapper">
             <div class="content-main">
 
-                    <section class="section">
-                        <div class="section-header">
-                            <h2>Ambientes Disponíveis</h2>
+                          <section class="section">
+                    <div class="section-header">
+                        <h2>Ambientes Disponíveis</h2>
+                    </div>
+                    <div class="cards-grid">
+                        {% for space in ambientes %}
                         
-                        </div>
-                        <div class="cards-grid">
-                            {% for space in ambientes %}
-                            
-                            <div class="card">
+                        <div class="card" 
+                             data-ambiente-id="{{ space.id }}"
+                             data-ambiente-nome="{{ space.name }}"
+                             data-ambiente-descricao="{{ space.descricao or '' }}"
+                             data-ambiente-capacidade="{{ space.capacidade }}"
+                             data-ambiente-localizacao="{{ space.localizacao or '' }}"
+                             data-ambiente-area="{{ space.area or '' }}"
+                             data-ambiente-status="{{ space.status }}"
+                             data-ambiente-recursos="{{ space.recursos|join('|') if space.recursos else '' }}">
+                           
+                            <img src="{{ space.image }}" class="ambiente-imagem" alt="{{ space.name }}"/>
+                                                     
+                            <div class="card-body">
+                                <h3 class="ambiente-nome">{{ space.name }}</h3>
+                                <span class="ambiente-status" style="display:none;">{{ space.status }}</span>
+
+                                {% if space.descricao %}
+                                <p class="ambiente-descricao">{{ space.descricao }}</p>
+                                {% else %}
+                                <p class="ambiente-descricao">Sem descrição disponível</p>
+                                {% endif %}
+
+                                <div class="info">
+                                    <span class="ambiente-capacidade">{{ space.capacidade }} pessoas</span>
+                                    {% if space.localizacao %}
+                                    <span class="ambiente-localizacao">{{ space.localizacao }}</span>
+                                    {% endif %}
+                                </div>
+
                                
-                                <img src="{{ space.image }}" class="ambiente-imagem"/>
-                                                         
-                                <div class="card-body">
-                  
-                                    <h3 class="ambiente-nome">{{ space.name }}</h3>
-                                    <span class="ambiente-status" style="display:none;">{{ space.status }}</span>
-
-                                    <p class="ambiente-descricao">{{ space.descricao }}</p>
-
-                                    <div class="info">
-                                        <span class="ambiente-capacidade">{{ space.capacidade }} pessoas</span>
-                                        <span class="ambiente-localizacao">{{ space.localizacao }}</span>
-                                    </div>
-
-                                    <div class="actions">
-                                        <button class="btn-details" onclick="abrirModalDetalhesAmbiente(this)">
-                                            Ver Detalhes
-                                        </button>
-                                        <button class="btn-reserve" onclick="abrirModalAgendamento('{{ space.id }}', '{{ space.name }}')">
-                                            Reservar
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Recursos ocultos -->
-                                <div class="recursos" style="display:none;">
+                                <div class="recursos-preview" style="display: none;">
                                     <h4>Recursos:</h4>
-                                    <ul>
-                                        {% for recurso in space.recursos %}
+                                     <ul>
+                                     
+                                                   {% for recurso in space.recursos %}
                                         <li>{{ recurso }}</li>
-                                        {% endfor %}
-                                    </ul>
+                                        {%endfor%}
+                                                  
+                                                 </ul>
                                 </div>
-                                           
+                            
+
+                                <div class="actions">
+                                    <button class="btn-details" onclick="abrirModalDetalhesAmbiente(this)" data-ambiente='{{ space|tojson }}'>
+                                        Ver Detalhes
+                                    </button>
+                                    <button class="btn-reserve" onclick="abrirModalAgendamento('{{ space.id }}', '{{ space.name }}')">
+                                        Reservar
+                                    </button>
+                                </div>
                             </div>
-                            {% endfor %}
                         </div>
-                    </section>
+                        {% endfor %}
+                    </div>
+                </section>
 
                 </div>
             </div>

@@ -2,10 +2,14 @@
 
 
 
-function excluir(id) {
+function excluirAmbiente(id) {
     if (!confirm('Deseja excluir este ambiente?')) return;
 
-    fetch(`/ambientes/${id}`, { method: 'DELETE' })
+    fetch(`/ambientes/${id}/`, 
+        { method: 'DELETE',
+         credentials: 'include'
+         })
+        
         .then(r => {
             if (!r.ok) throw new Error();
             return r.json();

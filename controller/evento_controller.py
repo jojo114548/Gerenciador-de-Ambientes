@@ -114,28 +114,6 @@ def criar_evento():
         return jsonify({"erro": f"Erro ao criar evento: {str(e)}"}), 500
     
 
-@eventos_bp.route("/eventos/<id>", methods=["PUT"])
-@jwt_required()
-def atualizar_evento(id):
-    try:
-        logado = get_jwt()
-       
-
-        if  logado["role"] != "admin":
-            return jsonify({"erro": "Você não tem permissão para editar este usuário."}), 403
-        
-        dados = request.get_json()
-        equipamentos = dados.pop("equipamentos", None)
-
-        
-        EventosService.atualizar(id, dados,equipamentos)
-        return jsonify({"mensagem": "Evento atualizado com sucesso"}), 200
-
-    except ValueError as e:
-        return jsonify({"erro": str(e)}), 400
-    except Exception as e:
-        return jsonify({"erro": "Erro ao alterar senha"}), 500
-    
 
 @eventos_bp.route("/eventos/<id>", methods=["DELETE"])
 @jwt_required()

@@ -22,6 +22,7 @@ def ambientes():
 
 
 @ambientes_bp.route('/ambientes/<id>', methods=['POST'])
+@jwt_required()
 def atualizar_ambiente(id):
 
     try:
@@ -59,9 +60,11 @@ def atualizar_ambiente(id):
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
-        return jsonify({"erro": "Erro ao alterar senha"}), 500
+        print(e)
+        return jsonify({"erro": "Erro ao Atualizar Ambiente"}), 500
 
-@ambientes_bp.route("/novo-ambiente", methods=['GET','POST'])
+@ambientes_bp.route("/novo-ambiente", methods=['POST'])
+@jwt_required()
 def novo_ambiente():
     try:
         logado = get_jwt()
@@ -84,7 +87,7 @@ def novo_ambiente():
         dados = {
             "name": request.form.get("name"),
             "type": request.form.get("type"),
-            "capacidade": int(request.form.get("capacidade")),
+            "capacidade" : int(request.form.get("capacidade")),
             "status": request.form.get("status", "Disponivel"),
             "descricao": request.form.get("descricao"),
             "localizacao": request.form.get("localizacao"),
@@ -95,14 +98,19 @@ def novo_ambiente():
 
         AmbientesService.inserir_ambiente(dados)
 
-
+        return jsonify({"mensagem": "Ambiente cadastrado com sucesso"}), 201
     
+
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
-        return jsonify({"erro": "Erro ao alterar senha"}), 500
+        return jsonify({"erro": "Erro cadastrar Ambiente "}), 500
+
+    
+
 
 @ambientes_bp.route("/ambientes/<id>/", methods=["DELETE"])
+@jwt_required()
 def deletar_ambiente(id):
 
     try:
@@ -117,4 +125,5 @@ def deletar_ambiente(id):
     except ValueError as e:
         return jsonify({"erro": str(e)}), 400
     except Exception as e:
-        return jsonify({"erro": "Erro ao alterar senha"}), 500
+        print(e)
+        return jsonify({"erro": "Erro ao deletar ambiente "}), 500

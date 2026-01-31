@@ -19,34 +19,41 @@
             <!-- Topbar -->
             <div class="topbar">
                 
+                
+               
                 <!-- Topbar Principal -->
                 <div class="topbar-main">
                     <h2>Painel do Administrador</h2>
                 </div>
-                <div>
-                  <a href="/index">voltar</a></div>
-
+               
+<div class="topbar-sair">
+                  <a href="/index" style=" color: #F87171;">
+                    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                  </a></div>
                 <!-- Navegação por Abas -->
                 <nav class="tabs-navigation">
                     <button class="tab-item active" data-tab="usuarios" onclick="switchTab('usuarios')">
                         Usuários
-                        <span class="tab-badge">{{ usuarios|length }}</span>
+                     
                     </button>
                     <button class="tab-item" data-tab="pendente" onclick="switchTab('pendente')">
                         Pendentes
-                        <span class="tab-badge">{{ (pendentes|length + pendentes_equipamentos|length) }}</span>
                     </button>
                     <button class="tab-item" data-tab="ambientes" onclick="switchTab('ambientes')">
                         Ambientes
-                        <span class="tab-badge">{{ ambientes|length }}</span>
+                       
                     </button>
                     <button class="tab-item" data-tab="equipamentos" onclick="switchTab('equipamentos')">
                         Equipamentos
-                        <span class="tab-badge">{{ equipamentos|length }}</span>
+                       
                     </button>
                     <button class="tab-item" data-tab="eventos" onclick="switchTab('eventos')">
                         Eventos
-                        <span class="tab-badge">{{ evento|length }}</span>
+                       
                     </button>
                     <button class="tab-item" data-tab="historico" onclick="switchTab('historico')">
                         Histórico Geral
@@ -129,7 +136,7 @@
                                                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                                                     </svg>
                                                 </button>
-                                                <button onclick="resetarSenhaPadrao('{{ usuario.id }}')" class="btn-reset">
+                                                <button onclick="resetarSenhaPadrao('{{ usuario.id }}')" class="btn-table-action primary">
   Resetar Senha Padrão
 </button>
 
@@ -234,7 +241,7 @@
                                         </td>
                                         <td data-label="Data/Hora">
                                             <div class="td-horario">
-                                                📅 {{ pending.data_equip }}<br>
+                                                📅 {{ pending.data }}<br>
                                                 ⏰ {{ pending.hora_inicio }} - {{ pending.hora_fim }}
                                             </div>
                                         </td>
@@ -291,12 +298,13 @@
                                 <tbody>
                                     {% for space in ambientes %}
                                     <tr class="card">
+                                        
                                         <td data-label="Ambiente">
                                             <div class="td-ambiente">
                                                 <img src="{{ space.image }}" class="ambiente-imagem" alt="{{ space.name }}">
                                                 <div class="td-info">
                                                     <h3 class="ambiente-nome">{{ space.name }}</h3>
-                                                    <p class="ambiente-descricao">{{ space.descricao}}</p>
+                                                    <p class="ambiente-descricao">{{ space.descricao }}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -306,7 +314,7 @@
                                         <td data-label="Capacidade" class="ambiente-capacidade">
                                             👥 {{ space.capacidade }} pessoas
                                         </td>
-                                        <td data-label="Recursos" class="td-recursos">
+                                        <td  class="td-recursos">
                                             <div class="recursos">
                                                 
                                                 <ul>
@@ -343,7 +351,7 @@
                                                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                                     </svg>
                                                 </button>
-                                                <button class="btn-acao excluir" title="Excluir" onclick="excluir('{{ space.id }}')">
+                                                <button class="btn-acao excluir" title="Excluir" onclick="excluirAmbiente('{{ space.id }}')">
                                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                         <polyline points="3 6 5 6 21 6"></polyline>
                                                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -447,7 +455,7 @@
                                                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                                     </svg>
                                                 </button>
-                                                <button class="btn-acao excluir" title="Excluir" onclick="excluir('{{ equipamento.id }}')">
+                                                <button class="btn-acao excluir" title="Excluir" onclick="excluirEquipamento('{{ equipamento.id }}')">
                                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                                         <polyline points="3 6 5 6 21 6"></polyline>
                                                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>

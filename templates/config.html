@@ -149,6 +149,7 @@
       minlength="6"
       required 
     />
+   
     <input 
       type="password" 
       id="confirmar-senha" 
@@ -158,7 +159,7 @@
     />
  
     <!-- ✅ Este botão APENAS altera a senha -->
-    <button type="submit">Alterar Senha</button>
+    <button type="submit"  class="save">Alterar Senha</button>
   </form>
 </div>
 
@@ -171,9 +172,9 @@
          Essa ação não poderá ser desfeita e você será deslogado automaticamente.</h3>
 
          <h3>Tem certeza de que deseja continuar?</h3>
-  <span>
-  <button onclick="excluirUsuario('{{user.id }}')">
-  Deletar Conta</button></span>
+ 
+  <button onclick="excluirUsuario('{{user.id }}')" class="btn-delete" >
+  Deletar Conta</button>
 {%endif%}
 {%endfor%}
 </div>

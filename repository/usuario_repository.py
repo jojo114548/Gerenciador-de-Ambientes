@@ -1,12 +1,14 @@
-import mysql.connector
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 
 def get_connection():
-    return mysql.connector.connect(
+    return psycopg2.connect(
         host="localhost",
-        user="root",
+        user="postgres",
         password="jojo4548",
-        database="nexus"
+        dbname="Nexus",
+        options="-c search_path=nexus"
     )
 
 
@@ -16,14 +18,14 @@ class UsuarioRepository:
     def listar():
         """Lista todos os usuários"""
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
             cursor.execute("""
                 SELECT 
                     id, name, email, cpf, rg, data_nascimento,
                     telefone, endereco, departamento, funcao,
                     role, image, status, created_at
-                FROM users
+                FROM nexus.users
                 ORDER BY name
             """)
             return cursor.fetchall()
@@ -34,7 +36,7 @@ class UsuarioRepository:
     @staticmethod
     def buscar_por_id(user_id):
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
             cursor.execute("""
                 SELECT 
@@ -42,34 +44,29 @@ class UsuarioRepository:
                     cpf, rg, data_nascimento,
                     telefone, endereco, departamento, funcao,
                     role, image, status, created_at, updated_at
-                FROM users
+                FROM nexus.users
                 WHERE id = %s
             """, (user_id,))
-            
             return cursor.fetchone()
         finally:
             cursor.close()
             conn.close()
-
-    
 
     @staticmethod
     def buscar_por_email(email):
         """Busca um usuário por email (com senha para autenticação)"""
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
             cursor.execute("""
-                SELECT * 
-                FROM users 
+                SELECT *
+                FROM nexus.users
                 WHERE email = %s
             """, (email,))
-            
             return cursor.fetchone()
         finally:
             cursor.close()
             conn.close()
-
 
     @staticmethod
     def adicionar(users):
@@ -78,7 +75,7 @@ class UsuarioRepository:
         cursor = conn.cursor()
         try:
             cursor.execute("""
-                INSERT INTO users (
+                INSERT INTO nexus.users (
                     id, name, email, cpf, rg, data_nascimento,
                     telefone, endereco, departamento, funcao,
                     role, image, status, senha
@@ -118,10 +115,8 @@ class UsuarioRepository:
         conn = get_connection()
         cursor = conn.cursor()
         try:
-           
-
             cursor.execute("""
-                UPDATE users
+                UPDATE nexus.users
                 SET name = %s,
                     email = %s,
                     cpf = %s,
@@ -133,7 +128,8 @@ class UsuarioRepository:
                     funcao = %s,
                     role = %s,
                     image = %s,
-                    status = %s
+                    status = %s,
+                    updated_at = CURRENT_TIMESTAMP
                 WHERE id = %s
             """, (
                 dados["name"],
@@ -161,20 +157,18 @@ class UsuarioRepository:
             cursor.close()
             conn.close()
 
-
-
     @staticmethod
     def deletar(usuario_id):
         """Remove um usuário (CASCADE deleta dependências automaticamente)"""
         conn = get_connection()
         cursor = conn.cursor()
         try:
-
-            
             cursor.execute("""
-                DELETE FROM users WHERE id = %s
+                DELETE FROM nexus.users WHERE id = %s
             """, (usuario_id,))
 
+            if cursor.rowcount == 0:
+                raise ValueError("Usuário não encontrado")
 
             conn.commit()
 
@@ -192,8 +186,8 @@ class UsuarioRepository:
         cursor = conn.cursor()
         try:
             cursor.execute(
-                "SELECT 1 FROM users WHERE id = %s",
-                (str(usuario_id),)
+                "SELECT 1 FROM nexus.users WHERE id = %s",
+                (usuario_id,)
             )
             return cursor.fetchone() is not None
         finally:
@@ -207,14 +201,14 @@ class UsuarioRepository:
         cursor = conn.cursor()
         try:
             cursor.execute("""
-                UPDATE users
+                UPDATE nexus.users
                 SET senha = %s,
                     updated_at = CURRENT_TIMESTAMP
                 WHERE id = %s
             """, (senha_hash, usuario_id))
 
             conn.commit()
-            
+
         except Exception as e:
             conn.rollback()
             raise e
@@ -222,4 +216,3 @@ class UsuarioRepository:
         finally:
             cursor.close()
             conn.close()
-    

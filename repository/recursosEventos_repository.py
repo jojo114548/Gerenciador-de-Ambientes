@@ -1,12 +1,14 @@
-import mysql.connector
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 
 def get_connection():
-    return mysql.connector.connect(
+    return psycopg2.connect(
         host="localhost",
-        user="root",
+        user="postgres",
         password="jojo4548",
-        database="nexus"
+        dbname="Nexus",
+        options="-c search_path=nexus"
     )
 
 
@@ -17,8 +19,12 @@ class RecursosRepository:
     @staticmethod
     def listar_ambientes():
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM ambientes WHERE status = 'Disponivel' ORDER BY name")
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute("""
+            SELECT * FROM nexus.ambientes 
+            WHERE status = 'Disponivel' 
+            ORDER BY name
+        """)
         ambientes = cursor.fetchall()
         cursor.close()
         conn.close()
@@ -28,8 +34,11 @@ class RecursosRepository:
     def buscar_ambiente_por_id(id):
         """Busca um ambiente específico por ID"""
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM ambientes WHERE id = %s", (id,))
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute(
+            "SELECT * FROM nexus.ambientes WHERE id = %s",
+            (id,)
+        )
         ambiente = cursor.fetchone()
         cursor.close()
         conn.close()
@@ -39,28 +48,33 @@ class RecursosRepository:
     def verificar_disponibilidade_ambiente(ambiente_id, data_evento, hora_evento):
         """Verifica se o ambiente está disponível na data/hora especificada"""
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         cursor.execute("""
-            SELECT COUNT(*) as total FROM eventos 
+            SELECT COUNT(*) AS total 
+            FROM nexus.eventos 
             WHERE ambiente_id = %s 
-            AND data_evento = %s 
-            AND hora_evento = %s
+              AND data_evento = %s 
+              AND hora_evento = %s
         """, (ambiente_id, data_evento, hora_evento))
         
         result = cursor.fetchone()
         cursor.close()
         conn.close()
         
-        return result['total'] == 0
+        return result["total"] == 0
     
     # ========== EQUIPAMENTOS ==========
     
     @staticmethod
     def listar_equipamentos():
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM equipamentos WHERE status = 'Disponivel' ORDER BY name")
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute("""
+            SELECT * FROM nexus.equipamentos 
+            WHERE status = 'Disponivel' 
+            ORDER BY name
+        """)
         equipamentos = cursor.fetchall()
         cursor.close()
         conn.close()
@@ -69,8 +83,11 @@ class RecursosRepository:
     @staticmethod
     def buscar_equipamento_por_id(id):
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM equipamentos WHERE id = %s", (id,))
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute(
+            "SELECT * FROM nexus.equipamentos WHERE id = %s",
+            (id,)
+        )
         equipamento = cursor.fetchone()
         cursor.close()
         conn.close()
@@ -80,11 +97,12 @@ class RecursosRepository:
     def verificar_disponibilidade_equipamento(equipamento_id, quantidade, data_evento, hora_evento):
         """Verifica se há equipamentos suficientes disponíveis"""
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Busca a quantidade disponível
         cursor.execute("""
-            SELECT quantidade_disponivel FROM equipamentos 
+            SELECT quantidade_disponivel 
+            FROM nexus.equipamentos 
             WHERE id = %s
         """, (equipamento_id,))
         
@@ -97,19 +115,19 @@ class RecursosRepository:
         
         # Verifica quanto já está reservado para o mesmo horário
         cursor.execute("""
-            SELECT COALESCE(SUM(ee.quantidade), 0) as reservado
-            FROM eventos_equipamentos ee
-            JOIN eventos e ON ee.evento_id = e.id
+            SELECT COALESCE(SUM(ee.quantidade), 0) AS reservado
+            FROM nexus.eventos_equipamentos ee
+            JOIN nexus.eventos e ON ee.evento_id = e.id
             WHERE ee.equipamento_id = %s
-            AND e.data_evento = %s
-            AND e.hora_evento = %s
+              AND e.data_evento = %s
+              AND e.hora_evento = %s
         """, (equipamento_id, data_evento, hora_evento))
         
         result = cursor.fetchone()
         cursor.close()
         conn.close()
         
-        disponivel = equipamento['quantidade_disponivel'] - result['reservado']
+        disponivel = equipamento["quantidade_disponivel"] - result["reservado"]
         return disponivel >= quantidade
     
     @staticmethod
@@ -122,10 +140,14 @@ class RecursosRepository:
         
         for equip in equipamentos:
             cursor.execute("""
-                INSERT INTO eventos_equipamentos 
+                INSERT INTO nexus.eventos_equipamentos 
                 (evento_id, equipamento_id, quantidade)
                 VALUES (%s, %s, %s)
-            """, (evento_id, equip['equipamento_id'], equip['quantidade']))
+            """, (
+                evento_id,
+                equip["equipamento_id"],
+                equip["quantidade"]
+            ))
         
         conn.commit()
         cursor.close()
@@ -135,16 +157,16 @@ class RecursosRepository:
     def listar_equipamentos_evento(evento_id):
         """Lista todos os equipamentos de um evento"""
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         cursor.execute("""
             SELECT 
                 ee.id,
                 ee.quantidade,
-                e.id as equipamento_id,
+                e.id AS equipamento_id,
                 e.name,
                 e.descricao
-            FROM eventos_equipamentos ee
+            FROM nexus.eventos_equipamentos ee
             JOIN equipamentos e ON ee.equipamento_id = e.id
             WHERE ee.evento_id = %s
         """, (evento_id,))
@@ -161,7 +183,7 @@ class RecursosRepository:
         cursor = conn.cursor()
         
         cursor.execute("""
-            DELETE FROM eventos_equipamentos 
+            DELETE FROM nexus.eventos_equipamentos 
             WHERE evento_id = %s
         """, (evento_id,))
         
