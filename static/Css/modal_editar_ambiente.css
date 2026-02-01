@@ -1,0 +1,166 @@
+/* ======================================================
+   OVERLAY
+====================================================== */
+#modal-editar.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1500;
+}
+
+#modal-editar.modal.active {
+  display: flex;
+}
+
+/* ======================================================
+   CONTEÚDO DO MODAL
+====================================================== */
+#modal-editar .modal-content {
+  background: #ffffff;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  animation: modalFadeIn 0.25s ease;
+}
+
+/* ======================================================
+   BOTÃO FECHAR
+====================================================== */
+#modal-editar .close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+#modal-editar .close:hover {
+  color: #111827;
+}
+
+/* ======================================================
+   TÍTULO
+====================================================== */
+#modal-editar h2 {
+  margin-bottom: 1.4rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ======================================================
+   FORMULÁRIO
+====================================================== */
+#form-editar-ambiente {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+#form-editar-ambiente label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+#form-editar-ambiente input,
+#form-editar-ambiente select,
+#form-editar-ambiente textarea {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#form-editar-ambiente textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+#form-editar-ambiente input:focus,
+#form-editar-ambiente select:focus,
+#form-editar-ambiente textarea:focus {
+  border-color: #2563eb;
+}
+
+/* ======================================================
+   PREVIEW DA IMAGEM
+====================================================== */
+#modal-editar .preview {
+  margin-top: 0.5rem;
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  display: none;
+}
+
+/* exiba via JS adicionando display:block */
+#modal-editar .preview.active {
+  display: block;
+}
+
+/* ======================================================
+   RECURSOS
+====================================================== */
+#recursos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ======================================================
+   BOTÃO SALVAR
+====================================================== */
+#form-editar-ambiente .btn-salvar {
+  margin-top: 1.4rem;
+  padding: 0.65rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+#form-editar-ambiente .btn-salvar:hover {
+  background: #1e40af;
+}
+
+/* ======================================================
+   ANIMAÇÃO
+====================================================== */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+@media (max-width: 640px) {
+  #modal-editar .modal-content {
+    padding: 1.5rem;
+  }
+}

@@ -1,0 +1,93 @@
+ <link rel="stylesheet" href="/static/Css/modal_cadastrar_usuario.css">
+ <div id="cadastrar-user-modal" class="modal" >
+        <div class="modal-overlay"  onclick="FecharCadastrar()"></div>
+        <div class="modal-content modal-booking">
+            <button class="modal-close"  onclick="FecharCadastrar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="booking-header">
+                <h2>Adicionar Novo Usuário</h2>
+                <p>Preencha os dados do novo usuário</p>
+            </div>
+            <form id="cadastrar-user-Adm" class="booking-form"  action="/novo-usuario" method="POST"  enctype="multipart/form-data">
+               <div class="form-group">
+    <label for="user-image">Foto de Perfil</label>
+    <input type="file" id="user-image" name="image" accept="image/*">
+</div>
+                <div class="form-group">
+                    <label for="user-name">Nome Completo</label>
+                    <input type="text" id="user-name" name="name" placeholder="Nome do usuário" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-email">E-mail</label>
+                    <input type="email" id="user-email" name="email" placeholder="email@exemplo.com" required>
+                </div>
+                <div class="form-group">
+    <label for="user-cpf">CPF</label>
+    <input
+        type="text"
+        id="user-cpf"
+        name="cpf"
+        placeholder="000.000.000-00"
+        required
+        maxlength="14"
+       
+    >
+</div>
+ 
+<div class="form-group">
+          <label for="user-rg">RG</label>
+          <input type="text" id="user-rg" name="rg" required>
+        </div>
+    <!-- TELEFONE -->
+    <div class="form-group">
+        <label for="user-telefone">Telefone</label>
+        <input type="text"
+               id="user-telefone"
+               name="telefone"
+               placeholder="(00) 00000-0000">
+    </div>
+
+    <!-- DATA NASCIMENTO -->
+    <div class="form-group">
+        <label for="user-data-nascimento">Data de Nascimento</label>
+        <input type="date"
+               id="user-data-nascimento"
+               name="data_nascimento">
+    </div>
+
+ 
+        <div class="form-group">
+            <label for="user-role">Função</label>
+            <select id="user-role" name="role" required>
+                <option value="">Selecione...</option>
+                <option value="admin">Administrador</option>
+                <option value="user">Usuário</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="user-status">Status</label>
+            <select id="user-status" name="status" required>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+            </select>
+        </div>
+     
+                    
+                <div class="form-group">
+                    <label for="user-password">Senha Temporária</label>
+                    <input type="password" id="user-password" name="senha" placeholder="••••••••" required minlength="6">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="FecharCadastrar()" >Cancelar</button>
+                    <button type="submit" class="btn-primary">Adicionar Usuário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/Javascript/cadastrar_usuario.js"></script>

@@ -1,0 +1,61 @@
+<link rel="stylesheet" href="/static/Css/modal_evento_detalhes.css">
+
+<div id="modaldetalhes" class="modal">
+    <div class="modal-content">
+        <button class="btn-cancelar" onclick="fecharModalDetalhes()">×</button>
+
+        <img id="md-image" class="modal-imagem" alt="Evento" style="display: none; max-width: 100%; border-radius: 8px; margin-bottom: 16px;">
+
+        <div class="modal-header">
+            <h2 id="md-titulo">Título do Evento</h2>
+            <span class="tag" id="md-tipo">Evento</span>
+        </div>
+
+        <div class="modal-info">
+            <div class="info-item">
+                <strong>📅 Data:</strong>
+                <span id="md-data">-</span>
+            </div>
+            <div class="info-item">
+                <strong>⏰ Hora:</strong>
+                <span id="md-hora">-</span>
+            </div>
+            <div class="info-item">
+                <strong>📍 Local:</strong>
+                <span id="md-local">-</span>
+            </div>
+            <div class="info-item">
+                <strong>👥 Participantes:</strong>
+                <span id="md-capacidade">0/0</span>
+            </div>
+        </div>
+
+        <hr style="margin: 20px 0; border: none; border-top: 1px solid #e2e8f0;">
+
+        <h3>Sobre o Evento</h3>
+        <p id="md-descricao">Descrição do evento</p>
+
+        <h3>Informações Adicionais</h3>
+        <div class="extra-info">
+            <div class="extra-info-item">
+                <strong>👨‍🏫 Instrutor:</strong> 
+                <span id="md-instrutor">-</span>
+            </div>
+            <div class="extra-info-item">
+                <strong>🎟️ Vagas Restantes:</strong> 
+                <span id="md-vagas">0</span>
+            </div>
+            <div class="extra-info-item">
+                <strong>🏢 Ambiente:</strong> 
+                <span id="md-ambiente">-</span>
+            </div>
+        </div>
+       
+        <div class="actions" id="md-actions">
+            <button class="btn-reserve" disabled style="background: #e2e8f0; color: #64748b; padding: 10px 20px; border: none; border-radius: 8px; cursor: not-allowed;">
+                Carregando...
+            </button>
+        </div>
+    </div>
+</div>
+<script src="/static/Javascript/detalhes_eventos.js"></script>

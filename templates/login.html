@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus - Sistema de Agendamentos</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<body>
+  <main class="page-home">
+        <div class="container">
+            <!-- Painel de login (esquerda) -->
+            <aside class="login-panel">
+                <div class="login-content">
+                    <div class="login-header">
+                        <h2>Login</h2>
+                    </div>
+
+                    <form class="login-form" action="/login" method="POST">
+                        <div class="form-group">
+                            <label for="email">Usuario</label>
+                            <input type="email" id="email" name="email" placeholder="Usuario" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input type="password" id="senha" name="senha" placeholder="Senha" required>
+                        </div>
+
+        
+
+                        <button type="submit" class="btn-primary">Login</button>
+                    </form>
+                </div>
+            </aside>
+
+            <!-- Conteúdo de boas-vindas (direita) -->
+            <div class="hero-content">
+                <div class="hero-inner">
+                    <img src="/static/imgs/logo.png" alt="Logo Nexus" class="logo" >
+                    
+                    <h1 class="hero-title">Gerencie seus agendamentos de forma simples e eficiente!</h1>
+                    
+                    <p class="hero-subtitle">
+                        Sistema completo para reserva de ambientes e equipamentos, organização de eventos e acompanhamento em tempo real. Tudo em uma única plataforma.
+                    </p>
+
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

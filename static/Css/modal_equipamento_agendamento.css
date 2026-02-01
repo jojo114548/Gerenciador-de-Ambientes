@@ -1,0 +1,174 @@
+/* ======================================================
+   OVERLAY
+====================================================== */
+#modal-equipamento.modal-agendamento {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1500;
+}
+
+#modal-equipamento.modal-agendamento.active {
+  display: flex;
+}
+
+/* ======================================================
+   BOX DO MODAL
+====================================================== */
+#modal-equipamento .modal-box {
+  background: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+  animation: modalFadeIn 0.25s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ======================================================
+   BOTÃO FECHAR
+====================================================== */
+#modal-equipamento .close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+#modal-equipamento .close:hover {
+  color: #111827;
+}
+
+/* ======================================================
+   TÍTULO
+====================================================== */
+#modal-equipamento h2 {
+  margin-bottom: 1.4rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+}
+
+/* ======================================================
+   FORMULÁRIO
+====================================================== */
+#form-agendamento-equipamento {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+#form-agendamento-equipamento label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+#form-agendamento-equipamento input,
+#form-agendamento-equipamento textarea {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#form-agendamento-equipamento textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+#form-agendamento-equipamento input:focus,
+#form-agendamento-equipamento textarea:focus {
+  border-color: #2563eb;
+}
+
+/* ======================================================
+   HORÁRIOS (LINHA DUPLA)
+====================================================== */
+#form-agendamento-equipamento .horarios {
+  display: flex;
+  gap: 1rem;
+}
+
+#form-agendamento-equipamento .horarios div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* ======================================================
+   BOTÕES
+====================================================== */
+#form-agendamento-equipamento .acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+#form-agendamento-equipamento .btn-cancelar {
+  background: #e5e7eb;
+  color: #374151;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#form-agendamento-equipamento .btn-cancelar:hover {
+  background: #d1d5db;
+}
+
+#form-agendamento-equipamento .btn-confirmar {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#form-agendamento-equipamento .btn-confirmar:hover {
+  background: #1e40af;
+}
+
+/* ======================================================
+   ANIMAÇÃO
+====================================================== */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+@media (max-width: 500px) {
+  #modal-equipamento .modal-box {
+    padding: 1.5rem;
+  }
+
+  #form-agendamento-equipamento .horarios {
+    flex-direction: column;
+  }
+}

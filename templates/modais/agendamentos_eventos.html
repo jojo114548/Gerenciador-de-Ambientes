@@ -1,0 +1,158 @@
+<link rel="stylesheet" href="/static/Css/modal_agendamentoEvento.css">
+
+<div id="modalAgendamento" class="modal-overlay" style="display: none;">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2>Novo Agendamento de Evento</h2>
+      <button class="modal-close" onclick="fecharModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <form id="formEvento" enctype="multipart/form-data">
+      <div class="modal-body">
+        
+        <!-- Informações Básicas -->
+        <div class="form-section">
+          <h3 class="section-title">Informações do Evento</h3>
+          
+          <div class="form-group">
+            <label for="titulo">Título do Evento *</label>
+            <input type="text" id="titulo" name="titulo" required 
+                   placeholder="Ex: Workshop de Desenvolvimento Web">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="data_evento">Data *</label>
+              <input type="date" id="data_evento" name="data_evento" required>
+            </div>
+
+            <div class="form-group">
+              <label for="hora_evento">Horário *</label>
+              <input type="time" id="hora_evento" name="hora_evento" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tipo">Tipo de Evento *</label>
+            <select id="tipo" name="tipo" required>
+              <option value="">Selecione...</option>
+              <option value="workshop">workshop</option>
+              <option value="hackathon">hackathon</option>
+              <option value="palestra">palestra</option>
+              <option value="outro">outro</option>
+            </select>
+          </div>
+       <div class="form-group">
+          <label for="localizacao">localizacao</label>
+            <input
+  type="text"
+  name="localizacao"
+  id="localizacao"
+  required
+>
+          </div>
+          <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" rows="3" 
+                      placeholder="Descreva o evento..."></textarea>
+          </div>
+        </div>
+
+        <!-- Recursos -->
+        <div class="form-section">
+          <h3 class="section-title">Recursos Necessários</h3>
+          
+          <div class="form-group">
+            <label for="ambiente_id">Ambiente *</label>
+            <select id="ambiente_id" name="ambiente_id" required onchange="atualizarCapacidadeAmbiente()">
+              <option value="">Selecione um ambiente...</option>
+              {% for ambiente in ambientes %}
+              <option value="{{ ambiente.id }}" data-capacidade="{{ ambiente.capacidade }}">
+                {{ ambiente.name }} (Capacidade: {{ ambiente.capacidade }} pessoas)
+              </option>
+              {% endfor %}
+            </select>
+            <small class="form-hint" id="ambiente-info"></small>
+          </div>
+
+          <div class="form-group">
+            <label>Equipamentos</label>
+            <div id="equipamentos-container">
+              <div class="equipamento-item">
+                <select name="equipamentos[]" class="equipamento-select">
+                  <option value="">Selecione um equipamento...</option>
+                  {% for equipamento in equipamentos %}
+                  <option value="{{ equipamento.id }}" data-disponivel="{{ equipamento.quantidade_disponivel }}">
+                    {{ equipamento.name }} ({{ equipamento.tipo }}) - Disponível: {{ equipamento.quantidade_disponivel }}
+                  </option>
+                  {% endfor %}
+                </select>
+                <input type="number" name="quantidades[]" min="1" value="1" 
+                       class="quantidade-input" placeholder="Qtd">
+                <button type="button" class="btn-remove-equipamento" onclick="removerEquipamento(this)" style="display:none;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <button type="button" class="btn-adicionar-equipamento" onclick="adicionarEquipamento()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Adicionar Equipamento
+            </button>
+          </div>
+        </div>
+
+        <!-- Detalhes Adicionais -->
+        <div class="form-section">
+          <h3 class="section-title">Detalhes Adicionais</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="capacidade">Capacidade *</label>
+              <input type="number" id="capacidade" name="capacidade" min="1" required 
+                     placeholder="Número de participantes">
+              <small class="form-hint" id="capacidade-hint"></small>
+            </div>
+
+            <div class="form-group">
+              <label for="participantes">Participantes Iniciais</label>
+              <input type="number" id="participantes" name="participantes" min="0" value="0">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="instrutor">Instrutor/Responsável *</label>
+            <input type="text" id="instrutor" name="instrutor" required 
+                   placeholder="Nome do instrutor">
+          </div>
+
+          <div class="form-group">
+            <label for="image">Imagem do Evento</label>
+            <input type="file" id="image" name="image" accept="image/*">
+            <small class="form-hint">Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</small>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="fecharModal()">Cancelar</button>
+        
+        <button type="submit" class="btn-primary">Criar Evento</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script src="/static/Javascript/agendamentos_eventos.js"></script>

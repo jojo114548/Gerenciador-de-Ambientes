@@ -1,0 +1,275 @@
+/* ======================================================
+   OVERLAY
+====================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+/* ======================================================
+   CONTAINER MODAL
+====================================================== */
+.modal-container,
+.modal-content.modal-booking {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 700px;
+  width: 95%;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalFadeIn 0.25s ease;
+}
+
+/* ======================================================
+   BOTÃO FECHAR
+====================================================== */
+.modal-close,
+.modal-container .modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #374151;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #111827;
+}
+
+/* ======================================================
+   SEÇÃO DE USUÁRIO
+====================================================== */
+.section-usuario {
+  margin-top: 1rem;
+}
+
+.cards-grid-usuario {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ======================================================
+   CARD USUÁRIO
+====================================================== */
+.card-adm-usuario {
+  background: #f9fafb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+.card-adm-usuario:hover {
+  transform: translateY(-3px);
+}
+
+.img-usuario img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.card-body-adm {
+  padding: 1rem;
+}
+
+.card-body-adm h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: #111827;
+}
+
+.card-body-adm p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.card-body-adm .info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #374151;
+  margin-bottom: 0.75rem;
+}
+
+/* ======================================================
+   AÇÕES DO CARD
+====================================================== */
+.actions-adm {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.actions-adm .btn-details,
+.actions-adm .btn-reserve {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.actions-adm .btn-details {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.actions-adm .btn-details:hover {
+  background: #dc2626;
+}
+
+.actions-adm .btn-reserve {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.actions-adm .btn-reserve:hover {
+  background: #2563eb;
+}
+
+/* ======================================================
+   FORMULÁRIO DE EDIÇÃO
+====================================================== */
+.booking-header h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.booking-header p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.booking-form .form-group,
+.booking-form .form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+}
+
+.booking-form .form-row {
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.booking-form label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+
+.booking-form .preview {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+/* ======================================================
+   FORM ACTIONS
+====================================================== */
+.booking-form .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.booking-form .btn-primary {
+  background: #3b82f6;
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.booking-form .btn-primary:hover {
+  background: #2563eb;
+}
+
+.booking-form .btn-secondary {
+  background: #e5e7eb;
+  color: #374151;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.booking-form .btn-secondary:hover {
+  background: #d1d5db;
+}
+
+/* ======================================================
+   ANIMAÇÃO
+====================================================== */
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+@media (max-width: 600px) {
+  .booking-form .form-row {
+    flex-direction: column;
+  }
+
+  .cards-grid-usuario {
+    grid-template-columns: 1fr;
+  }
+}

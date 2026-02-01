@@ -1,0 +1,185 @@
+/* ======================================================
+   CONTAINER PRINCIPAL
+====================================================== */
+#cadastrar-user-modal.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 1600;
+}
+
+#cadastrar-user-modal.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ======================================================
+   OVERLAY
+====================================================== */
+#cadastrar-user-modal .modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* ======================================================
+   MODAL CONTENT
+====================================================== */
+#cadastrar-user-modal .modal-content {
+  position: relative;
+  background: #ffffff;
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 16px;
+  padding: 2rem;
+  z-index: 2;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  animation: modalScaleIn 0.25s ease;
+}
+
+/* ======================================================
+   BOTÃO FECHAR
+====================================================== */
+#cadastrar-user-modal .modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+#cadastrar-user-modal .modal-close:hover {
+  color: #111827;
+}
+
+/* ======================================================
+   HEADER
+====================================================== */
+#cadastrar-user-modal .booking-header {
+  margin-bottom: 1.5rem;
+}
+
+#cadastrar-user-modal .booking-header h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+#cadastrar-user-modal .booking-header p {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* ======================================================
+   FORMULÁRIO
+====================================================== */
+#cadastrar-user-modal .booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#cadastrar-user-modal .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+#cadastrar-user-modal .form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.3rem;
+}
+
+#cadastrar-user-modal .form-group input,
+#cadastrar-user-modal .form-group select {
+  padding: 0.55rem 0.65rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#cadastrar-user-modal .form-group input:focus,
+#cadastrar-user-modal .form-group select:focus {
+  border-color: #2563eb;
+}
+
+/* ======================================================
+   LINHAS
+====================================================== */
+#cadastrar-user-modal .form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+/* ======================================================
+   AÇÕES
+====================================================== */
+#cadastrar-user-modal .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+#cadastrar-user-modal .btn-secondary {
+  background: #f3f4f6;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+#cadastrar-user-modal .btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+#cadastrar-user-modal .btn-primary {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.3rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+#cadastrar-user-modal .btn-primary:hover {
+  background: #1e40af;
+}
+
+/* ======================================================
+   ANIMAÇÃO
+====================================================== */
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+@media (max-width: 640px) {
+  #cadastrar-user-modal .modal-content {
+    padding: 1.5rem;
+  }
+
+  #cadastrar-user-modal .form-row {
+    grid-template-columns: 1fr;
+  }
+}

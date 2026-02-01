@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Administrador - Sistema de Agendamentos</title>
+    <link rel="stylesheet" href="/static/Css/painelAdm.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+   
+
+        
+        <main class="adm-panel">
+            <!-- Topbar -->
+            <div class="topbar">
+                
+                
+               
+                <!-- Topbar Principal -->
+                <div class="topbar-main">
+                    <h2>Painel do Administrador</h2>
+                </div>
+               
+<div class="topbar-sair">
+                  <a href="/index" style=" color: #F87171;">
+                    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                  </a></div>
+                <!-- Navegação por Abas -->
+                <nav class="tabs-navigation">
+                    <button class="tab-item active" data-tab="usuarios" onclick="switchTab('usuarios')">
+                        Usuários
+                     
+                    </button>
+                    <button class="tab-item" data-tab="pendente" onclick="switchTab('pendente')">
+                        Pendentes
+                    </button>
+                    <button class="tab-item" data-tab="ambientes" onclick="switchTab('ambientes')">
+                        Ambientes
+                       
+                    </button>
+                    <button class="tab-item" data-tab="equipamentos" onclick="switchTab('equipamentos')">
+                        Equipamentos
+                       
+                    </button>
+                    <button class="tab-item" data-tab="eventos" onclick="switchTab('eventos')">
+                        Eventos
+                       
+                    </button>
+                    <button class="tab-item" data-tab="historico" onclick="switchTab('historico')">
+                        Histórico Geral
+                    </button>
+                </nav>
+            </div>
+
+         
+
+            <!-- Conteúdo -->
+            <div class="content-wrapper">
+                <div class="content-main">
+                    
+                    <!-- ========== ABA: USUÁRIOS ========== -->
+                    <div class="tab-content active" id="tab-usuarios">
+                        <section class="section-usuario">
+                            <div class="section-header">
+                                <h2>Gerenciar Usuários</h2>
+                                <button class="btn-adicionar" onclick="Cadastrar()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Adicionar Usuário
+                                </button>
+                            </div>
+
+                            <table class="table-ambientes">
+                                <thead>
+                                    <tr>
+                                        <th>Usuário</th>
+                                        <th>Email</th>
+                                        <th>Função</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for usuario in usuarios %}
+                                    <tr>
+                                        <td data-label="Usuário">
+                                            <div class="td-ambiente">
+                                                <img src="{{ usuario.image }}" class="td-imagem td-imagem-user" alt="{{ usuario.name }}">
+                                                <div class="td-info">
+                                                    <h3>{{ usuario.name }}</h3>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-label="Email" class="td-localizacao">
+                                            {{ usuario.email }}
+                                        </td>
+                                        <td data-label="Função">
+                                            {% if usuario.role == 'admin' %}
+                                            <span class="categoria-badge badge-admin">Admin</span>
+                                            {% else %}
+                                            <span class="categoria-badge badge-user">Usuário</span>
+                                            {% endif %}
+                                        </td>
+                                        <td data-label="Status">
+                                            {% if usuario.status == 'ativo' %}
+                                            <span class="status-badge approved">Ativo</span>
+                                            {% elif usuario.status == 'inativo' %}
+                                            <span class="status-badge cancelled">Inativo</span>
+                                            {% else %}
+                                            <span class="status-badge pending">{{ usuario.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td data-label="Ações">
+                                            <div class="td-acoes">
+                                                <button class="btn-acao editar" title="Editar"
+                                                    onclick="abrirEditarUsuario('{{ usuario.id }}', '{{ usuario.image }}', '{{ usuario.name }}', '{{ usuario.email }}', '{{ usuario.cpf }}', '{{ usuario.rg }}', '{{ usuario.data_nascimento }}', '{{ usuario.telefone }}', '{{ usuario.endereco }}', '{{ usuario.departamento }}', '{{ usuario.funcao }}', '{{ usuario.role }}', '{{ usuario.status }}')">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-acao excluir" title="Excluir" onclick="deletarUsuario('{{ usuario.id }}')">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                                <button onclick="resetarSenhaPadrao('{{ usuario.id }}')" class="btn-table-action primary">
+  Resetar Senha Padrão
+</button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                    <!-- ========== ABA: PENDENTES ========== -->
+                    <div class="tab-content" id="tab-pendente">
+                        <section class="section-pendentes">
+                            <div class="section-header">
+                                <h2>Agendamentos Pendentes</h2>
+                                <span style="color: #6b7280; font-size: 14px;">Aprovar ou rejeitar solicitações de agendamento</span>
+                            </div>
+
+                            <table class="table-ambientes">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Finalidade</th>
+                                        <th>Data/Hora</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Pendentes de Ambientes -->
+                                    {% for pending in pendentes %}
+                                    {% if pending.status == 'pendente' %}
+                                    <tr>
+                                        <td data-label="Item">
+                                            <div class="td-ambiente">
+                                                <div class="icone-history" style="background: #fef3c7;">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                    </svg>
+                                                </div>
+                                                <div class="td-info">
+                                                    <h3>Ambiente</h3>
+                                                    <p>ID: {{ pending.ambiente_id }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-label="Finalidade" class="td-localizacao">
+                                            {{ pending.finalidade }}
+                                        </td>
+                                        <td data-label="Data/Hora">
+                                            <div class="td-horario">
+                                                📅 {{ pending.data }}<br>
+                                                ⏰ {{ pending.hora_inicio }} - {{ pending.hora_fim }}
+                                            </div>
+                                        </td>
+                                        <td data-label="Status">
+                                            <span class="status-badge pending">{{ pending.status }}</span>
+                                        </td>
+                                        <td data-label="Ações">
+                                            <div class="td-acoes">
+                                                <button class="btn-table-action primary" 
+                                                    onclick="atualizarStatusAmbiente('{{ pending.pendente_id }}', 'Confirmado')"
+                                                    style="background: #d1fae5; color: #065f46;">
+                                                    ✓ Aprovar
+                                                </button>
+                                                <button class="btn-table-action secondary" 
+                                                    onclick="atualizarStatusAmbiente('{{ pending.pendente_id }}', 'Rejeitado')"
+                                                    style="background: #fee2e2; color: #991b1b;">
+                                                    ✗ Rejeitar
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    <!-- Pendentes de Equipamentos -->
+                                    {% for pending in pendentes_equipamentos %}
+                                    {% if pending.status == 'pendente' %}
+                                    <tr>
+                                        <td data-label="Item">
+                                            <div class="td-ambiente">
+                                                <div class="icone-history" style="background: #fef3c7;">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                                    </svg>
+                                                </div>
+                                                <div class="td-info">
+                                                    <h3>Equipamento</h3>
+                                                    <p>ID: {{ pending.equipamento_id }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-label="Finalidade" class="td-localizacao">
+                                            {{ pending.finalidade }}
+                                        </td>
+                                        <td data-label="Data/Hora">
+                                            <div class="td-horario">
+                                                📅 {{ pending.data }}<br>
+                                                ⏰ {{ pending.hora_inicio }} - {{ pending.hora_fim }}
+                                            </div>
+                                        </td>
+                                        <td data-label="Status">
+                                            <span class="status-badge pending">{{ pending.status }}</span>
+                                        </td>
+                                        <td data-label="Ações">
+                                            <div class="td-acoes">
+                                                <button class="btn-table-action primary" 
+                                                    onclick="atualizarStatusEquipamento('{{ pending.pendente_id }}', 'Confirmado')"
+                                                    style="background: #d1fae5; color: #065f46;">
+                                                    ✓ Aprovar
+                                                </button>
+                                                <button class="btn-table-action secondary" 
+                                                    onclick="atualizarStatusEquipamento('{{ pending.pendente_id }}', 'Rejeitado')"
+                                                    style="background: #fee2e2; color: #991b1b;">
+                                                    ✗ Rejeitar
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                    <!-- ========== ABA: AMBIENTES ========== -->
+                    <div class="tab-content" id="tab-ambientes">
+                        <section class="section">
+                            <div class="section-header">
+                                <h2>Ambientes </h2>
+                                <button class="btn-adicionar" onclick="abrirModalAmbiente()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Novo Ambiente
+                                </button>
+                            </div>
+
+                            <table class="table-ambientes">
+                                <thead>
+                                    <tr>
+                                        <th>Ambiente</th>
+                                        <th>Localização</th>
+                                        <th>Capacidade</th>
+                                        <th>Recursos</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for space in ambientes %}
+                                    <tr class="card">
+                                        
+                                        <td data-label="Ambiente">
+                                            <div class="td-ambiente">
+                                                <img src="{{ space.image }}" class="ambiente-imagem" alt="{{ space.name }}">
+                                                <div class="td-info">
+                                                    <h3 class="ambiente-nome">{{ space.name }}</h3>
+                                                    <p class="ambiente-descricao">{{ space.descricao }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-label="Localização" class="ambiente-localizacao">
+                                            {{ space.localizacao }}
+                                        </td>
+                                        <td data-label="Capacidade" class="ambiente-capacidade">
+                                            👥 {{space.capacidade}} pessoas
+                                        </td>
+                                        
+                                        <td  class="td-recursos">
+                                             
+                                            <div class="recursos">
+                                                {% for recurso in space.recursos %}
+                                                <ul>
+                                     
+                                                  
+                                        <li>{{ recurso }}</li>
+                                       
+                                                  
+                                                 </ul>
+                                               {%endfor%}
+                                               
+                                            </div>
+                                            
+                                        </td>
+                                        
+                                        <td data-label="Status" class="ambiente-status">
+                                            {% if space.status == 'Disponivel' or space.status == 'Disponível' %}
+                                            <span class="status-badge disponivel">Disponível</span>
+                                            {% elif space.status == 'Manutenção' or space.status == 'Manutencao' %}
+                                            <span class="status-badge manutencao">Manutenção</span>
+                                            {% else %}
+                                            <span class="status-badge indisponivel">Indisponível</span>
+                                            {% endif %}
+                                        </td>
+                                        <td data-label="Ações">
+                                            <div class="td-acoes">
+                                                <button class="btn-acao" title="Ver Detalhes" onclick="abrirModalDetalhesAmbiente(this)" data-ambiente='{{ space|tojson }}'>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                        <circle cx="12" cy="12" r="3"></circle>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-acao editar" title="Editar" onclick="abrirModalEditar(this)" data-ambiente='{{ space|tojson }}'>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-acao excluir" title="Excluir" onclick="excluirAmbiente('{{ space.id }}')">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-table-action primary" onclick="abrirModalAgendamento('{{ space.id }}', '{{ space.name }}')">
+                                                    Reservar
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                    <!-- ========== ABA: EQUIPAMENTOS ========== -->
+                    <div class="tab-content" id="tab-equipamentos">
+                        <section class="section">
+                            <div class="section-header">
+                                <h2>Equipamentos </h2>
+                                <button class="btn-adicionar" onclick="abrirModalEquipamento()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Novo Equipamento
+                                </button>
+                            </div>
+
+                            <table class="table-equipamentos">
+                                <thead>
+                                    <tr>
+                                        <th>Equipamento</th>
+                                        <th>Categoria</th>
+                                        <th>Modelo</th>
+                                        <th>Quantidade</th>
+                                        <th>Condição</th>
+                                        <th>Status</th>
+                                        <th>Especificações</th>
+                                        <th style="text-align: right;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for equipamento in equipamentos %}
+                                    <tr class="card">
+                                        <td data-label="Equipamento">
+                                            <div class="td-equipamento">
+                                                <img src="{{ equipamento.image }}" class="equipamentos-imagem" alt="{{ equipamento.name }}">
+                                                <div class="td-info">
+                                                    <h3 class="equipamento-nome">{{ equipamento.name }}</h3>
+                                                    <span class="equipamento-descricao">{{ equipamento.descricao }}</span>
+                                                     <span class="equipamento-marca" style="display: none;">{{ equipamento.marca }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-label="Categoria">
+                                            <span class="equipamento-categoria">{{ equipamento.categoria }}</span>
+                                        </td>
+                                        <td data-label="Modelo" class="equipamento-modelo">
+                                            {{ equipamento.modelo }}
+                                        </td>
+                                        <td data-label="Quantidade" class="equipamento-quantidade">
+                                            {{ equipamento.quantidade_disponivel }}
+                                        </td>
+                                        <td data-label="Condição" class="equipamento-condicao">
+                                            {{ equipamento.condicao }}
+                                        </td>
+                                        
+                                        <td data-label="Status" class="equipamento-status">
+                                            {% if equipamento.quantidade_disponivel > 0 and equipamento.status == 'Disponivel' %}
+                                            <button >Disponivel</button>
+                                            {% else %}
+                                            <button disabled>Indisponível</button>
+                                            {% endif %}
+                                        </td>
+                                        <td data-label="specifications" class="recursos-equip">
+                                             <ul>
+            {% for recurso in equipamento.especificacoes %}
+              <li>{{ recurso }}</li>
+            {% endfor %}
+          </ul>
+                                        </td>
+                                        
+                                        <td data-label="Ações">
+                                            <div class="td-acoes">
+                                                <button class="btn-acao" title="Ver Detalhes"
+                                                    onclick="abrirModalDetalhesEquipamento(this)"
+                                                    data-equipamento='{{ equipamento|tojson }}'>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                        <circle cx="12" cy="12" r="3"></circle>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-acao editar" title="Editar"
+                                                    onclick="abrirModalEditarEquipamento(this)"
+                                                    data-equipamento='{{ equipamento|tojson }}'>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-acao excluir" title="Excluir" onclick="excluirEquipamento('{{ equipamento.id }}')">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                                {% if equipamento.quantidade_disponivel > 0 %}
+                                                <button class="btn-table-action primary"
+                                                    onclick="abrirModalAgendamentoEquipamento('{{ equipamento.id }}', '{{ equipamento.name }}')">
+                                                    Reservar
+                                                </button>
+                                                {% else %}
+                                                <button class="btn-table-action secondary" disabled>
+                                                    Sem estoque
+                                                </button>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                                     <!-- ========== ABA: EVENTOS ========== -->
+                    <div class="tab-content" id="tab-eventos">
+                        <section class="section">
+                            <div class="section-header">
+                                <h2>Eventos Próximos</h2>
+                                <button class="btn-adicionar" onclick="abrirModal()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Novo Evento
+                                </button>
+                            </div>
+
+                            <table class="table-eventos" >
+                                <thead>
+                                    <tr>
+                                        <th>Evento</th>
+                                        <th>Data/Hora</th>
+                                        <th>Localização</th>
+                                        <th>Instrutor</th>
+                                        <th>Participantes</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    {% for event in evento %}
+                                    <tr class="event-card" data-event-id="{{ event.id }}" data-inscrito="{{ 'true' if event.inscrito else 'false' }}">
+                                        <!-- Coluna invisível com todos os dados para o modal -->
+                                        <td  style="display: none;">
+                                            <img src="{{ event.image }}" class="eventos-imagem" alt="{{ event.titulo }}">
+                                            <span class="event-titulo">{{ event.titulo }}</span>
+                                            <span class="event-data">{{ event.data_evento }}</span>
+                                            <span class="event-hora">{{ event.hora_evento }}</span>
+                                            <span class="event-local">{{ event.localizacao }}</span>
+                                            <span class="event-desc">{{ event.descricao }}</span>
+                                            <span class="event-instrutor">{{ event.instrutor }}</span>
+                                            <span class="event-ambiente">{{ event.ambiente_nome }}</span>
+                                            <span class="event-capacidade" data-participantes="{{ event.participantes }}" data-capacidade="{{ event.capacidade }}"></span>
+                                        </td>
+
+                                        <!-- Conteúdo visível -->
+                                        <td data-label="Evento" >
+                                            <div class="td-evento">
+                                                <div class="td-info">
+                                                    <h3>{{ event.titulo }}</h3>
+                                                    <p>{{ event.descricao|truncate(50) }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td data-label="Data/Hora">
+                                            <div class="td-horario">
+                                                📅 {{ event.data_evento }}<br>
+                                                ⏰ {{ event.hora_evento }}
+                                            </div>
+                                        </td>
+                                        <td data-label="Localização" class="td-localizacao">
+                                            📍 {{ event.localizacao }}
+                                        </td>
+                                        <td data-label="Instrutor" class="td-localizacao">
+                                            {{ event.instrutor }}
+                                        </td>
+                                        <td data-label="Participantes" class="td-capacidade">
+                                            👥 {{ event.participantes }}/{{ event.capacidade }}
+                                        </td>
+                                        <td data-label="Status" >
+                                            {% if event.inscrito %}
+                                            <span class="status-badge approved">Inscrito</span>
+                                            {% elif event.participantes >= event.capacidade %}
+                                            <span class="status-badge cancelled">Lotado</span>
+                                            {% else %}
+                                            <span class="status-badge disponivel">Disponível</span>
+                                            {% endif %}
+                                        </td>
+                                        <td data-label="Ações">
+                                            <div class="td-acoes">
+                                                <button class="btn-acao" title="Ver Detalhes" onclick="abrirModalDetalhes(this)">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                        <circle cx="12" cy="12" r="3"></circle>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-acao excluir" title="Excluir" onclick="deletarAgendamento('{{ event.id }}')">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                                {% if event.inscrito %}
+                                                <button class="btn-table-action secondary" disabled>
+                                                    Inscrito
+                                                </button>
+                                                {% elif event.participantes >= event.capacidade %}
+                                                <button class="btn-table-action secondary" disabled>
+                                                    Lotado
+                                                </button>
+                                                {% else %}
+                                                <button class="btn-table-action primary" onclick="inscreverEvento('{{ event.id }}')">
+                                                    Inscrever-se
+                                                </button>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                    <!-- ========== ABA: HISTÓRICO ========== -->
+                    <div class="tab-content" id="tab-historico">
+                        <section class="section">
+                            <div class="section-header-historico">
+                                <h2>Histórico de Agendamentos</h2>
+                            </div>
+
+                            <table class="table-historico">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Horário</th>
+                                        <th>Tipo</th>
+                                        <th>Status</th>
+                                        <th>Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for history in historico %}
+                                    {% if history.user_id == id_logado %}
+                                    <tr>
+                                        <td>
+                                            <div class="td-nome">
+                                                <div class="icone-history">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                    </svg>
+                                                </div>
+                                                <div class="nome-info">
+                                                    <h3>{{ history.name }}</h3>
+                                                    <span>{{ history.purpose }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="td-horario">
+                                            {{ history.start_time }} - {{ history.end_time }}
+                                        </td>
+                                        <td>
+                                            <span class="tipo-badge">{{ history.type }}</span>
+                                        </td>
+                                        <td>
+                                            {% if history.status == 'Concluido' %}
+                                            <span class="status-badge approved">{{ history.status }}</span>
+                                            {% elif history.status == 'Confirmado'  %}
+                                            <span class="status-badge pending">{{ history.status }}</span>
+                                            {% elif history.status == 'Cancelado' %}
+                                            <span class="status-badge cancelled">{{ history.status }}</span>
+                                            {% else %}
+                                            <span class="status-badge active">{{ history.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="td-data">
+                                            {{ history.historico_date }}
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    {% for history in historico_equip %}
+                                    {% if history.user_id == id_logado %}
+                                    <tr>
+                                        <td>
+                                            <div class="td-nome">
+                                                <div class="icone-history">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                                    </svg>
+                                                </div>
+                                                <div class="nome-info">
+                                                    <h3>{{ history.equipamento_nome }}</h3>
+                                                    <span>{{ history.finalidade }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="td-horario">
+                                            {{ history.hora_inicio }} - {{ history.hora_fim }}
+                                        </td>
+                                        <td>
+                                            <span class="tipo-badge">Equipamento</span>
+                                        </td>
+                                        <td>
+                                            {% if history.status == 'Aprovado' or history.status == 'Approved' %}
+                                            <span class="status-badge approved">{{ history.status }}</span>
+                                            {% elif history.status == 'Pendente' or history.status == 'Pending' %}
+                                            <span class="status-badge pending">{{ history.status }}</span>
+                                            {% elif history.status == 'Cancelado' or history.status == 'Cancelled' %}
+                                            <span class="status-badge cancelled">{{ history.status }}</span>
+                                            {% else %}
+                                            <span class="status-badge active">{{ history.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="td-data">
+                                            {{ history.data_equip }}
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+
+    <!-- Modais -->
+    {% include 'modais/modal_evento_detalhes.html' %}
+    {% include 'modais/agendamentos_eventos.html' %}
+    {% include 'modais/modal_usuario_config.html' %}
+    {% include 'modais/modal_cadastrar_usuario.html' %}
+    {% include 'modais/modal_ambiente_detalhes.html' %}
+    {% include 'modais/modal_ambiente_agendamento.html' %}
+    {% include 'modais/modal_editar_ambiente.html' %}
+    {% include 'modais/modal_cadastrar_ambiente.html' %}
+    {% include 'modais/modal_equipamento_detalhes.html' %}
+    {% include 'modais/modal_equipamento_agendamento.html' %}
+    {% include 'modais/modal_editar_equipamento.html' %}
+    {% include 'modais/modal_cadastrar_equipamento.html' %}
+
+    <!-- Scripts -->
+    <script>
+        // Sistema de Navegação por Abas
+        function switchTab(tabName) {
+            // Remove active de todas as abas
+            document.querySelectorAll('.tab-item').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active de todos os conteúdos
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Adiciona active na aba clicada
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Adiciona active no conteúdo correspondente
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            
+        }
+    </script>
+    
+    <script src="/static/Javascript/detalhes_eventos.js"></script>
+    <script src="/static/Javascript/eventos.js"></script>
+    <script src="/static/Javascript/ambientes.js"></script>
+    <script src="/static/Javascript/equipamentos.js"></script>
+    <script src="/static/Javascript/editar_ambientes.js"></script>
+    <script src="/static/Javascript/editar_euipamentos.js"></script>
+    <script src="/static/Javascript/config.js"></script>
+    <script src="/static/Javascript/painelAdm.js"></script>
+
+</body>
+</html>

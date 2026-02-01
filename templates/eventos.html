@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Agendamentos</title>
+     <link rel="stylesheet" href="/static/Css/geral.css">
+     <link rel="stylesheet" href="../static/css/modal_notificacao.css">
+     <link rel="stylesheet" href="/static/Css/eventos.css">
+     <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div id="dashboard" class="dashboard" >
+      {% include 'base.html' %}
+ 
+
+          <main class="main-content">
+            <!-- Top Bar -->
+            <div class="topbar">
+               
+                <div >
+                    
+                </div>
+                <div class="topbar-actions">
+                      <button class="icon-button" onclick="modalConfig(event)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+
+                </button>
+                    <button class="icon-button" onclick="modal_notificacao()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg> <i class="bi bi-bell"></i>
+                                                  <span id="badge-notificacao" class="badge-notificacao"></span>
+
+                    </button>
+                </div>
+            </div>
+  {% include 'notificacao.html' %}
+            <div class="content-wrapper">
+                <div class="content-main">
+                  
+                 
+
+
+          <div class="notification" id="btn-notificacao">
+  <i class="bi bi-bell"></i>
+  <span id="badge-notificacao" class="badge"></span>
+</div>
+
+
+          
+
+
+                         <section class="section">
+    <div class="section-header">
+        <h2>Eventos Próximos</h2>
+        <button onclick="abrirModal()" class="btn-adicionar">Novo Agendamento</button>
+    </div>
+
+    <div class="cards-grid">
+        {% for event in evento %}
+        <div class="event-card" data-event-id="{{ event.id }}" data-inscrito="{{ 'true' if event.inscrito else 'false' }}">
+
+  <div class="event-header">
+   <img src="{{ event.image }}" class="eventos-imagem" style="display: none;" />
+
+   
+    <span class="event-data">{{ event.data_evento }}</span>
+    
+
+    <h3 class="event-titulo">{{ event.titulo }}</h3>
+
+  <span class="event-local"> {{ event.ambiente_nome }}
+                                    </span>
+  </div>
+
+  <div class="event-body">
+    <p class="event-desc">{{ event.descricao }}</p>
+    
+  {% if event.equipamentos %}
+    <div class="event-equipamentos">
+      <strong>Equipamentos:</strong>
+      <ul>
+        {% for equip in event.equipamentos %}
+          <li>
+            {{ equip.name }} — {{ equip.quantidade_disponivel }} un.
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <span class="sem-equipamentos">Sem equipamentos</span>
+  {% endif %}
+
+
+    <div class="event-meta">
+      <span
+        class="event-capacidade"
+        data-participantes="{{ event.participantes }}"
+        data-capacidade="{{ event.capacidade }}">
+        👥 {{ event.participantes }}/{{ event.capacidade }}
+      </span>
+     
+     
+      <span class="event-instrutor">
+        Instrutor: {{ event.instrutor }}
+      </span>
+      <span class="event-hora">{{ event.hora_evento }}</span>
+    </div>
+
+                <div class="actions">
+                {% if event.inscrito %}
+    <button class="btn-reserve btn-inscrito" disabled>
+        Inscrito
+    </button>
+
+{% elif event.participantes >= event.capacidade %}
+    <button class="btn-reserve" disabled>
+        Lotado
+    </button>
+
+{% else %}
+    <button
+        class="btn-reserve"
+        onclick="inscreverEvento('{{ event.id }}')">
+        Inscrever-se
+    </button>
+{% endif %}
+             
+
+
+<button class="btn-details" onclick="abrirModalDetalhes(this)">
+    Ver Detalhes
+  </button>
+  </div>         
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+
+
+
+
+{% include 'modais/modal_evento_detalhes.html' %}
+{% include 'modais/agendamentos_eventos.html' %}
+ {%include 'config.html' %}
+<script src="/static/Javascript/eventos.js"></script>
+
+
+
+
+
+</body>
+</html>

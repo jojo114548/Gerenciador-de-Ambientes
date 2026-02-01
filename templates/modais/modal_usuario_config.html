@@ -1,0 +1,165 @@
+<link rel="stylesheet" href="/static/Css/modal_usuario_config.css">
+
+<div id="modalUsuarioConfig" class="modal-overlay">
+  <div class="modal-container">
+    <button class="modal-close" onclick="fecharModalUsuario()">Fechar</button>
+
+    <section class="section-usuario">
+      <div class="cards-grid-usuario">
+
+        {% for usuario in usuarios %}
+        {% if usuario.id == id_logado %}
+        <div class="card-adm-usuario">
+
+          <div class="img-usuario">
+            <img src="{{ usuario.image  }}" alt="">
+          </div>
+
+          <div class="card-body-adm">
+            <h3>{{ usuario.name }}</h3>
+            <p>{{ usuario.email }}</p>
+
+            <div class="info">
+              <span>{{ usuario.role }}</span>
+              <span>{{ usuario.status }}</span>
+            </div>
+
+            <div class="actions-adm">
+              <button class="btn-details"
+                      onclick="deletarUsuario('{{ usuario.id }}')">
+                Excluir
+              </button>
+
+              <button class="btn-reserve"
+                onclick="abrirEditarUsuario(
+                  '{{ usuario.id }}',
+                  '{{ usuario.image  }}',
+                  '{{ usuario.name }}',
+                  '{{ usuario.email }}',
+                  '{{ usuario.cpf }}',
+                  '{{ usuario.rg }}',
+                  '{{ usuario.data_nascimento }}',
+                  '{{ usuario.telefone }}',
+                  '{{ usuario.endereco }}',
+                  '{{ usuario.departamento }}',
+                  '{{ usuario.funcao }}',
+                  '{{ usuario.role }}',
+                  '{{ usuario.status }}'
+                )">
+                Editar
+              </button>
+            </div>
+          </div>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+
+      </div>
+    </section>
+
+    </div>
+</div>
+
+
+
+
+  <div id="edit-config-modal" class="modal" style="display:none;">
+  <div class="modal-overlay" onclick="fecharEditarUsuario()"></div>
+
+  <div class="modal-content modal-booking">
+    <button class="modal-close" onclick="fecharEditarUsuario()">✕</button>
+
+    <div class="booking-header">
+      <h2>Editar Usuário</h2>
+      <p>Atualize os dados do usuário</p>
+    </div>
+
+    <form id="edit-config-form" class="booking-form" enctype="multipart/form-data">
+      
+      <input type="hidden" id="edit-user-id" name="id">
+
+      <label>Imagem</label>
+      <input type="file" id="edit-image-atual" name="image">
+      <img id="preview-imagem" class="preview" >
+       
+
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" id="edit-user-name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="edit-user-email" name="email" required>
+      </div>
+ 
+      <div class="form-row">
+        <div class="form-group">
+          <label>CPF</label>
+          <input type="text" id="edit-user-cpf" name="cpf" required>
+        </div>
+
+        <div class="form-group">
+          <label>RG</label>
+          <input type="text" id="edit-user-rg" name="rg">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Data de Nascimento</label>
+          <input type="date" id="edit-user-data-nascimento" name="data_nascimento">
+        </div>
+
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="text" id="edit-user-telefone" name="telefone">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Endereço</label>
+        <input type="text" id="edit-user-endereco" name="endereco">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Departamento</label>
+          <input type="text" id="edit-user-departamento" name="departamento">
+        </div>
+
+        <div class="form-group">
+          <label>Função</label>
+          <input type="text" id="edit-user-funcao" name="funcao">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Perfil</label>
+          <select id="edit-user-role" name="role">
+            <option value="admin">Administrador</option>
+            <option value="user">Usuário</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select id="edit-user-status" name="status">
+            <option value="ativo">Ativo</option>
+            <option value="inativo">Inativo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" onclick="fecharEditarUsuario()">Cancelar</button>
+        <button type="submit" class="btn-primary">Salvar</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script src="/static/Javascript/usuario_config_editar.js"></script>
