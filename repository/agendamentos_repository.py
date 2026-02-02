@@ -4,11 +4,18 @@ from datetime import datetime, date, time
 import os
 
 def get_connection():
-    return psycopg2.connect(
-        os.environ["postgresql://nexus_6t82_user:2O9D5klSvNu91o0022tuIWY7u3N7eOZE@dpg-d5va85coud1c738c6l1g-a/nexus_6t82"],
-        options="-c search_path=nexus"
-    )
-
+    try:
+        db_url = os.getenv("DATABASE_URL")
+        if not db_url:
+            raise ValueError("DATABASE_URL não encontrada no .env")
+        
+        print(f"Tentando conectar ao banco...") # remova em produção
+        conn = psycopg2.connect(db_url)
+        print("Conexão bem-sucedida!") # remova em produção
+        return conn
+    except Exception as e:
+        print(f"Erro ao conectar ao banco: {e}")
+        raise
 
 class AgendamentosRepository:
 
@@ -44,7 +51,7 @@ class AgendamentosRepository:
                 raise ValueError("Já existe um agendamento neste horário")
 
             cursor.execute("""
-                INSERT INTO agendamentos
+                INSERT INTO nexus.agendamentos
                 (ambiente_id, data, hora_inicio, hora_fim, finalidade, status)
                 VALUES (%s, %s, %s, %s, %s, %s)
                 RETURNING id
@@ -82,7 +89,7 @@ class AgendamentosRepository:
                 # Ao atualizar, ignora o próprio agendamento
                 cursor.execute("""
                     SELECT 1
-                    FROM agendamentos
+                    FROM nexus.agendamentos
                     WHERE ambiente_id = %s
                       AND data = %s
                       AND status NOT IN ('rejeitado', 'cancelado')
@@ -104,7 +111,7 @@ class AgendamentosRepository:
             else:
                 cursor.execute("""
                     SELECT 1
-                    FROM agendamentos
+                    FROM nexus.agendamentos
                     WHERE ambiente_id = %s
                       AND data = %s
                       AND status NOT IN ('rejeitado', 'cancelado')
@@ -149,8 +156,8 @@ class AgendamentosRepository:
                     amb.type AS ambiente_tipo,
                     amb.localizacao,
                     amb.capacidade
-                FROM agendamentos a
-                INNER JOIN ambientes amb ON a.ambiente_id = amb.id
+                FROM nexus.agendamentos a
+                INNER JOIN nexus.ambientes amb ON a.ambiente_id = amb.id
                 ORDER BY a.data DESC, a.hora_inicio ASC
             """)
 
@@ -182,10 +189,10 @@ class AgendamentosRepository:
                     pa.user_id,
                     u.name AS usuario_nome,
                     u.email AS usuario_email
-                FROM agendamentos a
-                INNER JOIN ambientes amb ON a.ambiente_id = amb.id
-                LEFT JOIN pendentes_ambientes pa ON pa.agendamento_id = a.id
-                LEFT JOIN users u ON pa.user_id = u.id
+                FROM nexus.agendamentos a
+                INNER JOIN nexus.ambientes amb ON a.ambiente_id = amb.id
+                LEFT JOIN nexus.pendentes_ambientes pa ON pa.agendamento_id = a.id
+                LEFT JOIN nexus.users u ON pa.user_id = u.id
                 WHERE a.status = 'pendente'
                 ORDER BY a.created_at ASC
             """)
@@ -215,8 +222,8 @@ class AgendamentosRepository:
                     amb.name AS ambiente_nome,
                     amb.type AS ambiente_tipo,
                     amb.localizacao
-                FROM agendamentos a
-                INNER JOIN ambientes amb ON a.ambiente_id = amb.id
+                FROM nexus.agendamentos a
+                INNER JOIN nexus.ambientes amb ON a.ambiente_id = amb.id
                 WHERE a.status = 'confirmado'
                   AND a.data >= CURRENT_DATE
                 ORDER BY a.data ASC, a.hora_inicio ASC
@@ -250,8 +257,8 @@ class AgendamentosRepository:
                     amb.localizacao,
                     amb.capacidade,
                     amb.image AS ambiente_image
-                FROM agendamentos a
-                INNER JOIN ambientes amb ON a.ambiente_id = amb.id
+                FROM nexus.agendamentos a
+                INNER JOIN nexus.ambientes amb ON a.ambiente_id = amb.id
                 WHERE a.id = %s
             """, (agendamento_id,))
 
@@ -272,7 +279,7 @@ class AgendamentosRepository:
                     SELECT 
                         id, ambiente_id, data, hora_inicio, hora_fim,
                         finalidade, status, created_at
-                    FROM agendamentos
+                    FROM nexus.agendamentos
                     WHERE ambiente_id = %s
                       AND data BETWEEN %s AND %s
                       AND status NOT IN ('rejeitado', 'cancelado')
@@ -283,7 +290,7 @@ class AgendamentosRepository:
                     SELECT 
                         id, ambiente_id, data, hora_inicio, hora_fim,
                         finalidade, status, created_at
-                    FROM agendamentos
+                    FROM nexus.agendamentos
                     WHERE ambiente_id = %s
                       AND status NOT IN ('rejeitado', 'cancelado')
                     ORDER BY data, hora_inicio
@@ -313,8 +320,8 @@ class AgendamentosRepository:
                     amb.name AS ambiente_nome,
                     amb.type AS ambiente_tipo,
                     amb.localizacao
-                FROM agendamentos a
-                INNER JOIN ambientes amb ON a.ambiente_id = amb.id
+                FROM nexus.agendamentos a
+                INNER JOIN nexus.ambientes amb ON a.ambiente_id = amb.id
                 WHERE a.data = %s
                   AND a.status NOT IN ('rejeitado', 'cancelado')
                 ORDER BY a.hora_inicio
@@ -341,7 +348,7 @@ class AgendamentosRepository:
                 raise ValueError(f"Status inválido. Use: {', '.join(status_validos)}")
 
             cursor.execute("""
-                UPDATE agendamentos
+                UPDATE nexus.agendamentos
                 SET status = %s,
                     updated_at = CURRENT_TIMESTAMP
                 WHERE id = %s
@@ -370,7 +377,7 @@ class AgendamentosRepository:
         cursor = conn.cursor()
         try:
             # Verificar se existe
-            cursor.execute("SELECT 1 FROM agendamentos WHERE id = %s", (agendamento_id,))
+            cursor.execute("SELECT 1 FROM nexus.agendamentos WHERE id = %s", (agendamento_id,))
             if not cursor.fetchone():
                 raise ValueError("Agendamento não encontrado")
 
@@ -379,7 +386,7 @@ class AgendamentosRepository:
                 # Buscar dados atuais
                 cursor.execute("""
                     SELECT ambiente_id, data, hora_inicio, hora_fim
-                    FROM agendamentos WHERE id = %s
+                    FROM nexus.agendamentos WHERE id = %s
                 """, (agendamento_id,))
                 atual = cursor.fetchone()
 
@@ -410,7 +417,7 @@ class AgendamentosRepository:
             campos.append("updated_at = CURRENT_TIMESTAMP")
             valores.append(agendamento_id)
 
-            query = f"UPDATE agendamentos SET {', '.join(campos)} WHERE id = %s"
+            query = f"UPDATE nexus.agendamentos SET {', '.join(campos)} WHERE id = %s"
             cursor.execute(query, valores)
 
             conn.commit()
@@ -431,7 +438,7 @@ class AgendamentosRepository:
         try:
             # Verificar se pode deletar (exemplo: apenas pendentes)
             cursor.execute("""
-                SELECT status FROM agendamentos WHERE id = %s
+                SELECT status FROM nexus.agendamentos WHERE id = %s
             """, (agendamento_id,))
             
             resultado = cursor.fetchone()
@@ -442,7 +449,7 @@ class AgendamentosRepository:
             # if resultado[0] not in ['pendente', 'rejeitado']:
             #     raise ValueError("Apenas agendamentos pendentes ou rejeitados podem ser deletados")
 
-            cursor.execute("DELETE FROM agendamentos WHERE id = %s", (agendamento_id,))
+            cursor.execute("DELETE FROM nexus.agendamentos WHERE id = %s", (agendamento_id,))
             conn.commit()
 
         except Exception as e:
@@ -486,8 +493,8 @@ class AgendamentosRepository:
                         a.status,
                         amb.name AS ambiente_nome,
                         amb.type AS ambiente_tipo
-                    FROM agendamentos a
-                    INNER JOIN ambientes amb ON a.ambiente_id = amb.id
+                    FROM nexus.agendamentos a
+                    INNER JOIN nexus.ambientes amb ON a.ambiente_id = amb.id
                     WHERE a.data BETWEEN %s AND %s
                       AND a.status = %s
                     ORDER BY a.data, a.hora_inicio
@@ -504,8 +511,8 @@ class AgendamentosRepository:
                         a.status,
                         amb.name AS ambiente_nome,
                         amb.type AS ambiente_tipo
-                    FROM agendamentos a
-                    INNER JOIN ambientes amb ON a.ambiente_id = amb.id
+                    FROM nexus.agendamentos a
+                    INNER JOIN nexus.ambientes amb ON a.ambiente_id = amb.id
                     WHERE a.data BETWEEN %s AND %s
                     ORDER BY a.data, a.hora_inicio
                 """, (data_inicio, data_fim))
@@ -523,7 +530,7 @@ class AgendamentosRepository:
         cursor = conn.cursor()
         try:
             cursor.execute("""
-                SELECT COUNT(*) FROM agendamentos WHERE status = %s
+                SELECT COUNT(*) FROM nexus.agendamentos WHERE status = %s
             """, (status,))
 
             return cursor.fetchone()[0]
@@ -545,7 +552,7 @@ class AgendamentosRepository:
                     COUNT(*) FILTER (WHERE status = 'rejeitado') as rejeitados,
                     COUNT(*) FILTER (WHERE status = 'cancelado') as cancelados,
                     COUNT(*) as total
-                FROM agendamentos
+                FROM nexus.agendamentos
             """)
 
             return cursor.fetchone()

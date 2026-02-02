@@ -3,11 +3,18 @@ from psycopg2.extras import RealDictCursor
 import os
 
 def get_connection():
-    return psycopg2.connect(
-        os.environ["postgresql://nexus_6t82_user:2O9D5klSvNu91o0022tuIWY7u3N7eOZE@dpg-d5va85coud1c738c6l1g-a/nexus_6t82"],
-        options="-c search_path=nexus"
-    )
-
+    try:
+        db_url = os.getenv("DATABASE_URL")
+        if not db_url:
+            raise ValueError("DATABASE_URL não encontrada no .env")
+        
+        print(f"Tentando conectar ao banco...") # remova em produção
+        conn = psycopg2.connect(db_url)
+        print("Conexão bem-sucedida!") # remova em produção
+        return conn
+    except Exception as e:
+        print(f"Erro ao conectar ao banco: {e}")
+        raise
 
 class HistoricoRepository:
 
@@ -73,37 +80,21 @@ class HistoricoRepository:
         conn = get_connection()
         cursor = conn.cursor()
         try:
+            # ✅ CORRIGIDO: Usar INSERT com VALUES e RETURNING
             cursor.execute("""
                 INSERT INTO nexus.historico (
-    agendamento_id,
-                user_id,
-                type,
-                name,
-                historico_date,
-                start_time,
-                end_time,
-                purpose,
-                status
-)
-SELECT 
-    a.id,
-                a.user_id,
-                a.type,
-                a.name,
-                a.data,
-                a.hora_inicio,
-                a.hora_fim,
-                a.finalidade,
-                a.status
-FROM nexus.pendentes_ambientes pe
-JOIN nexus.agendamentos_ambientes ae ON pe.agendamento_id = ae.id
-JOIN nexus.ambientes e ON ae.ambiente_id = e.id
-WHERE pe.status IN ('Confirmado', 'Rejeitado', 'Cancelado')
-  AND NOT EXISTS (
-      SELECT 1 
-      FROM nexus.historico he 
-      WHERE he.agendamento_id = pe.agendamento_id
-  );
+                    agendamento_id,
+                    user_id,
+                    type,
+                    name,
+                    historico_date,
+                    start_time,
+                    end_time,
+                    purpose,
+                    status
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s::nexus.status_historico)
+                RETURNING id
             """, (
                 dados["agendamento_id"],
                 dados["user_id"],

@@ -104,7 +104,7 @@
                                             {% endif %}
 
                                              {%if history.status =='Confirmado'%}
-                                             <button class="cancelar" onclick="cancelarHistoricoEquip('{{ history.id }}')"> Cancelar</button>
+                                             <button class="cancelar" onclick="cancelarHistorico('{{ history.id }}')"> Cancelar</button>
                                          
                                              {%endif%}   
                                         </td>
@@ -114,9 +114,10 @@
                                     </tr>
                                     {% endif %}
                                     {% endfor %}
-
-                                    {% for history in historico_equip %}
-                                    {% if history.user_id == id_logado %}
+                                    
+                                  
+                                    {% for historyEquip in historico_equip %}
+                                    {% if historyEquip.user_id == id_logado %}
                                     <tr>
                                         <td>
                                             <div class="td-nome">
@@ -127,36 +128,36 @@
                                                     </svg>
                                                 </div>
                                                 <div class="nome-info">
-                                                    <h3>{{ history.equipamento_nome }}</h3>
-                                                    <span>{{ history.finalidade }}</span>
+                                                    <h3>{{ historyEquip.equipamento_nome }}</h3>
+                                                    <span>{{ historyEquip.finalidade }}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="td-horario">
-                                            {{ history.hora_inicio }} - {{ history.hora_fim }}
+                                            {{ historyEquip.hora_inicio }} - {{ historyEquip.hora_fim }}
                                         </td>
                                         <td>
                                             <span class="tipo-badge">Equipamento</span>
                                         </td>
                                         <td>
-                                            {% if history.status == 'Confirmado' %}
-                                            <span class="status-badge approved">{{ history.status }}</span>
-                                            {% elif history.status == 'Pendente'  %}
-                                            <span class="status-badge pending">{{ history.status }}</span>
-                                            {% elif history.status == 'Cancelado'  %}
-                                            <span class="status-badge cancelled">{{ history.status }}</span>
+                                            {% if historyEquip.status == 'Confirmado' %}
+                                            <span class="status-badge approved">{{ historyEquip.status }}</span>
+                                            {% elif historyEquip.status == 'Pendente'  %}
+                                            <span class="status-badge pending">{{ historyEquip.status }}</span>
+                                            {% elif historyEquip.status == 'Cancelado'  %}
+                                            <span class="status-badge cancelled">{{ historyEquip.status }}</span>
                                             {% else %}
-                                            <span class="status-badge active">{{ history.status }}</span>
+                                            <span class="status-badge active">{{ historyEquip.status }}</span>
                                             {% endif %}
 
-                                             {%if history.status =='Confirmado'%}
+                                             {%if historyEquip.status =='Confirmado'%}
                                             
-                                             <button class="cancelar" onclick="cancelarHistoricoEquip('{{ history.id }}')"> Cancelar</button>
+                                             <button class="cancelar" onclick="console.log('ID:', '{{historyEquip.id }}'); cancelarHistoricoEquip('{{ historyEquip.id }}')"> Cancelar</button>
                                        
                                              {%endif%}   
                                         </td>
                                         <td class="td-data">
-                                            {{ history.data_equip }}
+                                            {{ historyEquip.data_equip }}
                                         </td>
                                     </tr>
                                     {% endif %}

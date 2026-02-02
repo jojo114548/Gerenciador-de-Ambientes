@@ -3,7 +3,8 @@ from repository.usuario_repository import UsuarioRepository
 from service.notificacao_service import NotificacaoService
 from model.usuarios import Usuario
 from datetime import datetime
-
+from model.usuarios import Usuario
+import uuid,os,bcrypt
 
 class UsuarioService:
 
@@ -177,3 +178,37 @@ class UsuarioService:
         # NotificacaoService.enviar_reset_senha(usuario_id)
 
         return True
+    
+    @staticmethod
+    def garantir_admin_padrao():
+        email_admin = "admin@nexus.com"
+
+        admin_existente = UsuarioRepository.buscar_por_email(email_admin)
+        if admin_existente:
+            return
+
+        senha_hash = bcrypt.hashpw(
+            "Admin@123".encode("utf-8"),
+            bcrypt.gensalt()
+        ).decode("utf-8")
+
+        admin = Usuario(
+            id=str(uuid.uuid4()),
+            name="Administrador",
+            email=email_admin,
+            cpf="00000000000",
+            rg=None,
+            data_nascimento=datetime.strptime("1990-01-01", "%Y-%m-%d").date(),
+            telefone=None,
+            endereco=None,
+            departamento="TI",
+            funcao="Admin",
+            role="admin",
+            image=None,
+            status="ativo",
+            senha=senha_hash
+        )
+
+        UsuarioRepository.adicionar(admin)
+
+        print("✅ Usuário admin padrão criado")

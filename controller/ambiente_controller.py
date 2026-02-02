@@ -99,6 +99,7 @@ def novo_ambiente():
         AmbientesService.inserir_ambiente(dados)
 
         return jsonify({"mensagem": "Ambiente cadastrado com sucesso"}), 201
+        
     
 
     except ValueError as e:

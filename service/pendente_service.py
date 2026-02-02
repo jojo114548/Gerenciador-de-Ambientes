@@ -47,6 +47,9 @@ class PendenteService:
                 "Conflito de horário: o ambiente já está reservado nesse período."
             )
 
+        # Atualizar status primeiro
+        PendenteRepository.atualizar_status(pendente_id, status)
+
         # ✅ HISTÓRICO DE AMBIENTE
         HistoricoService.criar_historico({
             "agendamento_id": pendente["agendamento_id"],
@@ -60,6 +63,8 @@ class PendenteService:
             "status": status
         })
 
-        PendenteRepository.atualizar_status(pendente_id, status)
-
-        return pendente
+        # Retornar os dados atualizados
+        return {
+            **pendente,
+            "status": status
+        }

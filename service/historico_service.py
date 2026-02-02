@@ -1,4 +1,4 @@
-from repository.historico_repository import HistoricoRepository 
+from repository.historico_repository import HistoricoRepository
 
 
 

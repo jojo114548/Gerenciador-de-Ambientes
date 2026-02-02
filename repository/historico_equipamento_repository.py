@@ -3,10 +3,18 @@ from psycopg2.extras import RealDictCursor
 import os
 
 def get_connection():
-    return psycopg2.connect(
-        os.environ["postgresql://nexus_6t82_user:2O9D5klSvNu91o0022tuIWY7u3N7eOZE@dpg-d5va85coud1c738c6l1g-a/nexus_6t82"],
-        options="-c search_path=nexus"
-    )
+    try:
+        db_url = os.getenv("DATABASE_URL")
+        if not db_url:
+            raise ValueError("DATABASE_URL não encontrada no .env")
+        
+        print(f"Tentando conectar ao banco...") # remova em produção
+        conn = psycopg2.connect(db_url)
+        print("Conexão bem-sucedida!") # remova em produção
+        return conn
+    except Exception as e:
+        print(f"Erro ao conectar ao banco: {e}")
+        raise
 
 
 class HistoricoEquipamentoRepository:
@@ -36,40 +44,21 @@ class HistoricoEquipamentoRepository:
                 if dados[campo] is None:
                     raise ValueError(f"Campo {campo} não pode ser NULL")
             
-            # Executar INSERT
+            # ✅ CORRIGIDO: Executar INSERT com VALUES e RETURNING
             cursor.execute("""
-               -- Inserir histórico dos agendamentos já confirmados
-INSERT INTO nexus.historico_equipamentos (
-    agendamento_id,
-    equipamento_id,
-    user_id,
-    equipamento_nome,
-    data_equip,
-    hora_inicio,
-    hora_fim,
-    finalidade,
-    status
-)
-SELECT 
-    ae.id,
-    ae.equipamento_id,
-    ae.user_id,
-    e.name,
-    ae.data,
-    ae.hora_inicio,
-    ae.hora_fim,
-    ae.finalidade,
-    pe.status::nexus.status_historico
-FROM nexus.pendentes_equipamentos pe
-JOIN nexus.agendamentos_equipamentos ae ON pe.agendamento_id = ae.id
-JOIN nexus.equipamentos e ON ae.equipamento_id = e.id
-WHERE pe.status IN ('Confirmado', 'Rejeitado', 'Cancelado')
-  AND NOT EXISTS (
-      SELECT 1 
-      FROM nexus.historico_equipamentos he 
-      WHERE he.agendamento_id = pe.agendamento_id
-  );
-             
+                INSERT INTO nexus.historico_equipamentos (
+                    agendamento_id,
+                    equipamento_id,
+                    user_id,
+                    equipamento_nome,
+                    data_equip,
+                    hora_inicio,
+                    hora_fim,
+                    finalidade,
+                    status
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s::nexus.status_historico)
+                RETURNING id
             """, (
                 dados["agendamento_id"],
                 dados["equipamento_id"],
@@ -108,55 +97,87 @@ WHERE pe.status IN ('Confirmado', 'Rejeitado', 'Cancelado')
             cursor.close()
             conn.close()
 
+    
     @staticmethod
     def listar():
-        """Lista todo o histórico"""
+        """Lista todos os equipamentos com suas especificações"""
         conn = get_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
             cursor.execute("""
                 SELECT
-                    he.*,
+                    he.id,
+                    he.agendamento_id,
+                    he.equipamento_id,
+                    he.user_id,
+                    he.equipamento_nome,
+                    he.data_equip,
+                    he.hora_inicio,
+                    he.hora_fim,
+                    he.finalidade,
+                    he.status,
+                    he.criado_em,
                     u.name AS usuario_nome,
                     u.email AS usuario_email,
-                    u.departamento,
-                    e.categoria AS equipamento_categoria,
-                    e.marca AS equipamento_marca,
-                    e.modelo AS equipamento_modelo
+                    e.categoria,
+                    e.marca,
+                    e.modelo
                 FROM nexus.historico_equipamentos he
                 INNER JOIN nexus.users u ON he.user_id = u.id
-                LEFT JOIN nexus.equipamentos e ON he.equipamento_id = e.id
+                LEFT JOIN nexus.equipamentos e ON e.id = he.equipamento_id
                 ORDER BY he.data_equip DESC, he.hora_inicio DESC
             """)
+              
+                    
             return cursor.fetchall()
         finally:
             cursor.close()
             conn.close()
 
     @staticmethod
-    def buscar_por_id(historicoEquip_id):
-        """Busca histórico por ID"""
+    def buscar_por_id(historico_id):
+        """Busca um histórico por ID"""
         conn = get_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
+            print(f"\n=== BUSCAR HISTÓRICO POR ID ===")
+            print(f"ID buscado: {historico_id}")
+            
             cursor.execute("""
                 SELECT
-                    he.*,
-                    u.name AS usuario_nome,
-                    u.email AS usuario_email,
-                    u.departamento,
-                    e.categoria AS equipamento_categoria,
-                    e.marca AS equipamento_marca,
-                    e.modelo AS equipamento_modelo
-                FROM nexus.historico_equipamentos he
-                INNER JOIN nexus.users u ON he.user_id = u.id
-                LEFT JOIN nexus.equipamentos e ON he.equipamento_id = e.id
-                WHERE he.id = %s
-            """, (historicoEquip_id,))
-            return cursor.fetchone()
+                    id,
+                    agendamento_id,
+                    equipamento_id,
+                    user_id,
+                    equipamento_nome,
+                    data_equip,
+                    hora_inicio,
+                    hora_fim,
+                    finalidade,
+                    status,
+                    criado_em
+                FROM nexus.historico_equipamentos
+                WHERE id = %s
+            """, (historico_id,))
+            
+            resultado = cursor.fetchone()
+            
+            print(f"Resultado encontrado: {resultado}")
+            print(f"=== FIM BUSCAR ===\n")
+            
+            return resultado
+            
+        except Exception as e:
+            print(f"❌ ERRO ao buscar histórico: {e}")
+            import traceback
+            traceback.print_exc()
+            return None
         finally:
             cursor.close()
             conn.close()
+      
+                 
+
 
     @staticmethod
     def listar_por_usuario(user_id):
@@ -244,6 +265,39 @@ WHERE pe.status IN ('Confirmado', 'Rejeitado', 'Cancelado')
         except Exception:
             conn.rollback()
             raise
+        finally:
+            cursor.close()
+            conn.close()
+
+
+    @staticmethod
+    def buscar_por_agendamento(agendamento_id):
+        """✅ Verifica se já existe histórico para um agendamento"""
+        conn = get_connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        try:
+            print(f"\n🔍 Verificando se já existe histórico para agendamento {agendamento_id}...")
+            
+            cursor.execute("""
+                SELECT id, status, equipamento_nome, criado_em
+                FROM nexus.historico_equipamentos
+                WHERE agendamento_id = %s
+                ORDER BY criado_em DESC
+                LIMIT 1
+            """, (agendamento_id,))
+            
+            resultado = cursor.fetchone()
+            
+            if resultado:
+                print(f"⚠️ JÁ EXISTE histórico para agendamento {agendamento_id}:")
+                print(f"   ID: {resultado['id']}")
+                print(f"   Status: {resultado['status']}")
+                print(f"   Criado em: {resultado['criado_em']}")
+            else:
+                print(f"✅ Nenhum histórico encontrado para agendamento {agendamento_id}")
+            
+            return resultado
+            
         finally:
             cursor.close()
             conn.close()

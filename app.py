@@ -1,4 +1,5 @@
-
+from dotenv import load_dotenv
+load_dotenv()  # <-- PRIMEIRA LINHA REAL
 from flask import Flask,request,redirect,url_for,jsonify
 from flask_jwt_extended import JWTManager
 from controller.usuario_controller import usuario_bp
@@ -12,6 +13,7 @@ from controller.agendamento_controller import agendamento_bp
 from controller.admin_controller import painelAdm_bp
 from controller.login_controller import login_bp
 from controller.config_controller import config_bp
+from service.usuario_service import UsuarioService
 
 
 app = Flask(__name__)
@@ -56,7 +58,14 @@ app.register_blueprint(agendamento_bp)
 app.register_blueprint(painelAdm_bp)
 app.register_blueprint(config_bp)
 
+admin_inicializado = False
 
+@app.before_request
+def init_app():
+    global admin_inicializado
+    if not admin_inicializado:
+        UsuarioService.garantir_admin_padrao()
+        admin_inicializado = True
 
 if __name__ == '__main__':
    

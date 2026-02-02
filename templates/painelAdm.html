@@ -297,76 +297,89 @@
                                 </thead>
                                 <tbody>
                                     {% for space in ambientes %}
-                                    <tr class="card">
+                                    <tr class="card"  data-ambiente-id="{{ space.id }}"
+                             data-ambiente-nome="{{ space.name }}"
+                             data-ambiente-descricao="{{ space.descricao or '' }}"
+                            data-ambiente-capacidade="{{ space.capacidade or '' }}"
+                             data-ambiente-localizacao="{{ space.localizacao or '' }}"
+                             data-ambiente-area="{{ space.area or '' }}"
+                             data-ambiente-status="{{ space.status }}"
+                             data-ambiente-recursos="{{ space.recursos|join('|') if space.recursos else '' }}">
                                         
-                                        <td data-label="Ambiente">
-                                            <div class="td-ambiente">
-                                                <img src="{{ space.image }}" class="ambiente-imagem" alt="{{ space.name }}">
-                                                <div class="td-info">
-                                                    <h3 class="ambiente-nome">{{ space.name }}</h3>
-                                                    <p class="ambiente-descricao">{{ space.descricao }}</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td data-label="Localização" class="ambiente-localizacao">
-                                            {{ space.localizacao }}
-                                        </td>
-                                        <td data-label="Capacidade" class="ambiente-capacidade">
-                                            👥 {{space.capacidade}} pessoas
-                                        </td>
-                                        
+    <td data-label="Ambiente">
+        <div class="td-ambiente">
+            <img src="{{ space.image }}" class="ambiente-imagem" alt="{{ space.name }}">
+            <div class="td-info">
+                <h3 class="ambiente-nome">{{ space.name }}</h3>
+                <p class="ambiente-descricao">{{ space.descricao }}</p>
+            </div>
+        </div>
+    </td>
+    
+    <!-- LOCALIZAÇÃO -->
+    <td data-label="Localização" class="ambiente-localizacao">
+        {{ space.localizacao }}
+    </td>
+    
+    <!-- CAPACIDADE -->
+    <td data-label="Capacidade" class="ambiente-capacidade">
+                                            👥 {{ space.capacidade }} pessoas
+    </td>
                                         <td  class="td-recursos">
-                                             
-                                            <div class="recursos">
-                                                {% for recurso in space.recursos %}
-                                                <ul>
-                                     
+        <div class="recursos">
+            <ul>
+                {% for recurso in space.recursos %}
+                <li>{{ recurso }}</li>
+                                        {%endfor%}
                                                   
-                                        <li>{{ recurso }}</li>
-                                       
-                                                  
-                                                 </ul>
-                                               {%endfor%}
-                                               
-                                            </div>
-                                            
-                                        </td>
-                                        
-                                        <td data-label="Status" class="ambiente-status">
-                                            {% if space.status == 'Disponivel' or space.status == 'Disponível' %}
-                                            <span class="status-badge disponivel">Disponível</span>
-                                            {% elif space.status == 'Manutenção' or space.status == 'Manutencao' %}
-                                            <span class="status-badge manutencao">Manutenção</span>
-                                            {% else %}
-                                            <span class="status-badge indisponivel">Indisponível</span>
-                                            {% endif %}
-                                        </td>
-                                        <td data-label="Ações">
-                                            <div class="td-acoes">
+            </ul>
+        </div>
+    </td>
+    
+    <!-- STATUS -->
+    <td data-label="Status" class="ambiente-status">
+        {% if space.status == 'Disponivel' or space.status == 'Disponível' %}
+        <span class="status-badge disponivel">Disponível</span>
+        {% elif space.status == 'Manutenção' or space.status == 'Manutencao' %}
+        <span class="status-badge manutencao">Manutenção</span>
+        {% else %}
+        <span class="status-badge indisponivel">Indisponível</span>
+        {% endif %}
+    </td>
+    
+    <!-- AÇÕES -->
+    <td data-label="Ações">
+        <div class="td-acoes">
                                                 <button class="btn-acao" title="Ver Detalhes" onclick="abrirModalDetalhesAmbiente(this)" data-ambiente='{{ space|tojson }}'>
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                        <circle cx="12" cy="12" r="3"></circle>
-                                                    </svg>
-                                                </button>
-                                                <button class="btn-acao editar" title="Editar" onclick="abrirModalEditar(this)" data-ambiente='{{ space|tojson }}'>
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                                    </svg>
-                                                </button>
-                                                <button class="btn-acao excluir" title="Excluir" onclick="excluirAmbiente('{{ space.id }}')">
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                    </svg>
-                                                </button>
-                                                <button class="btn-table-action primary" onclick="abrirModalAgendamento('{{ space.id }}', '{{ space.name }}')">
-                                                    Reservar
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </button>
+            
+            <!-- EDITAR -->
+            <button class="btn-acao editar" title="Editar" onclick="abrirModalEditar(this)" data-ambiente='{{ space|tojson }}'>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+            </button>
+            
+            <!-- EXCLUIR -->
+            <button class="btn-acao excluir" title="Excluir" onclick="excluirAmbiente('{{ space.id }}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+            </button>
+            
+            <!-- RESERVAR -->
+            <button class="btn-table-action primary" onclick="abrirModalAgendamento('{{ space.id }}', '{{ space.name }}')">
+                Reservar
+            </button>
+        </div>
+    </td>
+</tr>
                                     {% endfor %}
                                 </tbody>
                             </table>

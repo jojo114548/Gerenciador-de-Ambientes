@@ -3,11 +3,18 @@ from psycopg2.extras import RealDictCursor
 import os
 
 def get_connection():
-    return psycopg2.connect(
-        os.environ["postgresql://nexus_6t82_user:2O9D5klSvNu91o0022tuIWY7u3N7eOZE@dpg-d5va85coud1c738c6l1g-a/nexus_6t82"],
-        options="-c search_path=nexus"
-    )
-
+    try:
+        db_url = os.getenv("DATABASE_URL")
+        if not db_url:
+            raise ValueError("DATABASE_URL não encontrada no .env")
+        
+        print(f"Tentando conectar ao banco...") # remova em produção
+        conn = psycopg2.connect(db_url)
+        print("Conexão bem-sucedida!") # remova em produção
+        return conn
+    except Exception as e:
+        print(f"Erro ao conectar ao banco: {e}")
+        raise
 
 class NotificacaoRepository:
 
