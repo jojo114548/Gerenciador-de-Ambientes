@@ -7,13 +7,9 @@ def get_connection():
         db_url = os.getenv("DATABASE_URL")
         if not db_url:
             raise ValueError("DATABASE_URL não encontrada no .env")
-        
-        print(f"Tentando conectar ao banco...") # remova em produção
         conn = psycopg2.connect(db_url)
-        print("Conexão bem-sucedida!") # remova em produção
         return conn
     except Exception as e:
-        print(f"Erro ao conectar ao banco: {e}")
         raise
 
 class HistoricoRepository:

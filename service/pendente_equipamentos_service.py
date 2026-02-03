@@ -4,71 +4,91 @@ from repository.pendente_equipamento_repository import (
 from service.historico_equipamento_service import (
     HistoricoEquipamentoService
 )
-from repository.historico_equipamento_repository import (
-    HistoricoEquipamentoRepository  # ✅ ADICIONE ESTA IMPORTAÇÃO
-)
-from service.notificacao_service import NotificacaoService
+
+from repository.agendamentos_equipamentos_repository import AgendamentoEquipamentoRepository
 
 
 class PendenteServiceEquip:
 
     @staticmethod
     def criar_pendente(dados):
+        """
+        Cria um novo registro de pendente de equipamento.
+
+        - Valida se os dados foram informados
+        - Garante que o usuário esteja associado
+        - Insere o pendente no banco
+        - Trata duplicidade por constraint única
+        """
+        # Validação básica de existência dos dados
         if not dados:
             raise Exception("Dados do pendente não informados")
-
+        
+         # Garante que o pendente tenha um usuário associado
         if not dados.get("user_id"):
             raise ValueError("Usuário não informado para criação de pendente")
         
         try:
+             # Insere o pendente no banco de dados
             return PendenteEquipamentoRepository.inserir(dados)
+        
         except Exception as e:
+            # Trata violação de constraint única (pendente duplicado)
             if "uq_pendente_agendamento" in str(e):
                 return None
+            # Repropaga qualquer outro erro
             raise
 
     @staticmethod
     def listar():
+        """
+        Retorna todos os pendentes de equipamentos cadastrados.
+        """
         return PendenteEquipamentoRepository.listar()
 
     @staticmethod
     def atualizar_status(pendente_id, status):
-        print(f"\n{'='*60}")
-        print(f"🔄 ATUALIZANDO STATUS DO PENDENTE {pendente_id} para {status}")
-        print(f"{'='*60}")
+        """
+        Atualiza o status de um pendente de equipamento.
 
+        Fluxo completo:
+        - Busca o pendente pelo ID
+        - Valida existência
+        - Verifica se já existe histórico para o agendamento
+        - Atualiza o status do pendente
+        - Cria histórico (somente para status finais e se ainda não existir)
+        - Envia notificações ao usuário
+        - Retorna os dados atualizados
+        """
+       
+         # Busca o pendente pelo ID
         pendente = PendenteEquipamentoRepository.buscar_por_id(pendente_id)
+
+         # Valida se o pendente existe
         if not pendente:
             raise ValueError("Pendente não encontrado")
 
-        print(f"📦 Pendente encontrado:")
-        print(f"   Agendamento ID: {pendente['agendamento_id']}")
-        print(f"   Equipamento: {pendente['equipamento_nome']}")
-        print(f"   User ID: {pendente['user_id']}")
+         # Verifica se existe conflito de horário para equipamento
+        conflito = AgendamentoEquipamentoRepository.existe_conflito(
+        equipamento_id=pendente["equipamento_id"],
+        data=pendente["data"],
+        hora_inicio=pendente["hora_inicio"],
+        hora_fim=pendente["hora_fim"],
+        agendamento_id=pendente["agendamento_id"]  
+    )
+        
+         # Caso exista conflito, bloqueia a atualização
+        if conflito:
+            raise ValueError(
+                "Conflito de horário: o ambiente já está reservado nesse período."
+            )
+        
 
-        # 🔍 Verifica se já existe histórico para o agendamento
-        historico_existente = HistoricoEquipamentoRepository.buscar_por_agendamento(
-            pendente["agendamento_id"]
-        )
-
-        if historico_existente:
-            print(f"\n⚠️ HISTÓRICO JÁ EXISTE!")
-            print(f"   Histórico ID: {historico_existente['id']}")
-            print(f"   Status atual do histórico: {historico_existente['status']}")
-
-        # 🔄 Atualiza status do pendente (sempre)
-        print(f"\n🔄 Atualizando status do pendente no banco...")
+         #  Atualiza status do pendente (sempre)
         PendenteEquipamentoRepository.atualizar_status(pendente_id, status)
 
-        # 📝 Cria histórico APENAS se:
-        # - status for final
-        # - NÃO existir histórico ainda
-        if status in ['Confirmado', 'Rejeitado', 'Cancelado'] and not historico_existente:
-            try:
-                print(f"\n📝 Criando histórico para equipamento...")
-                print(f"   Status: {status}")
-
-                historico_id = HistoricoEquipamentoService.criar_historico({
+        # Cria histórico     
+        HistoricoEquipamentoService.criar_historico({
                     "agendamento_id": pendente["agendamento_id"],
                     "equipamento_id": pendente["equipamento_id"],
                     "user_id": pendente["user_id"],
@@ -79,55 +99,7 @@ class PendenteServiceEquip:
                     "finalidade": pendente["finalidade"],
                     "status": status
                 })
-
-                print(f"✅ Histórico criado com sucesso! ID: {historico_id}")
-
-            except Exception as e:
-                print(f"❌ Erro ao criar histórico: {e}")
-                import traceback
-                traceback.print_exc()
-
-        # 🔔 Notificações por status
-        try:
-            if status == 'Confirmado':
-                NotificacaoService.criar_notificacao({
-                    "user_id": pendente["user_id"],
-                    "titulo": "Agendamento Aprovado",
-                    "mensagem": (
-                        f"Seu agendamento do equipamento "
-                        f"'{pendente['equipamento_nome']}' foi aprovado para "
-                        f"{pendente['data']} às {pendente['hora_inicio']}."
-                    ),
-                    "tipo": "sucesso"
-                })
-
-            elif status == 'Rejeitado':
-                NotificacaoService.criar_notificacao({
-                    "user_id": pendente["user_id"],
-                    "titulo": "Agendamento Rejeitado",
-                    "mensagem": (
-                        f"Seu agendamento do equipamento "
-                        f"'{pendente['equipamento_nome']}' foi rejeitado."
-                    ),
-                    "tipo": "aviso"
-                })
-
-            elif status == 'Cancelado':
-                NotificacaoService.criar_notificacao({
-                    "user_id": pendente["user_id"],
-                    "titulo": "Agendamento Cancelado",
-                    "mensagem": (
-                        f"Seu agendamento do equipamento "
-                        f"'{pendente['equipamento_nome']}' foi cancelado."
-                    ),
-                    "tipo": "info"
-                })
-        except Exception as e:
-            print(f"Erro ao criar notificação: {e}")
-
-        print(f"✅ Processo completo!")
-        print(f"{'='*60}\n")
-
+        # Retorna o pendente com o status atualizado
         return {
             **pendente,
             "status": status
