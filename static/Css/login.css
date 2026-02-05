@@ -42,7 +42,7 @@ body {
 /* Painel de Login (Esquerda) */
 .login-panel {
     background: linear-gradient(135deg, #1A1D24 0%, #0D0F14 100%);
-    padding: 60px 50px;
+    padding: 60px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,11 +65,12 @@ body {
     z-index: 1;
 }
 
+
 .login-header h2 {
     color: #ffffff;
     font-size: 32px;
     font-weight: 600;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     letter-spacing: 1px;
 }
 
@@ -77,6 +78,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    margin-bottom: 70px;
 }
 
 .form-group {
@@ -156,7 +158,7 @@ body {
 /* Hero Content (Direita) */
 .hero-content {
     background: linear-gradient(135deg, #6C5CE7 0%, #5B4CD8 100%);
-    padding: 60px 50px;
+    padding: 60px 55px;
     display: flex;
     align-items: center;
     position: relative;
@@ -187,7 +189,9 @@ body {
 }
 
 .logo {
-    width: 300px;
+    width: 150px;
+    height: 150px;
+
     filter: brightness(0) invert(1);
     
 }
@@ -203,10 +207,12 @@ body {
 
 .hero-subtitle {
     color: rgba(255, 255, 255, 0.95);
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.6;
-    margin-bottom: 40px;
-    max-width: 450px;
+    margin-top: 60px;
+    max-width: 600px;
+    text-align: left;
+    font-weight: 600;
 }
 
 .hero-features {

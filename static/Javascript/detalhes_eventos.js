@@ -116,13 +116,13 @@ function abrirModalDetalhes(btn) {
 
     if (inscrito) {
       actions.innerHTML = `
-        <button class="btn-reserve btn-inscrito" disabled style="background: #dbeafe; color: #1e40af; padding: 10px 20px; border: none; border-radius: 8px; cursor: not-allowed;">
+        <button class="btn-reserve btn-inscrito" disabled style="background: #3b82f6; color: #dbeafe; padding: 10px 20px; border: none; border-radius: 8px; cursor: not-allowed;">
           ✓ Você está inscrito
         </button>
       `;
     } else if (participantes >= maxCapacidade) {
       actions.innerHTML = `
-        <button class="btn-reserve btn-lotado" disabled style="background: #fee2e2; color: #991b1b; padding: 10px 20px; border: none; border-radius: 8px; cursor: not-allowed;">
+        <button class="btn-reserve btn-lotado" disabled style="background: #dbeafe; color: #991b1b; padding: 10px 20px; border: none; border-radius: 8px; cursor: not-allowed;">
           Evento Lotado
         </button>
       `;

@@ -693,9 +693,9 @@
                                             <span class="tipo-badge">Equipamento</span>
                                         </td>
                                         <td>
-                                            {% if history.status == 'Aprovado' or history.status == 'Approved' %}
+                                            {% if history.status == 'Concluido'  %}
                                             <span class="status-badge approved">{{ history.status }}</span>
-                                            {% elif history.status == 'Pendente' or history.status == 'Pending' %}
+                                            {% elif history.status == 'Confirmado'  %}
                                             <span class="status-badge pending">{{ history.status }}</span>
                                             {% elif history.status == 'Cancelado' or history.status == 'Cancelled' %}
                                             <span class="status-badge cancelled">{{ history.status }}</span>

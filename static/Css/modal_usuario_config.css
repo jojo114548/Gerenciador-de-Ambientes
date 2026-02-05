@@ -3,16 +3,16 @@
 ====================================================== */
 .modal-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.55);
   display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-}
-
-.modal-overlay.active {
-  display: flex;
+  justify-content: center !important; /* ✅ FORÇAR CENTRALIZAÇÃO */
+  align-items: center !important; /* ✅ FORÇAR CENTRALIZAÇÃO */
+ z-index: 10000 !important; /* ✅ AUMENTAR PARA 10000 */
+  animation: overlayFadeIn 0.3s ease;
 }
 
 /* ======================================================
@@ -30,6 +30,7 @@
   max-height: 90vh;
   overflow-y: auto;
   animation: modalFadeIn 0.25s ease;
+  margin: 0 auto; /* ✅ ADICIONAR MARGEM AUTO COMO FALLBACK */
 }
 
 /* ======================================================
@@ -46,7 +47,8 @@
   font-weight: 700;
   cursor: pointer;
   color: #374151;
-  transition: color 0.2s;
+
+  z-index: 10; 
 }
 
 .modal-close:hover {
@@ -254,11 +256,26 @@
 }
 
 /* ======================================================
-   ANIMAÇÃO
+   ANIMAÇÕES
 ====================================================== */
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes modalFadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
 }
 
 /* ======================================================

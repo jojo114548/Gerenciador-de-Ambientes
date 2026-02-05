@@ -4,31 +4,73 @@
 #modalEditarEquipamento.modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 1500;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
 }
 
 #modalEditarEquipamento.modal.active {
   display: flex;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* ======================================================
    CONTEÚDO DO MODAL
 ====================================================== */
 #modalEditarEquipamento .modal-content {
-  background: #ffffff;
+  background: linear-gradient(to bottom, #ffffff, #fafbfc);
   width: 100%;
   max-width: 620px;
   max-height: 90vh;
   overflow-y: auto;
   border-radius: 16px;
-  padding: 2rem;
+  padding: 0;
   position: relative;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-  animation: modalFadeIn 0.25s ease;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15), 
+              0 12px 24px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s ease-out;
+}
+
+#modalEditarEquipamento .modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+#modalEditarEquipamento .modal-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+#modalEditarEquipamento .modal-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+#modalEditarEquipamento .modal-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #5568d3, #654a8f);
 }
 
 /* ======================================================
@@ -36,26 +78,55 @@
 ====================================================== */
 #modalEditarEquipamento .close {
   position: absolute;
-  top: 14px;
-  right: 18px;
-  font-size: 1.4rem;
+  top: 24px;
+  right: 28px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
-  color: #6b7280;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border: none;
 }
 
 #modalEditarEquipamento .close:hover {
-  color: #111827;
+  background: rgba(255, 255, 255, 0.3);
+
 }
 
 /* ======================================================
-   TÍTULO
+   HEADER
 ====================================================== */
 #modalEditarEquipamento h2 {
-  margin-bottom: 1.2rem;
-  font-size: 1.35rem;
+  margin: 0;
+  padding: 28px 32px;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: #111827;
+  color: #ffffff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#modalEditarEquipamento h2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  z-index: 0;
 }
 
 /* ======================================================
@@ -64,50 +135,97 @@
 #form-editar-equipamento {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 20px;
+  padding: 32px;
+}
+
+#form-editar-equipamento > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#form-editar-equipamento label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  letter-spacing: 0.01em;
 }
 
 #form-editar-equipamento input,
 #form-editar-equipamento select,
 #form-editar-equipamento textarea {
   width: 100%;
-  padding: 0.55rem 0.7rem;
-  font-size: 0.9rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
+  background: #fafbfc;
+  font-family: inherit;
 }
 
-#form-editar-equipamento textarea {
-  resize: vertical;
-  min-height: 80px;
+#form-editar-equipamento input:hover,
+#form-editar-equipamento select:hover,
+#form-editar-equipamento textarea:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
 }
 
 #form-editar-equipamento input:focus,
 #form-editar-equipamento select:focus,
 #form-editar-equipamento textarea:focus {
-  border-color: #2563eb;
+  border-color: #667eea;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+#form-editar-equipamento textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 /* ======================================================
    ESPECIFICAÇÕES
 ====================================================== */
 #form-editar-equipamento h4 {
-  margin-top: 1rem;
-  font-size: 0.95rem;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  font-size: 1rem;
   font-weight: 700;
-  color: #374151;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 #edit-especificacoes-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 12px;
+}
+
+.especificacao-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.especificacao-item:hover {
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 #edit-especificacoes-container input {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  background: white;
 }
 
 /* ======================================================
@@ -115,57 +233,100 @@
 ====================================================== */
 #form-editar-equipamento button[type="button"] {
   align-self: flex-start;
-  background: none;
-  border: none;
-  color: #2563eb;
-  font-size: 0.85rem;
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  border: 2px dashed #7dd3fc;
+  color: #0369a1;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  padding: 0;
+  padding: 12px 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 #form-editar-equipamento button[type="button"]:hover {
-  text-decoration: underline;
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
 }
 
 /* ======================================================
    BOTÃO SALVAR
 ====================================================== */
 #form-editar-equipamento button[type="submit"] {
-  margin-top: 1.4rem;
-  padding: 0.65rem;
-  font-size: 0.9rem;
+  margin-top: 16px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
-  background: #2563eb;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #ffffff;
   cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+#form-editar-equipamento button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+#form-editar-equipamento button[type="submit"]:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 #form-editar-equipamento button[type="submit"]:hover {
-  background: #1e40af;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
-/* ======================================================
-   ANIMAÇÃO
-====================================================== */
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+#form-editar-equipamento button[type="submit"]:active {
+  transform: translateY(0);
 }
 
 /* ======================================================
    RESPONSIVO
 ====================================================== */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   #modalEditarEquipamento .modal-content {
-    padding: 1.5rem;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+  }
+
+  #modalEditarEquipamento h2 {
+    padding: 20px 24px;
+    font-size: 1.35rem;
+  }
+
+  #form-editar-equipamento {
+    padding: 24px;
+  }
+
+  #modalEditarEquipamento .close {
+    top: 18px;
+    right: 20px;
+  }
+
+  #form-editar-equipamento button[type="submit"] {
+    width: 100%;
   }
 }

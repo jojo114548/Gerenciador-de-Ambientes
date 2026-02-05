@@ -232,7 +232,7 @@ class HistoricoEquipamentoRepository:
                         data_equip < CURRENT_DATE
                         OR (
                             data_equip = CURRENT_DATE
-                            AND hora_fim < CURRENT_TIME
+                            AND hora_fim <= CURRENT_TIME
                         )
                   )
             """)
@@ -268,11 +268,11 @@ class HistoricoEquipamentoRepository:
 
     @staticmethod
     def buscar_por_agendamento(agendamento_id):
-        """✅ Verifica se já existe histórico para um agendamento"""
+        """ Verifica se já existe histórico para um agendamento"""
         conn = get_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         try:
-            print(f"\n🔍 Verificando se já existe histórico para agendamento {agendamento_id}...")
+            print(f"\n Verificando se já existe histórico para agendamento {agendamento_id}...")
             
             cursor.execute("""
                 SELECT id, status, equipamento_nome, criado_em
@@ -283,14 +283,6 @@ class HistoricoEquipamentoRepository:
             """, (agendamento_id,))
             
             resultado = cursor.fetchone()
-            
-            if resultado:
-                print(f"⚠️ JÁ EXISTE histórico para agendamento {agendamento_id}:")
-                print(f"   ID: {resultado['id']}")
-                print(f"   Status: {resultado['status']}")
-                print(f"   Criado em: {resultado['criado_em']}")
-            else:
-                print(f"✅ Nenhum histórico encontrado para agendamento {agendamento_id}")
             
             return resultado
             

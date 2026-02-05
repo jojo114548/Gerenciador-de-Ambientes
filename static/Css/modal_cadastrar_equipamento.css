@@ -4,31 +4,73 @@
 #modalEquipamento.modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 1500;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
 }
 
 #modalEquipamento.modal.active {
   display: flex;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* ======================================================
    CONTEÚDO DO MODAL
 ====================================================== */
 #modalEquipamento .modal-content {
-  background: #ffffff;
+  background: linear-gradient(to bottom, #ffffff, #fafbfc);
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   max-height: 90vh;
   overflow-y: auto;
-  border-radius: 14px;
-  padding: 2rem;
+  border-radius: 16px;
+  padding: 0;
   position: relative;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-  animation: modalFade 0.25s ease;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15), 
+              0 12px 24px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s ease-out;
+}
+
+ .modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: none;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: none;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: none;
 }
 
 /* ======================================================
@@ -36,26 +78,61 @@
 ====================================================== */
 #modalEquipamento .close {
   position: absolute;
-  top: 14px;
-  right: 18px;
-  font-size: 1.4rem;
+  top: 24px;
+  right: 28px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
-  color: #6b7280;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border: none;
 }
 
 #modalEquipamento .close:hover {
-  color: #111827;
+  background: rgba(255, 255, 255, 0.3);
+
 }
 
 /* ======================================================
-   TÍTULO
+   HEADER
 ====================================================== */
 #modalEquipamento h2 {
-  margin-bottom: 1.4rem;
-  font-size: 1.35rem;
+  margin: 0;
+  padding: 28px 32px;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: #111827;
+  color: #ffffff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#modalEquipamento h2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  z-index: 0;
+}
+
+#modalEquipamento h2::after {
+  content: attr(data-text);
+  position: relative;
+  z-index: 1;
 }
 
 /* ======================================================
@@ -64,36 +141,59 @@
 #form-cadastro-equipamento {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 20px;
+  padding: 32px;
+}
+
+#form-cadastro-equipamento > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 #form-cadastro-equipamento label {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: #374151;
+  color: #334155;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 #form-cadastro-equipamento input,
 #form-cadastro-equipamento select,
 #form-cadastro-equipamento textarea {
   width: 100%;
-  padding: 0.55rem 0.65rem;
-  font-size: 0.9rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
+  background: #fafbfc;
+  font-family: inherit;
 }
 
-#form-cadastro-equipamento textarea {
-  resize: vertical;
-  min-height: 70px;
+#form-cadastro-equipamento input:hover,
+#form-cadastro-equipamento select:hover,
+#form-cadastro-equipamento textarea:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
 }
 
 #form-cadastro-equipamento input:focus,
 #form-cadastro-equipamento select:focus,
 #form-cadastro-equipamento textarea:focus {
-  border-color: #2563eb;
+  border-color: none;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+#form-cadastro-equipamento textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 /* ======================================================
@@ -101,8 +201,22 @@
 ====================================================== */
 #form-cadastro-equipamento hr {
   border: none;
-  border-top: 1px solid #e5e7eb;
-  margin: 1rem 0;
+  height: 3px;
+  background: #f1f5f9;
+  margin: 16px 0;
+  position: relative;
+  border-radius: 2px;
+}
+
+#form-cadastro-equipamento hr::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 2px;
 }
 
 /* ======================================================
@@ -111,66 +225,151 @@
 #especificacoes-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.especificacao-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.especificacao-item:hover {
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 #especificacoes-container input {
   width: 100%;
+  padding: 10px 14px;
+  background: white;
 }
 
 #form-cadastro-equipamento button[type="button"] {
   align-self: flex-start;
-  margin-top: 0.4rem;
-  padding: 0.45rem 0.75rem;
-  font-size: 0.8rem;
-  border-radius: 6px;
-  border: 1px dashed #9ca3af;
-  background: #f9fafb;
+  margin-top: 8px;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  color: #0369a1;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
 }
 
 #form-cadastro-equipamento button[type="button"]:hover {
-  background: #f3f4f6;
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  border-color: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+#form-cadastro-equipamento button[type="button"] svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* ======================================================
    BOTÃO SUBMIT
 ====================================================== */
 #form-cadastro-equipamento button[type="submit"] {
-  margin-top: 1.2rem;
-  padding: 0.65rem;
-  font-size: 0.9rem;
+  margin-top: 16px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
-  background: #2563eb;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #ffffff;
   cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+#form-cadastro-equipamento button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+#form-cadastro-equipamento button[type="submit"]:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 #form-cadastro-equipamento button[type="submit"]:hover {
-  background: #1e40af;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
+#form-cadastro-equipamento button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+
+
 /* ======================================================
-   ANIMAÇÃO
+   SEÇÃO DE CAMPO COM DESTAQUE
 ====================================================== */
-@keyframes modalFade {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.campo-destaque {
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.campo-destaque:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 /* ======================================================
    RESPONSIVO
 ====================================================== */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   #modalEquipamento .modal-content {
-    padding: 1.5rem;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+  }
+
+  #modalEquipamento h2 {
+    padding: 20px 24px;
+    font-size: 1.35rem;
+  }
+
+  #form-cadastro-equipamento {
+    padding: 24px;
+  }
+
+  #modalEquipamento .close {
+    top: 18px;
+    right: 20px;
+  }
+
+  #form-cadastro-equipamento button[type="submit"] {
+    width: 100%;
   }
 }

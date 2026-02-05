@@ -1,129 +1,401 @@
-/* Modal Background */
+/* ======================================================
+   MODAL - OVERLAY
+====================================================== */
 .modal {
-    display: none; /* escondido por padrão */
+    display: none;
     position: fixed;
     z-index: 1000;
-    left: 0;
-    top: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    background-color: rgba(0, 0, 0, 0.6);
-    font-family: 'Inter', sans-serif;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding: 2rem 1rem;
 }
 
-/* Modal Content Box */
+.modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: overlayFadeIn 0.3s ease;
+}
+
+/* ======================================================
+   MODAL - CONTENT BOX
+====================================================== */
 .modal-content {
-    background-color: #fff;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 15px;
-    max-width: 600px;
-    width: 90%;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+    margin: auto;
+    padding: 2.5rem;
+    border-radius: 28px;
+    max-width: 680px;
+    width: 100%;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.7) inset;
     position: relative;
-    animation: fadeIn 0.3s ease-in-out;
+    animation: modalSlideUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
-/* Close Button */
+/* ======================================================
+   CLOSE BUTTON
+====================================================== */
 .close {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    color: #888;
-    font-size: 24px;
-    font-weight: bold;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 1.75rem;
+    font-weight: 400;
+    line-height: 1;
     cursor: pointer;
-    transition: color 0.2s;
+    border-radius: 50%;
+    z-index: 10;
+    border: 2px solid transparent;
 }
 
 .close:hover {
-    color: #333;
+    background: #e2e8f0;
+    color: #0f172a;
+    border-color: #cbd5e1;
 }
 
-/* Modal Image */
+.close:active {
+    transform: rotate(90deg) scale(0.95);
+}
+
+/* ======================================================
+   MODAL IMAGE
+====================================================== */
 .modal-imagem {
     width: 100%;
-    max-height: 300px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    height: 320px;
+    border-radius: 20px;
+    margin-bottom: 2rem;
     object-fit: cover;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s ease;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
 }
 
-/* Modal Title */
+.modal-imagem:hover {
+    transform: scale(1.02);
+}
+
+/* ======================================================
+   MODAL TITLE
+====================================================== */
 .modal-content h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #111827;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
 }
 
-.modal-info{
-  display: flex;
-  justify-content: space-between;
-  gap: 9px;
+/* ======================================================
+   MODAL INFO - GRID CARDS
+====================================================== */
+.modal-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    padding: 1.75rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
-/* Modal Info (Categoria, Status, etc.) */
+
 .modal-info p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #4B5563;
+    margin: 0;
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: #475569;
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.modal-info p:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15);
+    transform: translateY(-3px);
 }
 
 .modal-info strong {
-    color: #111827;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
 }
 
-/* Descrição */
+.modal-info span {
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* ======================================================
+   STATUS BADGES (adicione classes via JS)
+====================================================== */
+#md-equip-status {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-disponivel {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+}
+
+.status-em-uso {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+}
+
+.status-manutencao {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+}
+
+.status-indisponivel {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35);
+}
+
+/* ======================================================
+   DESCRIÇÃO
+====================================================== */
 .modal-descricao {
-    margin-top: 20px;
+    margin-top: 2rem;
+    background: #ffffff;
+    padding: 1.75rem;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .modal-descricao h4 {
-    font-size: 16px;
-    margin-bottom: 8px;
-    color: #111827;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.modal-descricao h4::before {
+    content: '';
+    width: 4px;
+    height: 24px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-radius: 3px;
 }
 
 .modal-descricao p {
-    font-size: 14px;
-    color: #4B5563;
-    line-height: 1.5;
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.75;
+    margin: 0;
 }
 
-/* Recursos / Especificações */
+/* ======================================================
+   RECURSOS / ESPECIFICAÇÕES
+====================================================== */
 .modal-recursos {
-    margin-top: 20px;
+    margin-top: 2rem;
+    background: #ffffff;
+    padding: 1.75rem;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .modal-recursos h4 {
-    font-size: 16px;
-    margin-bottom: 8px;
-    color: #111827;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.modal-recursos h4::before {
+    content: '';
+    width: 4px;
+    height: 24px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-radius: 3px;
 }
 
 .modal-recursos ul {
     list-style-type: none;
     padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.875rem;
 }
 
 .modal-recursos ul li {
-    font-size: 14px;
-    color: #4B5563;
-    padding: 5px 0;
+    font-size: 0.9rem;
+    color: #334155;
+    padding: 1rem 1.25rem;
+    padding-left: 3rem;
     position: relative;
-    padding-left: 20px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .modal-recursos ul li::before {
-    content: "✔";
+    content: "✓";
     position: absolute;
-    left: 0;
-    color: #10B981; /* verde */
-    font-weight: bold;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
 }
 
-/* Fade-in Animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+.modal-recursos ul li:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-color: #10b981;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.15);
+    transform: translateX(5px);
+}
+
+/* ======================================================
+   SCROLLBAR CUSTOMIZADA
+====================================================== */
+.modal-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: none;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: none;
+}
+
+/* ======================================================
+   ANIMAÇÕES
+====================================================== */
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+@media (max-width: 768px) {
+    .modal {
+        padding: 1rem 0.5rem;
+    }
+
+    .modal-content {
+        padding: 2rem 1.5rem;
+        border-radius: 24px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .modal-imagem {
+        height: 240px;
+    }
+
+    .modal-info {
+        grid-template-columns: 1fr;
+        padding: 1.25rem;
+    }
+
+    .modal-recursos ul {
+        grid-template-columns: 1fr;
+    }
+
+    .close {
+        width: 40px;
+        height: 40px;
+        top: 1rem;
+        right: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .modal-content h2 {
+        font-size: 1.35rem;
+    }
+
+    .modal-imagem {
+        height: 200px;
+    }
 }

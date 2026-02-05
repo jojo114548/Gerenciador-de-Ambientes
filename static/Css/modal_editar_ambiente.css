@@ -4,31 +4,74 @@
 #modal-editar.modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 1500;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
 }
 
 #modal-editar.modal.active {
   display: flex;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* ======================================================
    CONTEÚDO DO MODAL
 ====================================================== */
 #modal-editar .modal-content {
-  background: #ffffff;
+  background: linear-gradient(to bottom, #ffffff, #fafbfc);
   width: 100%;
-  max-width: 640px;
+  max-width: 700px;
   max-height: 90vh;
   overflow-y: auto;
   border-radius: 16px;
-  padding: 2rem;
+  padding: 0;
   position: relative;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-  animation: modalFadeIn 0.25s ease;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15), 
+              0 12px 24px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s ease-out;
+  align-items: center;
+}
+
+#modal-editar .modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+#modal-editar .modal-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+#modal-editar .modal-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+#modal-editar .modal-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #5568d3, #654a8f);
 }
 
 /* ======================================================
@@ -36,26 +79,54 @@
 ====================================================== */
 #modal-editar .close {
   position: absolute;
-  top: 14px;
-  right: 18px;
-  font-size: 1.4rem;
+  top: 24px;
+  right: 28px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
-  color: #6b7280;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border: none;
 }
 
 #modal-editar .close:hover {
-  color: #111827;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* ======================================================
-   TÍTULO
+   HEADER
 ====================================================== */
 #modal-editar h2 {
-  margin-bottom: 1.4rem;
-  font-size: 1.35rem;
+  margin: 0;
+  padding: 28px 32px;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: #111827;
+  color: #ffffff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#modal-editar h2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  z-index: 0;
 }
 
 /* ======================================================
@@ -64,88 +135,87 @@
 #form-editar-ambiente {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 20px;
+  padding: 32px;
+}
+
+#form-editar-ambiente > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 #form-editar-ambiente label {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: #374151;
+  color: #334155;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 #form-editar-ambiente input,
 #form-editar-ambiente select,
 #form-editar-ambiente textarea {
   width: 100%;
-  padding: 0.55rem 0.65rem;
-  font-size: 0.9rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
+  background: #fafbfc;
+  font-family: inherit;
 }
 
-#form-editar-ambiente textarea {
-  resize: vertical;
-  min-height: 70px;
+#form-editar-ambiente input:hover,
+#form-editar-ambiente select:hover,
+#form-editar-ambiente textarea:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
 }
 
 #form-editar-ambiente input:focus,
 #form-editar-ambiente select:focus,
 #form-editar-ambiente textarea:focus {
-  border-color: #2563eb;
+  border-color: #667eea;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+#form-editar-ambiente textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 /* ======================================================
    PREVIEW DA IMAGEM
 ====================================================== */
 #modal-editar .preview {
-  margin-top: 0.5rem;
+  margin-top: 12px;
   width: 100%;
-  max-height: 180px;
+  max-height: 200px;
   object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
   display: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
 }
 
-/* exiba via JS adicionando display:block */
+#modal-editar .preview:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: scale(1.01);
+}
+
 #modal-editar .preview.active {
   display: block;
+  animation: fadeInImage 0.3s ease;
 }
 
-/* ======================================================
-   RECURSOS
-====================================================== */
-#recursos-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-/* ======================================================
-   BOTÃO SALVAR
-====================================================== */
-#form-editar-ambiente .btn-salvar {
-  margin-top: 1.4rem;
-  padding: 0.65rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: 8px;
-  border: none;
-  background: #2563eb;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-#form-editar-ambiente .btn-salvar:hover {
-  background: #1e40af;
-}
-
-/* ======================================================
-   ANIMAÇÃO
-====================================================== */
-@keyframes modalFadeIn {
+@keyframes fadeInImage {
   from {
     opacity: 0;
     transform: scale(0.95);
@@ -157,10 +227,169 @@
 }
 
 /* ======================================================
+   RECURSOS
+====================================================== */
+#recursos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.recurso-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.recurso-item:hover {
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+#recursos-container input {
+  width: 100%;
+  padding: 10px 14px;
+  background: white;
+}
+
+/* Botão adicionar recurso */
+.btn-add-recurso {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 2px dashed #7dd3fc;
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  color: #0369a1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-add-recurso:hover {
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+/* ======================================================
+   BOTÃO SALVAR
+====================================================== */
+#form-editar-ambiente .btn-salvar {
+  margin-top: 16px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+#form-editar-ambiente .btn-salvar::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+#form-editar-ambiente .btn-salvar:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+#form-editar-ambiente .btn-salvar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+#form-editar-ambiente .btn-salvar:active {
+  transform: translateY(0);
+}
+
+/* ======================================================
+   ESTADOS DE VALIDAÇÃO
+====================================================== */
+#form-editar-ambiente input:invalid:not(:placeholder-shown),
+#form-editar-ambiente select:invalid,
+#form-editar-ambiente textarea:invalid:not(:placeholder-shown) {
+  border-color: #fca5a5;
+}
+
+#form-editar-ambiente input:valid:not(:placeholder-shown),
+#form-editar-ambiente select:valid:not(:placeholder-shown),
+#form-editar-ambiente textarea:valid:not(:placeholder-shown) {
+  border-color: #86efac;
+}
+
+/* ======================================================
+   SEÇÃO DE CAMPO COM DESTAQUE
+====================================================== */
+.campo-destaque {
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.campo-destaque:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ======================================================
    RESPONSIVO
 ====================================================== */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   #modal-editar .modal-content {
-    padding: 1.5rem;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+  }
+
+  #modal-editar h2 {
+    padding: 20px 24px;
+    font-size: 1.35rem;
+  }
+
+  #form-editar-ambiente {
+    padding: 24px;
+  }
+
+  #modal-editar .close {
+    top: 18px;
+    right: 20px;
+  }
+
+  #form-editar-ambiente .btn-salvar {
+    width: 100%;
+  }
+
+  #modal-editar .preview {
+    max-height: 160px;
   }
 }

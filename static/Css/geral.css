@@ -547,7 +547,7 @@ body {
 .card:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-  border-color: #6C5CE7;
+  border-color: none;
 }
 
 .card img {
@@ -702,7 +702,7 @@ body {
 .event-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  border-color: #6C5CE7;
+  border-color: none;
 }
 
 .event-card.destaque {
@@ -816,11 +816,12 @@ body {
 }
 
 .event-capacidade {
-  font-weight: 700;
-  color: #6C5CE7;
+
+  color: #1A1D24;
 }
 
 .event-instrutor {
+
   color: #1A1D24;
 }
 
@@ -979,7 +980,7 @@ body {
 }
 
 .btn-reserve:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1D6FDB, #1557B0);
+  background: linear-gradient(135deg, #6C5CE7, #6C5CE7);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(47, 128, 237, 0.3);
 }
@@ -992,12 +993,12 @@ body {
 }
 
 .btn-reserve.btn-inscrito {
-  background: linear-gradient(135deg, #10B981, #059669);
-  color: #FFFFFF;
+  background: linear-gradient(135deg, #6C5CE7, #6C5CE7);
+  color: #ffffff;
 }
 
 .btn-reserve.btn-inscrito:hover {
-  background: linear-gradient(135deg, #059669, #047857);
+  background: linear-gradient(135deg, #6C5CE7, #6C5CE7);
 }
 
 .btn-reserve svg {
@@ -1115,78 +1116,71 @@ body {
 /* ======================================================
    MODAL
 ====================================================== */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(12px);
+/* ======================================================
+   FIX MODAIS - FORÇA CENTRALIZAÇÃO
+====================================================== */
+
+/* Modal de Configuração - Centralização especial */
+.modal-configuracao {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  z-index: 999 !important;
+}
+
+.modal-configuracao-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 998 !important;
+  margin: 0 !important;
+}
+
+/* Modais tipo Overlay (Usuário, Edição, Detalhes) */
+.modal-overlay,
+#edit-config-modal,
+#modal-detalhes-ambiente.modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
   display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  padding: 20px;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 99999 !important;
+  margin: 0 !important;
+  transform: none !important;
 }
 
-.modal-overlay.active {
-  display: flex;
+/* Quando os modais overlay estiverem dentro do dashboard */
+.dashboard .modal-overlay,
+.dashboard #edit-config-modal,
+.dashboard #modal-detalhes-ambiente.modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
 }
 
-.modal-card {
-  background: #FFFFFF;
-  width: 100%;
-  max-width: 800px;
-  border-radius: 24px;
-  padding: 40px;
-  animation: modalSlideUp 0.4s ease;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  max-height: 90vh;
-  overflow-y: auto;
+/* Container dos modais overlay */
+.modal-overlay .modal-container,
+.modal-overlay .modal-content,
+#modal-detalhes-ambiente .modal-content {
+  position: relative !important;
+  transform: none !important;
+  margin: auto !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
 }
 
-@keyframes modalSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.modal-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1F1F1F;
-}
-
-.modal-close {
-  width: 36px;
-  height: 36px;
-  border: none;
-  background: #F3F4F6;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  color: #1A1D24;
-  font-size: 20px;
-}
-
-.modal-close:hover {
-  background: #6C5CE7;
-  color: #FFFFFF;
-  transform: rotate(90deg);
-}
 
 /* ======================================================
    ACCORDION
