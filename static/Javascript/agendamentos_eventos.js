@@ -128,14 +128,14 @@ async function verificarDisponibilidade() {
     const result = await response.json();
 
     if (result.ambiente_disponivel && result.equipamentos_disponiveis) {
-      alert("✅ Todos os recursos estão disponíveis!");
+         mostrarToast("Todos os recursos estão disponíveis!", "sucesso");
     } else {
-      alert(`⚠️ ${result.mensagens?.join("\n") || "Recursos indisponíveis"}`);
+       mostrarToast("Recursos indisponíveis", "erro");
     }
 
   } catch (error) {
     console.error(error);
-    alert("Erro ao verificar disponibilidade");
+     mostrarToast("Erro ao verificar disponibilidade", "erro");
   }
 }
 
@@ -173,15 +173,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await response.json();
 
       if (response.ok) {
-        alert("✅ Evento criado com sucesso!");
+         mostrarToast("Evento criado com sucesso!", "sucesso");
         location.reload();
       } else {
-        alert(result.erro || "Erro ao criar evento");
+         mostrarToast("Erro ao criar evento", "erro");
       }
 
     } catch (error) {
       console.error(error);
-      alert("Erro de conexão");
+      mostrarToast("Erro de conexão", "erro");
     }
   });
 });

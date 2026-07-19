@@ -2,32 +2,33 @@
 
 <div id="modal-agendamento" class="modal-agendamento">
     <div class="modal-box">
-
-        <button class="close" onclick="fecharModalAgendamento()">×</button>
+        <div class="ambienteAgend">
           <h2 id="titulo-modal">Novo Agendamento</h2>
+        </div>
+       
         <form id="form-agendamento">
           <input type="hidden" id="ambiente_id" name="ambiente_id">
 
-            <label>Data</label>
-            <input type="date" id="ambiente-data" required>
+            <label for="ambiente-data">Data</label>
+            <input type="date" id="ambiente-data" name="ambiente-data" required>
 
             <div class="horarios">
                 <div>
-                    <label>Horário Início</label>
-                    <input type="time" id="ambiente-hora_inicio" required>
+                    <label for="ambiente-hora_inicio">Horário Início</label>
+                    <input type="time" id="ambiente-hora_inicio" name="ambiente-hora_inicio" required>
                 </div>
                 <div>
-                    <label>Horário Fim</label>
-                    <input type="time" id="ambiente-hora_fim" required>
+                    <label for="ambiente-hora_fim">Horário Fim</label>
+                    <input type="time" id="ambiente-hora_fim" name="ambiente-hora_fim" required>
                 </div>
             </div>
 
-            <label>Finalidade</label>
+            <label for="ambiente-finalidade">Finalidade</label>
             <textarea
                 id="ambiente-finalidade"
+                name="ambiente-finalidade"
                 placeholder="Descreva o objetivo do agendamento"
-                required>
-            </textarea>
+                required></textarea>
 
             <div class="acoes">
                 <button type="button" class="btn-cancelar" onclick="fecharModalAgendamento()">
@@ -41,6 +42,5 @@
 
     </div>
 </div>
-
 
 <script src="/static/Javascript/agendamentos_ambientes.js"></script>

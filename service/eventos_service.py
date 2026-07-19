@@ -4,6 +4,8 @@ from repository.eventos_repository import EventosRepository
 from repository.recursosEventos_repository import RecursosRepository
 from service.notificacao_service import NotificacaoService
 
+from datetime import datetime
+
 
 class EventosService:
     
@@ -30,6 +32,11 @@ class EventosService:
             equipamentos = EventosRepository.buscar_equipamentos_do_evento(evento["id"])
             # Adiciona a lista de equipamentos ao dicionário do evento
             evento["equipamentos"] = equipamentos
+
+        for evento in eventos:
+            if evento.get("data_evento"):
+                data = datetime.strptime(str(evento["data_evento"]), "%Y-%m-%d")
+                evento["data_evento"] = data.strftime("%d/%m/%Y")
 
         return eventos
 

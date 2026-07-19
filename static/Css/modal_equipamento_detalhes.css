@@ -30,7 +30,7 @@
     margin: auto;
     padding: 2.5rem;
     border-radius: 28px;
-    max-width: 680px;
+  max-width: 620px;
     width: 100%;
     box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25),
                 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
@@ -65,7 +65,7 @@
 
 .close:hover {
     background: #e2e8f0;
-    color: #0f172a;
+    color: #0F1B2E;
     border-color: #cbd5e1;
 }
 
@@ -98,7 +98,7 @@
     font-size: 2rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
-    color: #0f172a;
+    color: #0F1B2E;
     letter-spacing: -0.03em;
     line-height: 1.2;
 }
@@ -133,7 +133,7 @@
 }
 
 .modal-info p:hover {
-    border-color: #3b82f6;
+    border-color: #0F1B2E;
     box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15);
     transform: translateY(-3px);
 }
@@ -148,7 +148,7 @@
 }
 
 .modal-info span {
-    color: #0f172a;
+    color: #0F1B2E;
     font-weight: 700;
     font-size: 1rem;
 }
@@ -173,7 +173,7 @@
 }
 
 .status-em-uso {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    background: linear-gradient(135deg, #12838973 0%, #128489 100%);
     color: #ffffff;
     box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
 }
@@ -216,7 +216,7 @@
     content: '';
     width: 4px;
     height: 24px;
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    background: #128489;
     border-radius: 3px;
 }
 
@@ -253,7 +253,7 @@
     content: '';
     width: 4px;
     height: 24px;
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    background: #128489;
     border-radius: 3px;
 }
 
@@ -267,7 +267,7 @@
 
 .modal-recursos ul li {
     font-size: 0.9rem;
-    color: #334155;
+    color: #0F1B2E;
     padding: 1rem 1.25rem;
     padding-left: 3rem;
     position: relative;
@@ -308,21 +308,21 @@
    SCROLLBAR CUSTOMIZADA
 ====================================================== */
 .modal-content::-webkit-scrollbar {
-    width: 10px;
+    display:none;
 }
 
 .modal-content::-webkit-scrollbar-track {
-    background: #f1f5f9;
+display: none;
     border-radius: 10px;
 }
 
 .modal-content::-webkit-scrollbar-thumb {
-    background: none;
+display: none;
     border-radius: 10px;
 }
 
 .modal-content::-webkit-scrollbar-thumb:hover {
-    background: none;
+ display: none;
 }
 
 /* ======================================================

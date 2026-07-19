@@ -10,6 +10,7 @@ import uuid
 import os
 from werkzeug.utils import secure_filename
 from service.notificacao_service import NotificacaoService
+from datetime import datetime
 
 
 # Cria o Blueprint para as rotas de eventos
@@ -222,6 +223,8 @@ def detalhes_evento(evento_id):
         if not evento:
             # Retorna erro 404 (Not Found)
             return jsonify({"erro": "Evento não encontrado"}), 404
+        
+        
         
         # Retorna os dados do evento em formato JSON com status 200 (OK)
         return jsonify(evento), 200

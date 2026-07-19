@@ -213,14 +213,13 @@ class UsuarioService:
         Garante a existência de um usuário administrador padrão.
         Usado normalmente na inicialização do sistema.
         """
-        email_admin = "admin@nexus.com"
+        email_admin = "teste@nexus.com"
 
         # Verifica se o admin já existe
         admin_existente = UsuarioRepository.buscar_por_email(email_admin)
         if admin_existente:
             return
         
-
         # Gera hash da senha padrão
         senha_hash = bcrypt.hashpw(
             "Admin@123".encode("utf-8"),

@@ -4,14 +4,14 @@ from datetime import datetime, date, time
 import os
 
 def get_connection():
-    try:
-        db_url = os.getenv("DATABASE_URL")
-        if not db_url:
-            raise ValueError("DATABASE_URL não encontrada no .env")
-        conn = psycopg2.connect(db_url)
-        return conn
-    except Exception as e:
-        raise
+    return psycopg2.connect(
+        host="localhost",
+        user="postgres",
+        password="jojo4548",
+        dbname="Nexus",
+        port=5432,
+        options="-c search_path=nexus"
+    )
 
 class AgendamentosRepository:
 

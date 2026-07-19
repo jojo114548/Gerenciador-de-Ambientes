@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus - Sistema de Agendamentos</title>
-    <link rel="stylesheet" href="../static/Css/login.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus - Sistema de Agendamentos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/Css/login.css">
+
+
 </head>
 <body>
-  <main class="page-home">
-        <div class="container">
-            <!-- Painel de login (esquerda) -->
-            <aside class="login-panel">
+    <aside class="login-panel" id="login">
                 <div class="login-content">
-                     
                     <div class="login-header">
-                        
- <img src="/static/imgs/nova_logo.png" alt="Logo Nexus" class="logo" >
-                   
                         <h2>Login</h2>
                     </div>
 
@@ -38,20 +36,152 @@
                 </div>
             </aside>
 
-            <!-- Conteúdo de boas-vindas (direita) -->
-            <div class="hero-content">
-                <div class="hero-inner">
-                   
-                    <h1 class="hero-title">Gerencie seus agendamentos de forma simples e eficiente!</h1>
-                    
-                    <p class="hero-subtitle">
-                        Sistema completo para reserva de ambientes e equipamentos, organização de eventos e acompanhamento em tempo real. Tudo em uma única plataforma.
-                    </p>
+<section class="hero">
+    
 
-                    
-                </div>
+    <nav class="navbar">
+        <div class="logo"><img src="/static/imgs/Gemini_Generated_Image_6jenjx6jenjx6jen.png" alt="Nexus" ></div>
+        <button class="btn-nav" onclick="login()">Login 
+        </button>
+    </nav>
+
+    <div class="hero-content">
+        <div class="hero-text">
+            
+            <h1>Leve Seu <span>Agendamento</span> Para o Próximo Nível</h1>
+            <p>Gerencie agendamentos de ambientes, equipamentos e eventos de forma simples e eficiente. Tudo em um só lugar, com facilidade e organização.</p>
+            <div class="hero-actions">
+                <button class="btn-primary-hero">Começar Agora</button>
             </div>
         </div>
-    </main>
+
+        <div class="hero-image-wrap">
+           
+           <img src="/static/imgs/modelo.png" alt="Usuário do sistema">
+
+           
+        </div>
+    </div>
+
+    <div class="section-lead">
+        <h2>Por que escolher o Nexus?</h2>
+        <p>Três motivos que fazem instituições trocarem planilhas por um sistema de verdade.</p>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-box">
+            <div class="stat-icon">
+                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+            </div>
+            <div class="stat-info">
+                <strong>Rápido e Intuitivo</strong>
+                <span>Interface moderna e fácil de usar. Faça reservas em poucos cliques e visualize tudo em um só lugar.</span>
+            </div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+            </div>
+            <div class="stat-info">
+                <strong>Controle Total</strong>
+                <span>Acompanhe inscrições, gerencie participantes e tenha visibilidade completa de todos os seus agendamentos.</span>
+            </div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+            </div>
+            <div class="stat-info">
+                <strong>Relatórios Detalhados</strong>
+                <span>Análise completa do uso de recursos, histórico de reservas e estatísticas de participação.</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="benefits">
+    <div class="benefits-image reveal">
+        <img src="/static/imgs/perfil-principal.png" alt="Pessoa usando o sistema">
+    </div>
+
+    <div class="benefits-content reveal">
+       
+        <h2>Benefícios do Nosso Sistema de Agendamento</h2>
+
+        <div class="benefit-item">
+            <div class="benefit-icon purple">
+                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+            </div>
+            <div>
+                <h3>Agendamento Inteligente</h3>
+                <p>Sistema automatizado que sugere os melhores horários e ambientes disponíveis para suas necessidades.</p>
+            </div>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon pink">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg>
+            </div>
+            <div>
+                <h3>Disponibilidade em Tempo Real</h3>
+                <p>Visualize a disponibilidade de ambientes e equipamentos instantaneamente, sem conflitos de horário.</p>
+            </div>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon indigo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+            </div>
+            <div>
+                <h3>Gestão Completa de Eventos</h3>
+                <p>Organize e gerencie eventos com facilidade, desde o planejamento até a execução, tudo em um só lugar.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+   
+   function login(){
+     document.getElementById('login').style.display = 'flex';
+      
+   }
+
+</script>
+
 </body>
 </html>

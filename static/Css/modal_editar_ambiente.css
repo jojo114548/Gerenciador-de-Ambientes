@@ -44,7 +44,7 @@
 #modal-editar .modal-content {
   background: linear-gradient(to bottom, #ffffff, #fafbfc);
   width: 100%;
-  max-width: 700px;
+ max-width: 620px;
   max-height: 90vh;
   overflow-y: auto;
   border-radius: 16px;
@@ -57,11 +57,11 @@
 }
 
 #modal-editar .modal-content::-webkit-scrollbar {
-  width: 8px;
+ display:none;
 }
 
 #modal-editar .modal-content::-webkit-scrollbar-track {
-  background: #f1f5f9;
+ display: none;
   border-radius: 4px;
 }
 
@@ -110,8 +110,8 @@
   padding: 28px 32px;
   font-size: 1.75rem;
   font-weight: 700;
-  color: #ffffff;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff ;
+  background: #128489;
   position: relative;
   overflow: hidden;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -148,7 +148,7 @@
 #form-editar-ambiente label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #334155;
+  color: #0F1B2E;
   letter-spacing: 0.01em;
   display: flex;
   align-items: center;
@@ -266,9 +266,9 @@
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: 10px;
-  border: 2px dashed #7dd3fc;
+  border: 2px dashed #0F1B2E;
   background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  color: #0369a1;
+  color: #0F1B2E;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -278,7 +278,7 @@
 
 .btn-add-recurso:hover {
   background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-  border-color: #38bdf8;
+  border-color: #0F1B2E;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
 }
@@ -293,7 +293,7 @@
   font-weight: 600;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #128489;
   color: #ffffff;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -336,13 +336,13 @@
 #form-editar-ambiente input:invalid:not(:placeholder-shown),
 #form-editar-ambiente select:invalid,
 #form-editar-ambiente textarea:invalid:not(:placeholder-shown) {
-  border-color: #fca5a5;
+ border: 1px solid #e2e8f0;
 }
 
 #form-editar-ambiente input:valid:not(:placeholder-shown),
 #form-editar-ambiente select:valid:not(:placeholder-shown),
 #form-editar-ambiente textarea:valid:not(:placeholder-shown) {
-  border-color: #86efac;
+  border: 1px solid #e2e8f0;
 }
 
 /* ======================================================

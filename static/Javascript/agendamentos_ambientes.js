@@ -28,24 +28,29 @@ document.getElementById('form-agendamento').addEventListener('submit', function(
 
     // CONFLITO DE HORÁRIO
     if (response.status === 409) {
-      alert(res.erro);
-      return;
+      console.error("Conflito de horário:", res);
+      mostrarToast(res.message || "Este horário já está reservado", "erro");
+      return; // ✅ Impede a execução do código de sucesso
     }
 
     // OUTROS ERROS
     if (!response.ok) {
-      throw new Error(res.erro || 'Erro ao agendar');
+      console.error("Erro ao agendar:", res);
+      mostrarToast(res.message || "Erro ao agendar", "erro");
+      return; // ✅ Impede a execução do código de sucesso
     }
 
-    // SUCESSO
-    alert(res.mensagem);
+    // SUCESSO (só chega aqui se response.ok for true)
+    mostrarToast("Agendamento realizado com sucesso", "sucesso");
     fecharModalAgendamento();
     location.reload();
   })
   .catch(err => {
-    alert(err.message);
+    console.error("Erro de conexão:", err);
+    mostrarToast("Erro de conexão", "erro");
   });
 });
+
 function fecharModalAgendamento() {
   document.getElementById('modal-agendamento').style.display = 'none';
 }

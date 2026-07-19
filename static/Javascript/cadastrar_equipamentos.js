@@ -1,14 +1,14 @@
-// 🔓 Abrir modal
+//  Abrir modal
 function abrirModalEquipamento() {
   document.getElementById('modalEquipamento').style.display = 'block';
 }
 
-// 🔒 Fechar modal
+//  Fechar modal
 function fecharModalEquipamento() {
   document.getElementById('modalEquipamento').style.display = 'none';
 }
 
-// ➕ Adicionar campo de especificação
+//  Adicionar campo de especificação
 function addEspecificacao() {
   const container = document.getElementById('especificacoes-container');
 
@@ -20,7 +20,7 @@ function addEspecificacao() {
   container.appendChild(input);
 }
 
-// 📤 Envio do formulário
+// Envio do formulário
 document.getElementById('form-cadastro-equipamento') .addEventListener('submit', function (e) {
 
     e.preventDefault();
@@ -28,11 +28,11 @@ document.getElementById('form-cadastro-equipamento') .addEventListener('submit',
     const form = this;
     const quantidadeInput = document.getElementById('quantidade_disponivel');
 
-    // 🔴 Validação obrigatória (MySQL NOT NULL)
+    //  Validação obrigatória (MySQL NOT NULL)
     const quantidade = parseInt(quantidadeInput.value, 10);
 
     if (isNaN(quantidade) || quantidade < 0) {
-      alert('Informe uma quantidade disponível válida.');
+      mostrarToast("Informe uma quantidade disponível válida.", "erro");
       quantidadeInput.focus();
       return;
     }
@@ -51,11 +51,11 @@ document.getElementById('form-cadastro-equipamento') .addEventListener('submit',
         return res.text();
       })
       .then(() => {
-        alert('Equipamento cadastrado com sucesso');
+        mostrarToast("Equipamento cadastrado com sucesso", "sucesso");
         fecharModalEquipamento();
         location.reload();
       })
       .catch(() => {
-        alert('Erro ao cadastrar equipamento');
+        mostrarToast("Erro ao cadastrar equipamento", "erro");
       });
   });

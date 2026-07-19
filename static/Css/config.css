@@ -25,12 +25,12 @@
   overflow: hidden;
   
   background: linear-gradient(to bottom, #ffffff, #fafbfc);
-  border: 1px solid #e2e8f0;
+  border: none;
   border-radius: 20px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15), 
               0 12px 24px rgba(0, 0, 0, 0.1);
   
-  color: #1e293b;
+  color: #0F1B2E;
   animation: modalSlideIn 0.3s ease-out;
 }
 
@@ -78,7 +78,7 @@
   
   padding: 28px 32px;
   
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #128489;
   position: relative;
   overflow: hidden;
 }
@@ -188,18 +188,18 @@
 
 .sidebar button:hover {
   background: rgba(102, 126, 234, 0.08);
-  color: #667eea;
+  color: #128489;
   transform: translateX(4px);
 }
 
 .sidebar button:hover i,
 .sidebar button:hover svg {
-  color: #667eea;
+  color: #128489;
   transform: scale(1.1);
 }
 
 .sidebar button.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #128489;
   color: #ffffff;
   border-color: transparent;
   box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
@@ -220,7 +220,7 @@
   width: 4px;
   height: 60%;
   
-  background: linear-gradient(180deg, #667eea, #764ba2);
+  background: #128489;
   border-radius: 0 4px 4px 0;
 }
 
@@ -229,9 +229,7 @@
   flex: 1;
   padding: 32px;
   overflow-y: auto;
-  
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
+ 
 }
 
 .content::-webkit-scrollbar {
@@ -239,16 +237,16 @@
 }
 
 .content::-webkit-scrollbar-track {
-  background: transparent;
+display:none;
 }
 
 .content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #667eea, #764ba2);
+display:none;
   border-radius: 4px;
 }
 
 .content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #5568d3, #654a8f);
+ display:none;
 }
 
 /* ==================== TÍTULOS E TEXTOS ==================== */
@@ -256,7 +254,7 @@
   margin-bottom: 8px;
   font-size: 1.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background:#128489;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -265,7 +263,7 @@
 .content p {
   margin-bottom: 24px;
   font-size: 0.95rem;
-  color: #64748b;
+  color: #0F1B2E;
   line-height: 1.6;
 }
 
@@ -275,7 +273,7 @@
   
   font-size: 1.1rem;
   font-weight: 700;
-  color: #1e293b;
+  color: #0F1B2E;
   
   border-bottom: 3px solid #f1f5f9;
   position: relative;
@@ -288,7 +286,8 @@
   left: 0;
   width: 60px;
   height: 3px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: #128489;
+
   border-radius: 2px;
 }
 
@@ -306,7 +305,7 @@
   width: 180px;
   height: 180px;
   
-  border: 4px solid #667eea;
+  border: 4px solid #0F1B2E;
   border-radius: 16px;
   box-shadow: 0 12px 32px rgba(102, 126, 234, 0.3);
   
@@ -318,7 +317,7 @@
 .image-perfil:hover {
   transform: scale(1.05) rotate(2deg);
   box-shadow: 0 16px 40px rgba(102, 126, 234, 0.4);
-  border-color: #764ba2;
+  border-color: #128489;
 }
 
 /* ==================== FORMULÁRIOS ==================== */
@@ -334,7 +333,7 @@ label {
   
   font-size: 0.9rem;
   font-weight: 600;
-  color: #334155;
+  color: #0F1B2E;
   letter-spacing: 0.01em;
 }
 
@@ -349,7 +348,7 @@ select {
   border-radius: 10px;
   
   font-size: 0.95rem;
-  color: #1e293b;
+  color: #0F1B2E;
   font-family: inherit;
   
   transition: all 0.3s ease;
@@ -373,7 +372,7 @@ select:focus {
   outline: none;
   
   background: #ffffff;
-  border-color: #667eea;
+  border-color: #0F1B2E;
   box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
   transform: translateY(-1px);
 }
@@ -392,7 +391,7 @@ select {
 .save {
   padding: 12px 32px;
   
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #128489;
   border: none;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
@@ -506,13 +505,13 @@ select {
 .info-box i {
   margin-top: 2px;
   font-size: 1.2rem;
-  color: #3b82f6;
+  color: #0F1B2E;
 }
 
 .info-box p {
   margin: 0;
   font-size: 0.9rem;
-  color: #1e40af;
+  color: #0F1B2E;
   line-height: 1.5;
 }
 
@@ -534,7 +533,7 @@ select {
 .toggle span {
   font-size: 0.95rem;
   font-weight: 500;
-  color: #334155;
+  color: #0F1B2E;
 }
 
 .toggle input[type="checkbox"] {
@@ -569,8 +568,8 @@ select {
 }
 
 .toggle input[type="checkbox"]:checked {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  border-color: #667eea;
+  background: #128489;
+  border-color: #0F1B2E;
 }
 
 .toggle input[type="checkbox"]:checked::before {

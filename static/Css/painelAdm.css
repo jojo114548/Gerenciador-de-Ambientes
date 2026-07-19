@@ -148,20 +148,19 @@
 .content-wrapper {
     flex: 1;
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #6C5CE7 #F8F9FA;
+    
 }
 
 .content-wrapper::-webkit-scrollbar {
-    width: 8px;
+    display:none;
 }
 
 .content-wrapper::-webkit-scrollbar-track {
-    background: transparent;
+    display:none;
 }
 
 .content-wrapper::-webkit-scrollbar-thumb {
-    background: #6C5CE7;
+   display:none;
     border-radius: 10px;
 }
 

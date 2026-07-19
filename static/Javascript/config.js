@@ -114,7 +114,7 @@ function excluirUsuario(id) {
     .then(data => {
         alert(data.mensagem);
 
-        // 🔴 desloga após excluir a própria conta
+        //  desloga após excluir a própria conta
         window.location.href = "/logout";
     })
     .catch(error => {

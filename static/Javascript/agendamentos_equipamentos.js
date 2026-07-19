@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("form-agendamento-equipamento");
 
   if (!form) {
-    console.error("Formulário NÃO encontrado");
+
+   mostrarToast("Formulário NÃO encontrado", "erro");
     return;
   }
 
@@ -42,22 +43,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // CONFLITO DE HORÁRIO
       if (response.status === 409) {
-        alert(res.erro);
+        mostrarToast("Conflito de horário", "erro");
         return;
       }
 
       // OUTROS ERROS
       if (!response.ok) {
-        throw new Error(res.erro || 'Erro ao agendar');
+        console.error("Erro ao agendar:", res);
+        mostrarToast("Erro ao agendar", "erro");
       }
 
       // SUCESSO
-      alert(res.mensagem);
-      fecharModalAgendamentoEquipamento(); // ✅ CORRIGIDO
+      mostrarToast("Agendamento realizado com sucesso", "sucesso");
+      fecharModalAgendamentoEquipamento(); 
       location.reload();
 
     } catch (err) {
-      alert(err.message);
+      mostrarToast("Erro de conexão", "erro");
     }
   });
 });

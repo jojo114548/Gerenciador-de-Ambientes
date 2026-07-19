@@ -65,13 +65,13 @@ document.getElementById('form-editar-ambiente').addEventListener('submit', funct
         return res.json();
       })
       .then(data => {
-        alert(data.mensagem);
+        mostrarToast(data.mensagem, "sucesso");
         fecharModalAmbiente();
         location.reload();
       })
       .catch(err => {
         console.error(err);
-        alert('Erro ao Cadastrar ambiente');
+        mostrarToast("Erro ao Cadastrar ambiente", "erro");
       });
 });
 

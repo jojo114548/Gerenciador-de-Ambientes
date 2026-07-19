@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="/static/Css/modal_detalhes_ambiente.css">
 
-<div id="modal-detalhes-ambiente" class="modal">
+<div id="modal-detalhes-ambiente" class="modal" role="dialog" aria-modal="true" aria-labelledby="md-nome">
     <div class="modal-content">
-            <span class="close" onclick="fecharModalDetalhesAmbiente()">x</span>
+        <span class="close" onclick="fecharModalDetalhesAmbiente()" role="button" aria-label="Fechar" tabindex="0">&times;</span>
 
-        <img id="md-imagem" style="width:100%; height:200px; object-fit:cover; border-radius:6px;">
+        <img id="md-imagem" alt="Foto do ambiente">
 
         <h2 id="md-nome"></h2>
 
@@ -13,7 +13,7 @@
             <p><strong>Capacidade:</strong> <span id="md-capacidade"></span></p>
             <p><strong>Localização:</strong> <span id="md-localizacao"></span></p>
         </div>
-        
+
         <h4>Sobre o Ambiente</h4>
         <p id="md-descricao"></p>
 
@@ -25,4 +25,3 @@
 </div>
 
 <script src="/static/Javascript/detalhes_ambientes.js"></script>
-

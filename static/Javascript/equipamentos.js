@@ -16,12 +16,12 @@ function excluirEquipamento(id) {
         return response.json();
     })
     .then(data => {
-        alert('equipamento deletado com sucesso!');
-        window.location.reload();
+      mostrarToast("equipamento deletado com sucesso!", "sucesso");
+      setTimeout(() => location.reload(), 1200);
     })
     .catch(error => {
-        console.error(error);
-        alert(error.message);
+      console.error(err);
+    mostrarToast("Erro de conexão", "erro");
     });
 }
 

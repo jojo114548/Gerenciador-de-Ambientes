@@ -15,9 +15,10 @@ function excluirAmbiente(id) {
             return r.json();
         })
         .then(() => {
-            alert('Ambiente excluído com sucesso!');
+            mostrarToast("Ambiente excluído com sucesso", "sucesso");
             location.reload();
         })
-        .catch(() => alert('Erro ao excluir ambiente'));
+        .catch(() => mostrarToast("Erro ao excluir ambiente", "erro"));
+      
 }
 

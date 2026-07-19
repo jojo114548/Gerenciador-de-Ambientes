@@ -1,3 +1,5 @@
+
+
 function abrirModalDetalhes(btn) {
  
   
@@ -45,6 +47,7 @@ function abrirModalDetalhes(btn) {
     }
   };
 
+
   // Capturar dados
   const titulo = getTextSafe(".event-titulo");
   const data = getTextSafe(".event-data");
@@ -53,7 +56,9 @@ function abrirModalDetalhes(btn) {
   const descricao = getTextSafe(".event-desc");
   const instrutor = getTextSafe(".event-instrutor");
   const ambiente = getTextSafe(".event-ambiente");
-
+  
+ 
+         
   console.log("Dados capturados:", { titulo, data, hora, local, instrutor });
 
   // Preencher campos básicos

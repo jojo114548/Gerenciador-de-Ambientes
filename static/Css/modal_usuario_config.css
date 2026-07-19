@@ -15,23 +15,7 @@
   animation: overlayFadeIn 0.3s ease;
 }
 
-/* ======================================================
-   CONTAINER MODAL
-====================================================== */
-.modal-container,
-.modal-content.modal-booking {
-  background: #ffffff;
-  border-radius: 16px;
-  max-width: 700px;
-  width: 95%;
-  padding: 2rem;
-  position: relative;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: modalFadeIn 0.25s ease;
-  margin: 0 auto; /* ✅ ADICIONAR MARGEM AUTO COMO FALLBACK */
-}
+
 
 /* ======================================================
    BOTÃO FECHAR
@@ -146,36 +130,57 @@
 }
 
 .actions-adm .btn-reserve {
-  background: #3b82f6;
+  background: #0F1B2E;
   color: #ffffff;
 }
 
 .actions-adm .btn-reserve:hover {
-  background: #2563eb;
+  background: #0F1B2E;
 }
 
 /* ======================================================
    FORMULÁRIO DE EDIÇÃO
 ====================================================== */
+
+.booking-header{
+
+    background:#128489;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    padding:28px 40px;
+    text-align:center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
 .booking-header h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 0.25rem;
+
+    color:#fff;
+
+    font-size:26px;
+
+    margin:0;
 }
 
 .booking-header p {
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin-bottom: 1rem;
-}
+  color:rgba(255,255,255,.85);
 
+    margin-top:8px;
+}
+.booking-form{
+  margin-top: 20px;
+}
 .booking-form .form-group,
 .booking-form .form-row {
   display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-  gap: 0.5rem;
+    flex:1;
+    padding:0;
+    margin:0;
+    border:none;
+    background:transparent;
+    box-shadow:none;
 }
 
 .booking-form .form-row {
@@ -186,7 +191,7 @@
 .booking-form label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
+  color: #0F1B2E;
 }
 
 .booking-form input,
@@ -203,7 +208,7 @@
 .booking-form input:focus,
 .booking-form select:focus,
 .booking-form textarea:focus {
-  border-color: #3b82f6;
+  border-color: #0F1B2E;
   box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
 }
 
@@ -226,7 +231,7 @@
 }
 
 .booking-form .btn-primary {
-  background: #3b82f6;
+  background: #128489;;
   color: #ffffff;
   border: none;
   padding: 0.55rem 1.2rem;
@@ -237,12 +242,12 @@
 }
 
 .booking-form .btn-primary:hover {
-  background: #2563eb;
+  background: #12838991;;
 }
 
 .booking-form .btn-secondary {
   background: #e5e7eb;
-  color: #374151;
+  color: #0F1B2E;
   border: none;
   padding: 0.55rem 1.2rem;
   border-radius: 8px;

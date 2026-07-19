@@ -28,16 +28,16 @@
 #modal-detalhes-ambiente .modal-content {
   background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
   width: 100%;
-  max-width: 680px;
+ max-width: 620px;
   border-radius: 28px;
   padding: 2.5rem;
   position: relative;
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2),
               0 0 0 1px rgba(255, 255, 255, 0.6) inset;
   max-height: 90vh;
+  max-height: 90dvh;
   overflow-y: auto;
   animation: modalSlideIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-  margin: auto; /* ADICIONAR ESTA LINHA */
 }
 
 /* ======================================================
@@ -64,7 +64,6 @@
 #modal-detalhes-ambiente .close:hover {
   color: #0f172a;
   background: #e2e8f0;
-
 }
 
 /* ======================================================
@@ -112,6 +111,7 @@
   width: 4px;
   height: 22px;
   border-radius: 3px;
+  background: #128489;
 }
 
 #modal-detalhes-ambiente p {
@@ -150,8 +150,8 @@
 }
 
 #modal-detalhes-ambiente .info p:hover {
-  border-color:none;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12);
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
   transform: translateY(-2px);
 }
 
@@ -182,11 +182,10 @@
   letter-spacing: 0.05em;
 }
 
-/* Você pode adicionar classes dinâmicas via JS para diferentes status */
 #modal-detalhes-ambiente #md-status.disponivel {
-  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  background: #128489;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 #modal-detalhes-ambiente #md-status.ocupado {
@@ -218,8 +217,6 @@
   margin-bottom: 1rem;
 }
 
-
-
 .modal-recursos ul {
   list-style: none;
   padding-left: 0;
@@ -249,7 +246,7 @@
   transform: translateY(-50%);
   width: 22px;
   height: 22px;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: #128489;
   color: #ffffff;
   border-radius: 50%;
   display: flex;
@@ -261,8 +258,8 @@
 
 .modal-recursos li:hover {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border-color:none;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12);
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
   transform: translateX(4px);
 }
 
@@ -270,21 +267,21 @@
    SCROLLBAR CUSTOMIZADA
 ====================================================== */
 #modal-detalhes-ambiente .modal-content::-webkit-scrollbar {
-  width: 10px;
+ display:none;
 }
 
 #modal-detalhes-ambiente .modal-content::-webkit-scrollbar-track {
-  background: #f1f5f9;
+ display: none;
   border-radius: 10px;
 }
 
 #modal-detalhes-ambiente .modal-content::-webkit-scrollbar-thumb {
-  background: none;
+display: none;
   border-radius: 10px;
 }
 
 #modal-detalhes-ambiente .modal-content::-webkit-scrollbar-thumb:hover {
-  background: none;
+ display: none;
 }
 
 /* ======================================================
@@ -310,25 +307,72 @@
   }
 }
 
+@keyframes modalSlideInMobile {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ======================================================
-   RESPONSIVO
+   RESPONSIVO - TABLET
+====================================================== */
+@media (max-width: 768px) {
+  #modal-detalhes-ambiente .modal-content {
+    max-width: 100%;
+    padding: 2rem;
+  }
+}
+
+/* ======================================================
+   RESPONSIVO - MOBILE (modal ocupa a tela toda)
 ====================================================== */
 @media (max-width: 640px) {
+  #modal-detalhes-ambiente.modal {
+    padding: 0; /* sem margem de respiro, o modal vira a própria tela */
+    align-items: flex-end; /* conteúdo "sobe" a partir da base, estilo bottom sheet */
+  }
+
   #modal-detalhes-ambiente .modal-content {
-   max-width: 100%;
-    border-radius: 16px 16px 0 0;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    max-height: 100dvh; /* ocupa exatamente a altura visível da tela no mobile */
+    border-radius: 20px 20px 0 0;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    animation: modalSlideInMobile 0.35s ease;
   }
 
   #modal-detalhes-ambiente h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   #modal-detalhes-ambiente img {
-    height: 220px;
+    height: 200px;
+    margin-bottom: 1.25rem;
   }
 
   #modal-detalhes-ambiente .info {
     grid-template-columns: 1fr;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  #modal-detalhes-ambiente h4 {
+    font-size: 1.05rem;
+    margin-top: 1.25rem;
+  }
+
+  .modal-recursos {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
   }
 
   .modal-recursos ul {
@@ -338,7 +382,24 @@
   #modal-detalhes-ambiente .close {
     width: 38px;
     height: 38px;
-    top: 1rem;
-    right: 1rem;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
+/* ======================================================
+   RESPONSIVO - TELAS MUITO PEQUENAS
+====================================================== */
+@media (max-width: 380px) {
+  #modal-detalhes-ambiente .modal-content {
+    padding: 1.125rem;
+  }
+
+  #modal-detalhes-ambiente h2 {
+    font-size: 1.25rem;
+  }
+
+  #modal-detalhes-ambiente img {
+    height: 170px;
   }
 }
